@@ -1,0 +1,146 @@
+\documentclass[officiallayout]{tktla} 
+%\documentclass[officiallayout,a4frame]{tktla}
+\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{graphicx}
+
+\title{Example Thesis \\ with a Long Title}
+\author{John Smith}
+\authorcontact{John.Smith@cs.helsinki.fi\par
+  http://cs.helsinki.fi/John.Smith/}
+\pubtime{September}{2014}
+\reportno{0}
+\isbnpaperback{000-00-0000-0}
+\isbnpdf{000-00-0000-0}
+\issn{1238-8645}
+\printhouse{Unigrafia}
+\pubpages{7} % --- remember to update this!
+% For monographs, the number of the last page of the list of references
+% For article-based theses, the number of the last page of the list of
+% references of the preamble part + the total number of the pages of
+% the original articles and interleaf pages.
+\supervisorlist{John Smythe, University of Helsinki, Finland}
+\preexaminera{Eva Johnson, University of Edinburgh, United Kingdom}
+\preexaminerb{Matti Suomalainen, University of Turku, Finland}
+\opponent{John Smithe, University of Amsterdam, The Netherlands}
+\custos{Petra Nielsen, University of Helsinki, Finland}
+\generalterms{thesis, example, another example, still more examples,
+  more and more examples}
+\additionalkeywords{example, an example phrase with many words}
+\crcshort{A.0, C.0.0}
+\crclong{
+\item[A.0] Example Category
+\item[C.0.0] Another Example
+}
+\permissionnotice{
+  To be presented in \ldots{} text of a long permission notice. Text of
+  a long permission notice. Text of a long permission notice. Text of
+  a long permission notice. Text of a long permission notice. Text of
+  a long permission notice.
+}
+
+\newtheorem{theorem}{Theorem}[chapter]
+\newenvironment{proof}{\noindent\textbf{Proof.} }{$\Box$}
+
+\begin{document}
+
+\frontmatter
+
+\maketitle
+
+\begin{abstract}
+  This is a sample sentence that should look like normal text, and
+  this is another. This is a sample sentence that should look like
+  normal text, and this is another. This is a sample sentence that
+  should look like normal text, and this is another.
+
+  This is a sample sentence that should look like normal text, and
+  this is another. This is a sample sentence that should look like
+  normal text, and this is another.
+\end{abstract}
+
+\begin{acknowledgements}
+  This is a sample sentence that should look like normal text, and
+  this is another. This is a sample sentence that should look like
+  normal text, and this is another. This is a sample sentence that
+  should look like normal text, and this is another.
+\end{acknowledgements}
+
+\tableofcontents
+
+\mainmatter
+
+\chapter{Reinforcement Learning}
+\section{Markov Decision Process}
+\section{Partially Observable Markov Decision Process}
+\section{Dynamic Programming}
+\section{Reinforcement Learning Methods}
+\subsection{Temporal Difference Learning}
+\subsection{Q-Learning}
+\subsection{Adaptive Heuristic Critic}
+\subsection{Prioritised Sweeping}
+\subsection{Policy Gradient Methods}
+
+\section{Classification of the Regarded RL Problems}
+\subsection{High-Dimensionality}
+\subsection{Partial-Observability}
+\subsection{Continuous State and Action Spaces}
+\subsection{Data-Efficiency}
+
+\chapter{Recurrent Neural Networks}
+\section{Feedforward Neural Networks}
+\section{Recurrent Neural Networks}
+\subsection{Finite Unfolding in Time}
+\subsection{Overshooting}
+\subsection{Dynamical Consistency}
+\section{Universal Approximation}
+\subsection{Approximation by FFNN}
+
+\subsection{Approximation by RNN}
+\section{Training of RNN}
+\subsection{Shared Weight Extended Backpropagation}
+\subsection{Learning Methods}
+\subsection{Learning Long-Term Dependencies}
+
+\section{Improved Model-Building with RNN} 
+\subsection{Handling Data Noise} 
+\subsection{Handling the Uncertainty of the Initial State}
+\subsection{Optimal Weight Initialisation}
+
+\chapter{Prior Arts of Combining RNN and RL}
+\section{Neural Actor-Critic(idasi's group)}
+\section{LSTM with POMDP objective function}
+\section{PhD thesis, by Remi Coulom ?}
+
+\section{DQN?}
+\section{Hybrid Approch(RL with RNN)}
+\section{Recurrent Models of Visual Attention?}       
+\section{stanley gecco021 2002?}
+\chapter{Experiment}
+\section{RNN(LSTM) Implementation}
+\section{Cart-pole Balancing Simulator}
+\section{Learning a task of stacking wooden blocks}
+
+This is a sample sentence that should look like normal text, and this
+is another. This is a sample sentence that should look like normal
+text, and this is another. This is a sample sentence that should look
+like normal text, and this is another.
+
+
+\begin{theorem}
+This is a sample sentence that should look like normal text,
+and this is another:
+\[ y = x+3 \]
+\end{theorem}
+
+\begin{proof}
+This is a sample sentence.
+\end{proof}
+
+
+
+\begin{thebibliography}{00}
+\item Smith, John. Example Document.
+\end{thebibliography}
+
+\end{document}
