@@ -1,0 +1,188 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% ICML 2013 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Use the following line _only_ if you're still using LaTeX 2.09.
+%\documentstyle[icml2013,epsf,natbib]{article}
+% If you rely on Latex2e packages, like most moden people use this:
+\documentclass{article}
+
+% For figures
+\usepackage{graphicx} % more modern
+%\usepackage{epsfig} % less modern
+\usepackage{subfigure} 
+
+% For citations
+\usepackage{natbib}
+
+% For algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% For drawing recurrent neural network
+\usepackage{tikz}
+
+% As of 2011, we use the hyperref package to produce hyperlinks in the
+% resulting PDF.  If this breaks your system, please commend out the
+% following usepackage line and replace \usepackage{icml2013} with
+% \usepackage[nohyperref]{icml2013} above.
+\usepackage{hyperref}
+
+% Packages hyperref and algorithmic misbehave sometimes.  We can fix
+% this with the following command.
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Employ the following version of the ``usepackage'' statement for
+% submitting the draft version of the paper for review.  This will set
+% the note in the first column to ``Under review.  Do not distribute.''
+\usepackage{icml2013} 
+% Employ this version of the ``usepackage'' statement after the paper has
+% been accepted, when creating the final version.  This will set the
+% note in the first column to ``Proceedings of the...''
+% \usepackage[accepted]{icml2013}
+
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{Submission and Formatting Instructions for ICML 2013}
+
+\begin{document} 
+
+\twocolumn[
+\icmltitle{
+Accelerating Repetitive Trajectory Planning of (Kuka Robot Arm) based on Stacked Reinforcement Learning Structures}
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2013
+% package.
+\icmlauthor{Yuan Gao}{gaoyuankidult@gmail.com}
+\icmladdress{University of Helsinki,
+             Finland}
+
+% You may provide any keywords that you 
+% find helpful for describing your paper; these are used to populate 
+% the "keywords" metadata in the PDF but will not be shown in the document
+\icmlkeywords{}
+
+\vskip 0.3in
+]
+
+\section*{Introduction}
+Machine learning for robotics, which is also called robot learning, is a field of research at the intersection of robotics and machine learning. It considers algorithms that can endow robot novel skills or enable robot to adapt complex environments. The embodiment of the robot, as situated in a physical embedding , provides simultaneously difficulties and opportunities for guiding the learning process. High dimensions, real time constrains, collection of data and large quantity of data are considered to be environmental settings for this particular problem\cite{kaelbling1996reinforcement}. However,sensorimotor synergies and motor primitives are considered to address new machine learning field. Example of skills include mainly sesorimotor skills such as grasping, locomotion, active learning as well as
+joint operation with humans. Boldly speaking, it also includes linguistic and visual skills such as situated meaning of human language and image recognition. Robot learning is highly related to adaptive control, reinforcement learning as well as developmental robotics\cite{lungarella2003developmental}.
+The main problem of robot learnings is autonomous lifelong acquisition of repertoires of skills. Though machine learning algorithms are always employed in computer vision in the context of robotics. These methods are normally not considered as robot learning.
+
+In this paper, we are going to consider research plan of one specific problem in robot learning - namely repetitive trajectory planning i.e. planning the path of moving a robot arm. The basic idea of structured reinforcement learning is to stack a several layers of reinforcement learning(RL) structure together to create a memorial mechanism for repetitive behavior. 
+
+The structure of this paper is organized as following. In the first section, reinforcement learning and its two main cases on robot learning are considered including Nature Actor-Critic\cite{peters2008natural}, Long Short-term Memory\cite{hochreiter1997long}. Then in the second section, we talk about the idea of research and discuss the motivation of this research plan. The paper then shows concrete plan of research in section three.
+
+
+\section{Reinforcement Learning}
+In this section, we first give general intuitive concept of the Reinforcement Learning(RL) and then we introduce the basic knowledge needed about reinforcement learning for further discussion. 
+
+If we would like to discuss what might be the most
+common way of learning, learning based on interacting
+with our environment is a natural idea to think about.
+When we were born in this world, we had no teachers
+around us. But tens of years passed, we learned to
+fear, to communicate with others and to write a paper.
+As a consequence, it is very natural to think that our
+environment is a great source of information. While
+playing around with environment, we learn by taking
+actions and getting reward from it. Now when we cook
+, when we do exercise, we are fully and acutely aware
+what will be the response of environment.
+
+The RL is an area that studies the mechanism of the
+such kind of learning in a computational way. Generally the goal of RL is to find a way of mapping different states with different actions so that we could maximize the reward signals. 
+
+There are two main approaches in area of reinforcement learning, one is based on Markov Decision Process(MDP)\cite{barto1998reinforcement}. Both methods have advantages and drawbacks when applied to robotics, another one is recurrent neural network(RNN)\cite{williams1989learning}.  
+
+\subsection{Markov Decision Process}
+MDP is a discrete time stochastic control process. We may consider a robot in a state $s$ of discrete space $S$. Now the robot can take an action $a$ in all possible action set $A$ resulting in a state $s$ . We can denote this process as transition function
+$P_a(s, s')$ meaning the probability of moving from state
+$s$ to state $s'$ through action a. Then after the robot executes action $a$ and results in $s'$ , it will receive a reward $r$ according to reward function denoted as $R_a(s, s ')$. The goal of reinforcement learning is to optimize cumulative reward of whole process. In robot learning problems, the state is normally continuous.
+
+The problems of MDP is more clear to researchers as it is based on mathematical formalizations. On one hand, MDP-based methods together with optimization methods such as Gradient Partially Observable Markov Decision Processes (GPOMDP), projection method or nature gradient are state-of-art in robot trajectory learning. On another hand, as data collected from robot is different from normal data, it was pointed out the MDP-based methods suffers several curses\cite{kober2012reinforcement}.
+\begin{itemize}
+\item Curse of Dimensionality
+\item Curse of Real-World Samples
+\item Curse of Under-Modeling and Model Uncertainty
+\item Curse of Goal Specification
+\end{itemize}
+The data is normally high dimensional, continuous and erroneous data in robot systems. It is considered to be difficult questions to neglect these issues and it is also hard to specify the goal of system i.e. what robot needs to be at last.
+
+\subsection{Recurrent Neural Network}
+Another approaches is RNN-based algorithms. Showed by Funahashi, in principle, RNN is able to deal with continuous data for any dynamical system\cite{funahashi1993approximation}. There are many successful examples made by different RNNs including Long Short Term Memory(LSTM) for heart surgery robot\cite{mayer2008system}, RNN for motion planning\cite{zaier2004motion} and Hopfield Netowrk for robot planning \cite{miyazaki2010robot}. 
+
+RNN is a special class of artificial neural network where connections of neurons form at least a directed circle. Based on the connection types, there are many different types of recurrent neural network. However, due to data properties of robots, the algorithm needs to temporarily memorize important "moment" in adaptive, dynamic, internal states until the memories can help to compute proper actions. This idea leads to a recurrent neural network structure called Long Short Term Memory(LSTM).
+
+An LSTM network is an artificial neural network that contains LSTM blocks instead of, or in addition to, regular network units. An LSTM block may be described as a "smart" network unit that can remember a value for an arbitrary length of time. An LSTM block contains gates that determine when the input is significant enough to remember, when it should continue to remember or forget the value, and when it should output the value.
+
+
+\section{Idea and Motivation}
+By knowing basics of two types of reinforcement learning algorithms, we are able to continue discussion of research idea.
+
+Considering any repetitive behavior of human, there is always some event triggering the repetitive behavior. For example a simple "pardon" may result to repetition of last sentence. Similarly robot sometimes needs to deal with same process. For example, stacking three blocks on top of each other is a repetitive behavior(the main trajectory contains three similar circle-like sub-trajectories) but when robot does it, it does not execute three similar control patterns instead it executes a long sequential command.
+
+As both MDP(Especially in discrete case) and RNN( Especially for LSTM) contain structures like "states" that can remember current situation of agent, stacking another RL structure on top of it is an intrinsically interesting idea. Learning process based on the parameters of previous RL algorithm can generate a high level representation. Then the high level representation can accelerate the learning process by letting robot know what kind of stage it is in so that for similar tasks, it knows when to start repeating. Similar works have been done in different ways.
+\begin{itemize}
+\item Google combined convolutional neural network(CNN) with a simple Q learning\cite{mnih2013playing}
+\item Researchers also combined auto-encoders with model-based RL.
+\end{itemize}
+
+Like all of them, the proposed method also stacked two different learning together. However, the feed-forward model(namely CNN and auto-encoder) in previous researches are used for perception, but for control it needs to remember temporal information. Novelty of the proposal lies in expanding the abstract idea of previous research and introducing it to a working example of system(or theoretical analysis if possible).
+
+
+Motivation of this topic comes from tow ideas. The first one is from biological truth. The brain contains RNNs to deal with learning.(Though whether the RNN is mainly applied to control or perception is still an open question). Many researchers, such as the connectionist Paul Smolensky, have argued that connectionist models will evolve toward fully continuous, high-dimensional, non-linear, dynamic systems approaches. Recent biological research also shows Brain makes predictive behavior before executing action\cite{clark2013whatever}. This shows brain is able to make Bayesian inference which should be based on recurrent structure rather than feed-forward structure.
+
+The biological background is important but yet not enough. However, the second reason is more related to recent advances in robot learning algorithms. The recent achievements in the area of robot control have showed that it is possible to control robot by LSTM and Nature Actor-Critic models. This two methods both have some problems. The LSTM is able to learn sequential data nicely but lacking of proper training method causes the network to be very difficult to adapt to longer sequence when its size becomes large. Nature Actor-Critic suffers problems like lacking of safety guarantees\cite{thomas2013projected} and biased representation\cite{thomas2014bias}. 
+
+Research of whether stacked reinforcement learning structure may help understanding of the repetitive behavior as well as saving learning time of long repetitive sequential data.
+
+\section{Concrete Plan and Experiment}
+There are three different architectures under consideration.
+\begin{itemize}
+\item Nature Actor-Critic RL stacks on LSTM
+\item LSTM stacks on Nature Actor-Critic RL
+\item Vanilla(Or Other structures) RNN stacks on LSTM
+\end{itemize}
+
+The first idea is illustrated as follows:
+\begin{figure}[H]
+\scalebox{.8}{
+\begin{tikzpicture}[shorten >=1pt,->]
+  \tikzstyle{vertex}=[circle,fill=black!25,minimum size=17pt,inner sep=0pt]
+  \foreach \name/\x in {s/1, 2/2, 3/3, 4/4, 5/5, 
+                        6/6, 7/7, 8/8, 9/9, t/10}
+    \node[vertex] (G-\name) at (\x,0) {$\name$};
+
+  \foreach \from/\to in {s/2,2/3,3/4,4/5,5/6,6/7,7/8,8/9,9/t}
+    \draw (G-\from) -- (G-\to);
+\end{tikzpicture}
+}
+\end{figure}
+
+
+
+% In the unusual situation where you want a paper to appear in the
+% references without citing it in the main text, use \nocite
+\nocite{langley00}
+
+\bibliography{thesis_proposal}
+\bibliographystyle{icml2013}
+
+\end{document} 
+
+
+% This document was modified from the file originally made available by
+% Pat Langley and Andrea Danyluk for ICML-2K. This version was
+% created by Lise Getoor and Tobias Scheffer, it was slightly modified  
+% from the 2010 version by Thorsten Joachims & Johannes Fuernkranz, 
+% slightly modified from the 2009 version by Kiri Wagstaff and 
+% Sam Roweis's 2008 version, which is slightly modified from 
+% Prasad Tadepalli's 2007 version which is a lightly 
+% changed version of the previous year's version by Andrew Moore, 
+% which was in turn edited from those of Kristian Kersting and 
+% Codrina Lauth. Alex Smola contributed to the algorithmic style files.  
