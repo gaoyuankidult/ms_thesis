@@ -1,0 +1,237 @@
+@article{Vincent2010,
+abstract = {We explore an original strategy for building deep networks, based on stacking layers of denoising autoencoders which are trained locally to denoise corrupted versions of their inputs. The resulting algorithm is a straightforward variation on the stacking of ordinary autoencoders. It is however shown on a benchmark of classification problems to yield significantly lower classification error, thus bridging the performance gap with deep belief networks (DBN), and in several cases surpassing it. Higher level representations learnt in this purely unsupervised fashion also help boost the performance of subsequent SVM classifiers. Qualitative experiments show that, contrary to ordinary autoencoders, denoising autoencoders are able to learn Gabor-like edge detectors from natural image patches and larger stroke detectors from digit images. This work clearly establishes the value of using a denoising criterion as a tractable unsupervised objective to guide the learning of useful higher level representations.},
+author = {Vincent, Pascal and Larochelle, Hugo and Lajoie, Isabelle and Bengio, Yoshua and Manzagol, Pierre-Antoine},
+doi = {10.1111/1467-8535.00290},
+file = {:home/deepthree/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Vincent et al. - 2010 - Stacked Denoising Autoencoders Learning Useful Representations in a Deep Network with a Local Denoising Criterio.pdf:pdf},
+isbn = {1532-4435},
+issn = {15324435},
+journal = {Journal of Machine Learning Research},
+pages = {3371--3408},
+title = {{Stacked Denoising Autoencoders: Learning Useful Representations in a Deep Network with a Local Denoising Criterion}},
+volume = {11},
+year = {2010}
+}
+@article{Salakhutdinov2009,
+abstract = {We present a new learning algorithm for Boltz- mann machines that contain many layers of hid- den variables. Data-dependent expectations are estimated using a variational approximation that tends to focus on a single mode, and data- independent expectations are approximated us- ing persistent Markov chains. The use of two quite different techniques for estimating the two types of expectation that enter into the gradient of the log-likelihood makes it practical to learn Boltzmann machines with multiple hidden lay- ers and millions of parameters. The learning can be made more efficient by using a layer-by-layer pre-training phase that allows variational in- ference to be initialized with a single bottom- up pass. We present results on the MNIST and NORB datasets showing that deep Boltzmann machines learn good generative models and per- form well on handwritten digit and visual object recognition tasks},
+archivePrefix = {arXiv},
+arxivId = {1203.4416},
+author = {Salakhutdinov, Ruslan and Hinton, Geoffrey},
+eprint = {1203.4416},
+file = {:home/deepthree/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Salakhutdinov, Hinton - 2009 - Deep Boltzmann Machines.pdf:pdf},
+issn = {15324435},
+journal = {Artificial Intelligence},
+pages = {448--455},
+title = {{Deep Boltzmann Machines}},
+url = {http://www.cs.utoronto.ca/~rsalakhu/papers/dbm.pdf},
+volume = {5},
+year = {2009}
+}
+@article{Hinton2006,
+abstract = {We show how to use "complementary priors" to eliminate the explaining-away effects that make inference difficult in densely connected belief nets that have many hidden layers. Using complementary priors, we derive a fast, greedy algorithm that can learn deep, directed belief networks one layer at a time, provided the top two layers form an undirected associative memory. The fast, greedy algorithm is used to initialize a slower learning procedure that fine-tunes the weights using a contrastive version of the wake-sleep algorithm. After fine-tuning, a network with three hidden layers forms a very good generative model of the joint distribution of handwritten digit images and their labels. This generative model gives better digit classification than the best discriminative learning algorithms. The low-dimensional manifolds on which the digits lie are modeled by long ravines in the free-energy landscape of the top-level associative memory, and it is easy to explore these ravines by using the directed connections to display what the associative memory has in mind.},
+author = {Hinton, Geoffrey E. and Osindero, Simon and Teh, Yee Whye},
+doi = {10.1162/neco.2006.18.7.1527},
+isbn = {0899-7667},
+issn = {0899-7667},
+journal = {Neural computation},
+keywords = {Algorithms,Animals,Humans,Learning,Learning: physiology,Neural Networks (Computer),Neurons,Neurons: physiology},
+pages = {1527--54},
+pmid = {16764513},
+title = {{A fast learning algorithm for deep belief nets.}},
+url = {http://www.ncbi.nlm.nih.gov/pubmed/16764513},
+volume = {18},
+year = {2006}
+}
+@inproceedings{Karpathy2014,
+abstract = {Convolutional Neural Networks (CNNs) have been established as a powerful class of models for image recognition problems. Encouraged by these results, we provide an extensive empirical evaluation of CNNs on large-scale video classification using a new dataset of 1 million YouTube videos belonging to 487 classes. We study multiple approaches for extending the connectivity of a CNN in time domain to take advantage of local spatio-temporal information and suggest a multiresolution, foveated architecture as a promising way of speeding up the training. Our best spatio-temporal networks display significant performance improvements compared to strong feature-based baselines (55.3\% to 63.9\%), but only a surprisingly modest improvement compared to single-frame models (59.3\% to 60.9\%). We further study the generalization performance of our best model by retraining the top layers on the UCF-101 Action Recognition dataset and observe significant performance improvements compared to the UCF-101 baseline model (63.3\% up from 43.9\%).},
+author = {Karpathy, Andrej and Leung, Thomas},
+booktitle = {Proceedings of 2014 IEEE Conference on Computer Vision and Pattern Recognition},
+doi = {10.1109/CVPR.2014.223},
+pages = {1725--1732},
+title = {{Large-scale Video Classification with Convolutional Neural Networks}},
+year = {2014}
+}
+@article{Krizhevsky2012,
+abstract = {We trained a large, deep convolutional neural network to classify the 1.2 million high-resolution images in the ImageNet LSRVRC-2010 contest into the 1000 different classes. On the test data, we achieved top-1 and top-5 error rates of 37.5\% and 17.0\% which is considerably better than the previous state of the art. The neural network, which has 60 million paramters and 650,000 neurons, consists of five convolutional layers, some of which are followed by max-pooling layers, and three fully connected layers with a final 1000-way softmax. To make training faster, we used non-saturating neurons and a very efficient GPU implementation of the convolutional operation. To reduce overfitting in the fully-connected layers, we employed a recently-developed method called 'dropout' that proved to be effective. We also entered a variant of the model in the ILSVRC-2012 competition and achievd a top-5 test error rate of 15.3\%, compared to 26.2\% achieved by the second-best entry.},
+archivePrefix = {arXiv},
+arxivId = {1102.0183},
+author = {Krizhevsky, Alex and Sutskever, Ilya and Hinton, Geoffrey E},
+eprint = {1102.0183},
+isbn = {9781627480031},
+issn = {10495258},
+journal = {Advances In Neural Information Processing Systems},
+pages = {1--9},
+title = {{ImageNet Classification with Deep Convolutional Neural Networks}},
+year = {2012}
+}
+@article{Kober2013,
+abstract = {Reinforcement learning offers to robotics a framework and set of tools for the design of sophisticated and hard-to-engineer behaviors. Conversely, the challenges of robotic problems provide both inspiration, impact, and validation for developments in reinforcement learning. The relationship between disciplines has sufficient promise to be likened to that between physics and mathematics. In this article, we attempt to strengthen the links between the two research communities by providing a survey of work in reinforcement learning for behavior generation in robots. We highlight both key challenges in robot reinforcement learning as well as notable successes. We discuss how contributions tamed the complexity of the domain and study the role of algorithms, representations, and prior knowledge in achieving these successes. As a result, a particular focus of our paper lies on the choice between model-based and model-free as well as between value-function-based and policy-search methods. By analyzing a simple problem in some detail we demonstrate how reinforcement learning approaches may be profitably applied, and we note throughout open questions and the tremendous potential for future research.},
+author = {Kober, J. and Bagnell, J. a. and Peters, J.},
+doi = {10.1177/0278364913495721},
+isbn = {9783642276446},
+issn = {0278-3649},
+journal = {The International Journal of Robotics Research},
+keywords = {learning control,reinforcement learning,robot,survey},
+pages = {1238--1274},
+title = {{Reinforcement learning in robotics: A survey}},
+url = {http://ijr.sagepub.com/cgi/doi/10.1177/0278364913495721},
+volume = {32},
+year = {2013}
+}
+@article{Matari1997,
+abstract = {This paper describes a formulation of reinforcement learning that enables learning in noisy, dynamic environemnts such as in the complex concurrent multi-robot learning domain. The methodology involves minimizing the learning space through the use behaviors and conditions, and dealing with the credit assignment problem through shaped reinforcement in the form of heterogeneous reinforcement functions and progress estimators. We experimentally validate the approach on a group of four mobile robots learning a foraging task},
+author = {Matari, Maja J and Systems, Complex and Matari\'{c}, M.J.},
+doi = {10.1023/A:1008819414322},
+issn = {0929-5593},
+journal = {Autonomous Robots},
+keywords = {group behavior,multi-agent systems,reinforcement learning,robot learning,robotics},
+pages = {73--83},
+title = {{Reinforcement learning in the multi-robot domain}},
+url = {http://www.springerlink.com/index/K662611455651Q42.pdf},
+volume = {4},
+year = {1997}
+}
+@article{Riedmiller2009,
+abstract = {Batch reinforcement learning methods provide a powerful framework for learning efficiently and effectively in autonomous robots. The paper reviews some recent work of the authors aiming at the successful application of reinforcement learning in a challenging and complex domain. It discusses several variants of the general batch learning framework, particularly tailored to the use of multilayer perceptrons to approximate value functions over continuous state spaces. The batch learning framework is successfully used to learn crucial skills in our soccer-playing robots participating in the RoboCup competitions. This is demonstrated on three different case studies.},
+author = {Riedmiller, Martin and Gabel, Thomas and Hafner, Roland and Lange, Sascha},
+doi = {10.1007/s10514-009-9120-4},
+issn = {09295593},
+journal = {Autonomous Robots},
+keywords = {Autonomous learning robots,Batch reinforcement learning,Learning mobile robots,Neural control,RoboCup},
+pages = {55--73},
+title = {{Reinforcement learning for robot soccer}},
+volume = {27},
+year = {2009}
+}
+@inproceedings{Cassandra1997,
+abstract = {An increasing number of researchers in many ar- eas are becoming interested in the application of the partially observable Markov decision process (pomdp) model to problems with hidden state. This model can account for both state transition and observation uncertainty. The majority of re- cent research interest in the pomdp model has been in the artificial intelligence community and as such, has been applied in a limited range of domains. The main purpose of this paper is show the wider applicability of the model by way of sur- veying the potential application areas for pomdps.},
+author = {Cassandra, Anthony R},
+booktitle = {Uncertainty in Artificial Intelligence},
+pages = {472--480},
+title = {{A Survey of POMDP Applications}},
+year = {1997}
+}
+@article{Monahan1982,
+abstract = {This paper surveys models and algorithms dealing with partially observable Markov decision processes. A partially observable Markov decision process (POMDP) is a generalization of a Markov decision process which permits uncertainty regarding the state of a Markov process and allows for state information acquisition. A general framework for finite state and action POMDP's is presented. Next, there is a brief discussion of the development of POMDP's and their relationship with other decision processes. A wide range of models in such areas as quality control, machine maintenance, internal auditing, learning, and optimal stopping are discussed within the POMDP-framework. Lastly, algorithms for computing optimal solutions to POMDP's are presented.},
+author = {Monahan, George E},
+doi = {10.2307/2631070},
+isbn = {00251909 (ISSN)},
+issn = {0025-1909},
+journal = {Management Science},
+keywords = {MARKOV DECISION PROCESSES,PARTIALLY OBSERVABLE,SURVEY},
+pages = {1--16},
+pmid = {7357551},
+title = {{A Survey of Partially Observable Markov Decision Processes: Theory, Models, and Algorithms}},
+url = {http://www.jstor.org/stable/2631070},
+volume = {28},
+year = {1982}
+}
+@article{Mnih2014,
+author = {Mnih, Volodymyr and Heess, Nicolas and Graves, Alex},
+file = {:home/deepthree/Desktop/mendeley/mendeleydesktop-1.12.4-linux-x86\_64/papers/5542-recurrent-models-of-visual-attention.pdf:pdf},
+journal = {Advances in Neural Information \ldots},
+pages = {1--9},
+title = {{Recurrent Models of Visual Attention}},
+url = {http://papers.nips.cc/paper/5542-recurrent-models-of-visual-attention},
+year = {2014}
+}
+@article{Werbos1990,
+abstract = {Basic backpropagation, which is a simple method now being widely
+used in areas like pattern recognition and fault diagnosis, is reviewed.
+The basic equations for backpropagation through time, and applications
+to areas like pattern recognition involving dynamic systems, systems
+identification, and control are discussed. Further extensions of this
+method, to deal with systems other than neural networks, systems
+involving simultaneous equations, or true recurrent networks, and other
+practical issues arising with the method are described. Pseudocode is
+provided to clarify the algorithms. The chain rule for ordered
+derivatives-the theorem which underlies backpropagation-is briefly
+discussed. The focus is on designing a simpler version of
+backpropagation which can be translated into computer code and applied
+directly by neutral network users},
+author = {Werbos, Paul J.},
+doi = {10.1109/5.58337},
+isbn = {0018-9219},
+issn = {00189219},
+journal = {Proceedings of the IEEE},
+pages = {1550--1560},
+title = {{Backpropagation through time: What it does and how to do it}},
+volume = {78},
+year = {1990}
+}
+@article{Wierstra2007,
+author = {Wierstra, Daan and Foerster, Alexander},
+file = {:home/deepthree/Desktop/mendeley/mendeleydesktop-1.12.4-linux-x86\_64/papers/icann07.pdf:pdf},
+journal = {Artificial Neural Networks– \ldots},
+number = {1},
+title = {{Solving deep memory POMDPs with recurrent policy gradients}},
+url = {http://link.springer.com/chapter/10.1007/978-3-540-74690-4\_71},
+volume = {1},
+year = {2007}
+}
+@inproceedings{Liu2007,
+abstract = {This paper presents a framework for obtaining an optimal policy in model-free partially observable Markov decision problems (POMDPs) using a recurrent neural network (RNN), A Q-function approximation approach is taken, utilizing a novel RNN architecture with computation and storage requirements that are dramatically reduced when compared to existing schemes. A scalable online training algorithm, derived from the real-time recurrent learning (RTRL) algorithm, is employed. Moreover, stochastic meta-descent (SMD), an adaptive step size scheme for stochastic gradient-descent problems, is utilized as means of incorporating curvature information to accelerate the learning process. We consider case studies of POMDPs where state information is not directly available to the agent. Particularly, we investigate scenarios in which the agent receives identical observations for multiple states, thereby relying on temporal dependencies captured by the RNN to obtain the optimal policy, Simulation results illustrate the effectiveness of the approach along with substantial improvement in convergence rate when compared to existing schemes},
+author = {Liu, Zhenzhen and Elhanany, Itamar},
+booktitle = {Proceedings of the 2007 IEEE Symposium on Approximate Dynamic Programming and Reinforcement Learning, ADPRL 2007},
+doi = {10.1109/ADPRL.2007.368178},
+isbn = {1424407060},
+keywords = {Constraint optimization,Real-lime recurrent learning (RTRL),Recurrent neural networks},
+pages = {119--126},
+title = {{A scalable model-free recurrent neural network framework for solving POMDPs}},
+year = {2007}
+}
+@techreport{Gomez2004,
+abstract = {Recurrent neural networks are theoretically capable of learning complex temporal sequences, but training them through gradient-descent is too slow and unstable for practical use in reinforcement learning environments. Neuroevolution, the evolution of artificial neural networks using genetic algorithms, can potentially solve real-world reinforcement learning tasks that require deep use of memory, i.e. memory spanning hundreds or thousands of inputs, by searching the space of recurrent neural networks directly. In this paper, we introduce a new neuroevolution algorithm called Hierarchical Enforced SubPopulations that simultaneously evolves networks at two levels of granularity: full networks and network components or neurons. We demonstrate the method in two POMDP tasks that involve temporal dependencies of up to thousands of time-steps, and show that it is faster and simpler than the current best conventional reinforcement learning system on these tasks.},
+author = {Gomez, F. J. and Schmidhuber, J.},
+booktitle = {Galleria Rassegna Bimestrale Di Cultura},
+doi = {10.1145/1068009.1068092},
+isbn = {1595930108},
+pages = {1--14},
+title = {{Co-Evolving Recurrent Neurons Learn Deep Memory POMDPs}},
+year = {2004}
+}
+@article{Kaelbling1996,
+abstract = {This paper surveys the field of reinforcement learning from a computer-science perspective. It is written to be accessible to researchers familiar with machine learning. Both the historical basis of the field and a broad selection of current work are summarized. Reinforcement learning is the problem faced by an agent that learns behavior through trial-and-error interactions with a dynamic environment. The work described here has a resemblance to work in psychology, but differs considerably in the details and in the use of the word ``reinforcement.'' The paper discusses central issues of reinforcement learning, including trading off exploration and exploitation, establishing the foundations of the field via Markov decision theory, learning from delayed reinforcement, constructing empirical models to accelerate learning, making use of generalization and hierarchy, and coping with hidden state. It concludes with a survey of some implemented systems and an assessment of the practical utility of current methods for reinforcement learning.},
+archivePrefix = {arXiv},
+arxivId = {cs/9605103},
+author = {Kaelbling, Leslie Pack and Littman, Michael L. and Moore, Andrew W.},
+doi = {10.1613/jair.301},
+eprint = {9605103},
+isbn = {0-7803-3213-X},
+issn = {10769757},
+journal = {Journal of Artificial Intelligence Research},
+pages = {237--285},
+primaryClass = {cs},
+title = {{Reinforcement learning: A survey}},
+volume = {4},
+year = {1996}
+}
+@inproceedings{Silver2014,
+abstract = {In this paper we consider deterministic policy gradient algorithms for reinforcement learning with continuous actions. The deterministic pol- icy gradient has a particularly appealing form: it is the expected gradient of the action-value func- tion. This simple form means that the deter- ministic policy gradient can be estimated much more efficiently than the usual stochastic pol- icy gradient. To ensure adequate exploration, we introduce an off-policy actor-critic algorithm that learns a deterministic target policy from an exploratory behaviour policy. We demonstrate that deterministic policy gradient algorithms can significantly outperform their stochastic counter- parts in high-dimensional action spaces.},
+author = {Silver, David and Lever, Guy and Heess, Nicolas and Degris, Thomas and Wierstra, Daan and Riedmiller, Martin},
+booktitle = {Proceedings of the 31st International Conference on Machine Learning (ICML-14)},
+file = {:home/deepthree/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Silver et al. - 2014 - Deterministic Policy Gradient Algorithms.pdf:pdf},
+pages = {387--395},
+title = {{Deterministic Policy Gradient Algorithms}},
+year = {2014}
+}
+@inproceedings{Peters2006,
+abstract = {The acquisition and improvement of motor skills and control policies for robotics from trial and error is of essential importance if robots should ever leave precisely pre-structured environments. However, to date only few existing reinforcement learning methods have been scaled into the domains of high-dimensional robots such as manipulator, legged or humanoid robots. Policy gradient methods remain one of the few exceptions and have found a variety of applications. Nevertheless, the application of such methods is not without peril if done in an uninformed manner. In this paper, we give an overview on learning with policy gradient methods for robotics with a strong focus on recent advances in the field. We outline previous applications to robotics and show how the most recently developed methods can significantly improve learning performance. Finally, we evaluate our most promising algorithm in the application of hitting a baseball with an anthropomorphic arm},
+author = {Peters, Jan and Schaal, Stefan},
+booktitle = {IEEE International Conference on Intelligent Robots and Systems},
+doi = {10.1109/IROS.2006.282564},
+file = {:home/deepthree/Desktop/mendeley/mendeleydesktop-1.12.4-linux-x86\_64/papers/IROS2006-Peters\_[0].pdf:pdf},
+isbn = {142440259X},
+pages = {2219--2225},
+title = {{Policy gradient methods for robotics}},
+year = {2006}
+}
+@inproceedings{Sutton1999,
+abstract = {Function approximation is essential to reinforcement learning, but the standard approach of approximating a value function and determining a policy from it has so far proven theoretically intractable. In this paper we explore an alternative approach in which the policy is explicitly represented by its own function approximator, independent of the value function, and is updated according to the gradient of expected reward with respect to the policy parameters. Williams's REINFORCE method and actor-critic methods are examples of this approach. Our main new result is to show that the gradient can be written in a form suitable for estimation from experience aided by an approximate action-value or advantage function. Using this result, we prove for the ¯rst time that a version of policy iteration with arbitrary di®erentiable function approximation is convergent to a locally optimal policy.},
+author = {Sutton, Richard S. and Mcallester, David and Singh, Satinder and Mansour, Yishay},
+booktitle = {In Advances in Neural Information Processing Systems 12},
+doi = {10.1.1.37.9714},
+file = {:home/deepthree/Desktop/mendeley/mendeleydesktop-1.12.4-linux-x86\_64/papers/SMSM-NIPS99.pdf:pdf},
+pages = {1057--1063},
+title = {{Policy Gradient Methods for Reinforcement Learning with Function Approximation}},
+year = {1999}
+}
