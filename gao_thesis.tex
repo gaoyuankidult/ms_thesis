@@ -4,11 +4,11 @@
 \usepackage{latexsym}
 \usepackage{graphicx}
 
-\title{Example Thesis \\ with a Long Title}
-\author{John Smith}
-\authorcontact{John.Smith@cs.helsinki.fi\par
-  http://cs.helsinki.fi/John.Smith/}
-\pubtime{September}{2014}
+\title{Deep Learning Algorithms \\ for Control}
+\author{Yuan Gao}
+\authorcontact{gaoyuankidult@gmail.com\par
+  http://www.cs.helsinki.fi/u/yuangao/}
+\pubtime{September}{2015}
 \reportno{0}
 \isbnpaperback{000-00-0000-0}
 \isbnpdf{000-00-0000-0}
@@ -19,14 +19,13 @@
 % For article-based theses, the number of the last page of the list of
 % references of the preamble part + the total number of the pages of
 % the original articles and interleaf pages.
-\supervisorlist{John Smythe, University of Helsinki, Finland}
-\preexaminera{Eva Johnson, University of Edinburgh, United Kingdom}
-\preexaminerb{Matti Suomalainen, University of Turku, Finland}
-\opponent{John Smithe, University of Amsterdam, The Netherlands}
-\custos{Petra Nielsen, University of Helsinki, Finland}
-\generalterms{thesis, example, another example, still more examples,
-  more and more examples}
-\additionalkeywords{example, an example phrase with many words}
+\supervisorlist{Dorota Glowacka, University of Helsinki, Finland \newline  Leo K{\"a}rkk{\"a}inen, Nokia Research Center, Finland \newline Honkala Mikko Nokia Research Center}
+\preexaminera{}
+\preexaminerb{}
+\opponent{}
+\custos{}
+\generalterms{}
+\additionalkeywords{}
 \crcshort{A.0, C.0.0}
 \crclong{
 \item[A.0] Example Category
@@ -49,14 +48,7 @@
 \maketitle
 
 \begin{abstract}
-  This is a sample sentence that should look like normal text, and
-  this is another. This is a sample sentence that should look like
-  normal text, and this is another. This is a sample sentence that
-  should look like normal text, and this is another.
-
-  This is a sample sentence that should look like normal text, and
-  this is another. This is a sample sentence that should look like
-  normal text, and this is another.
+One sub-field of machine learning called deep learning gained a lot of attention recently as a method attempting to model high-level abstractions by using model architectures composed by multiple non-linear layers. (for example \cite{Krizhevsky2012}). Several architectures of deep learning networks like deep belief network \cite{Hinton2006}, deep Boltzman machine \cite{Salakhutdinov2009}, convolutional neural network \cite{Krizhevsky2012} and deep de-noising auto-encoder \cite{Vincent2010} have shown its advantages in specific areas. One interesting example is convolutional neural network invented by Krizhevsky in 2012, which  outperformed all the traditional feature-based machine learning techniques in ImageNet competition.
 \end{abstract}
 
 \begin{acknowledgements}
@@ -137,10 +129,7 @@ and this is another:
 This is a sample sentence.
 \end{proof}
 
-
-
-\begin{thebibliography}{00}
-\item Smith, John. Example Document.
-\end{thebibliography}
+\bibliography{library}
+\bibliographystyle{alpha}
 
 \end{document}
