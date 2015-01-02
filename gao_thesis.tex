@@ -4,6 +4,17 @@
 \usepackage{latexsym}
 \usepackage{graphicx}
 
+% 
+\usepackage{xargs}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
+%
+
+
 \title{Deep Learning Algorithms \\ for Control}
 \author{Yuan Gao}
 \authorcontact{gaoyuankidult@gmail.com\par
@@ -19,7 +30,7 @@
 % For article-based theses, the number of the last page of the list of
 % references of the preamble part + the total number of the pages of
 % the original articles and interleaf pages.
-\supervisorlist{Dorota Glowacka, University of Helsinki, Finland \newline  Leo K{\"a}rkk{\"a}inen, Nokia Research Center, Finland \newline Honkala Mikko Nokia Research Center}
+\supervisorlist{Dorota Glowacka, University of Helsinki, Finland \newline  Leo K{\"a}rkk{\"a}inen, Nokia Research Center, Finland \newline Honkala Mikko Nokia Research Center, Finland}
 \preexaminera{}
 \preexaminerb{}
 \opponent{}
@@ -46,21 +57,21 @@
 \frontmatter
 
 \maketitle
-
+\listoftodos
 \begin{abstract}
-Controlling a complicated mechanical system to perform a certain task, for example, making robot to dance, is a traditional problem studied in the area of control theory. Many successful applications like Google BigDog\cite{Raibert2008} and Google Self-driving(#TODO cite) car have been made in accordance to the new theories found in this field.
+Controlling a complicated mechanical system to perform a certain task, for example, making robot to dance, is a traditional problem studied in the area of control theory. Many successful applications like Google BigDog\cite{Raibert2008} and Google Self-driving car \todo{citation of self driving car} have been made in accordance to the new theories found in this field.
 
-However more evidences show that with in-cooperating with machine learning techniques in robotics can enable people to get rid of tedious engineering works of adjusting environmental parameters(#TODO cite). Many researchers like Jan Peters(#TODO cite), Sethu Vijayakumar, Stefan Schaal, Andrew Ng and Sebastian Thrun are the early explorers in this field. Based on the Partial Observable Markov Decision Process(POMDP) reinforcement learning, they contributed theory and practical implementation of several bench marks in this field.
+However more evidences show that in-cooperating with machine learning techniques in robotics can enable people to get rid of tedious engineering works of adjusting environmental parameters\todo{citation}. Many researchers like Jan Peters\todo{citation}, Sethu Vijayakumar, Stefan Schaal, Andrew Ng and Sebastian Thrun are the early explorers in this field. Based on the Partial Observable Markov Decision Process(POMDP) reinforcement learning, they contributed theory and practical implementation of several bench marks in this field.
 
 Recently, one sub-field of machine learning called deep learning gained a lot of attention as a method attempting to model high-level abstractions by using model architectures composed by multiple non-linear layers. (for example \cite{Krizhevsky2012}). Several architectures of deep learning networks like deep belief network \cite{Hinton2006}, deep Boltzman machine \cite{Salakhutdinov2009}, convolutional neural network \cite{Krizhevsky2012} and deep de-noising auto-encoder \cite{Vincent2010} have shown its advantages in specific areas. Especially, convolutional neural network, which was invented by Krizhevsky, outperformed all the traditional feature-based machine learning techniques in ImageNet competition.
 
-The main works of deep learning is more related to perception which deals with the problems like Sensor Fusion{OConnor2013}, Nature Language Processing(NLP)\cite{Cho2014} and Object Recognition\cite{Lenz2013}\cite{Hoffman2014}. Although considered briefly in Jürgen Schmidhuber's team\cite{Mayer2006}, the other area of robotics, namely control, remains more-or-less unexplored in the realm of deep learning.
+The main works of deep learning is more related to perception which deals with the problems like Sensor Fusion{OConnor2013}, Nature Language Processing(NLP)\cite{Cho2014} and Object Recognition\cite{Lenz2013}\cite{Hoffman2014}. Although considered briefly in J{\"u}rgen Schmidhuber's team\cite{Mayer2006}, the other area of robotics, namely control, remains more-or-less unexplored in the realm of deep learning.
 
-There are two reasons about why these areas remain unexplored,
+There are two reasons about why these areas remain unexplored. The first reason is that deep learning method emphasizes on data driving techniques in which we need a lot of data to enable system to find important features whilst we don't have any dataset that can offer large amount of data. The second reason is that applying deep learning techniques requires introducing real robot platform to test the algorithm. This process is hard for researchers as they normally don't have resources for this complicated task.
 
-The main focus of this thesis is to introduce general learning methods for robot control problem with an emphasize on deep learning method. As a consequence, this thesis tries to describe the transitional learning method of robot as well as the emerging deep learning method.
+The main focus of this thesis is to introduce general learning methods for robot control problem with an emphasize on deep learning method. As a consequence, this thesis tries to describe the transitional learning method as well as the emerging deep learning methods for robot control problem.
 
-Ultimately, the author hope the readers of this thesis, even without much background in machine learning or robotics can understand the gists of robot learning problems.
+Ultimately, the author hope the readers of this thesis, even without much background in machine learning or robotics can understand the gists of solution for robot learning problems. \improvement{All paragraphs abstract needs to be rechecked.}
 \end{abstract}
 
 \begin{acknowledgements}
@@ -73,9 +84,47 @@ Ultimately, the author hope the readers of this thesis, even without much backgr
 \tableofcontents
 
 \mainmatter
+\chapter{Introduction}
+
+Controlling a complicated mechanical system to perform a certain task, for example making robot to dance, is a traditional problem studied in the field of control theory. Many successful applications like Google BigDog\cite{Raibert2008} and Google Self-driving car \cite{Guizzo2011a} have been made in accordance to the new theories found in this field.
+
+However more evidences show that in-cooperating with machine learning techniques in robotics can enable people to get rid of tedious engineering works of adjusting environmental parameters\todo{citation}. Many researchers like Jan Peters\todo{citation}, Sethu Vijayakumar, Stefan Schaal, Andrew Ng and Sebastian Thrun are the early explorers in this field. Based on the Partial Observable Markov Decision Process(POMDP) reinforcement learning, they contributed first several algorithms enabling robot to learn to perform a certain task overtime.
+
+Recently, one sub-field of machine learning called deep learning gained a lot of attention as a method attempting to model high-level abstractions by using model architectures composed by multiple non-linear layers. (for example \cite{Krizhevsky2012}). Several architectures of deep learning networks like deep belief network \cite{Hinton2006}, deep Boltzman machine \cite{Salakhutdinov2009}, convolutional neural network \cite{Krizhevsky2012} and deep de-noising auto-encoder \cite{Vincent2010} have shown its advantages in specific areas. Especially, convolutional neural network, which was invented by Krizhevsky, outperformed all the traditional feature-based machine learning techniques in ImageNet competition.
+
+Based on the two trends we noticed, a natural path of research is to use deep learning methods for controlling movements of robot. Until the end of 2014,  the main works of deep learning are more related to a category of robotics called perception, which deals with problems like Sensor Fusion \cite{OConnor2013}, Nature Language Processing(NLP)\cite{Cho2014} and Object Recognition\cite{Lenz2013}\cite{Hoffman2014}. Although considered briefly in J{\"u}rgen Schmidhuber's team\cite{Mayer2006}, the other area of robotics, namely control, remains more-or-less unexplored in the realm of deep learning.
+
+The researches done in J{\"u}rgen Schmidhuber's team provided several interesting structures that might be potentially useful for robot control. The name of one of these structures is called Long Short Term Memory (LSTM), which is one variation of Recurrent Neural Network(RNN). Several experiments like generating sequences\cite{Graves2013}, speech recognition\cite{Graves2013b} and neural turing machine \cite{Graves2014} show that it has ability of extracting and storing temporal information from data. As a consequence, this specific structure of RNN, with modification, can be applied for control problems of robots.
+
+The main contribution of author is to invent a novel optimization method for system combining with POMDP reinforcement learning and LSTM.
+
+There are two main focuses of this thesis. One main focus of this Thesis is to introduce general learning methods for robot control problem with an emphasize on deep learning method. this thesis tries to describe the transitional learning method as well as the emerging deep learning methods for robot control problem. Anther focus of this thesis is to introduce the main contribution of author in this field. With experiments, the author is able to show his own method can outperform the transitional machine learning methods of robot control problems.
 
 \chapter{Reinforcement Learning}
+
+If we would like to discuss what might be the most common way of learning, learning based on interacting with our environment is a natural idea to think about. When we were born in this world, we had no teachers around us. But tens of years passed, we learned to fear, to communicate with others and to write a paper. As a consequence, it is very natural to think that our environment is a great source of information. While playing around with environment, we learn by taking actions and getting reward from it. Now when we cook , when we do exercise, we are fully and acutely aware what will be the response of environment.
+
+The RL is an area that studies the mechanism of the such kind of learning in a computational way. Generally the goal of RL is to find a way of mapping different states with different actions so that we could maximize the reward signals. 
+
+There are two main approaches in area of reinforcement learning, one is based on Markov Decision Process(MDP)\cite{Sutton1998a}. Both methods have advantages and drawbacks when applied to robotics, another one is recurrent neural network(RNN)\cite{williams1989learning}.
+
+In the following sections of this chapter, we may consider robot as an agent in all description of related techniques.
+
 \section{Markov Decision Process}
+Markov Decision Process (MDP) is a discrete time stochastic control process. We may consider a robot in a state $s$ of discrete state space $S$. The robot can take an action $a$ in all possible action set $A$ resulting in a state $s'$ . We can denote this process as transition function
+$P_a(s, s')$ meaning the probability of moving from state
+$s$ to state $s'$ through action a. Then after the robot executes action $a$ and results in $s'$ , it will receive a reward $r$ according to reward function denoted as $R_a(s, s ')$. The goal of reinforcement learning is to optimize cumulative reward of whole process. 
+
+The problems of MDP is more clear to researchers as it is based on mathematical formalizations. On one hand, MDP-based methods together with optimization methods such as Gradient Partially Observable Markov Decision Processes (GPOMDP), projection method or nature gradient are state-of-art in robot trajectory learning. On another hand, as data collected from robot is different from normal data, it was pointed out the MDP-based methods suffers several curses\cite{Kober2013}.
+\begin{itemize}
+\item Curse of Dimensionality
+\item Curse of Real-World Samples
+\item Curse of Under-Modeling and Model Uncertainty
+\item Curse of Goal Specification
+\end{itemize}
+The data is normally high dimensional, continuous and erroneous data in robot systems. It is considered to be difficult questions to neglect these issues and it is also hard to specify the goal of system i.e. what robot needs to be at last.
+
+
 \section{Partially Observable Markov Decision Process}
 \section{Dynamic Programming}
 \section{Reinforcement Learning Methods}
@@ -142,6 +191,6 @@ This is a sample sentence.
 \end{proof}
 
 \bibliography{library}
-\bibliographystyle{alpha}
+\bibliographystyle{siam}
 
 \end{document}
