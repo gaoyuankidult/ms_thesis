@@ -124,7 +124,6 @@ The problems of MDP is more clear to researchers as it is based on mathematical 
 \end{itemize}
 The data is normally high dimensional, continuous and erroneous data in robot systems. It is considered to be difficult questions to neglect these issues and it is also hard to specify the goal of system i.e. what robot needs to be at last.
 
-
 \section{Partially Observable Markov Decision Process}
 \section{Dynamic Programming}
 \section{Reinforcement Learning Methods}
@@ -141,8 +140,56 @@ The data is normally high dimensional, continuous and erroneous data in robot sy
 \subsection{Data-Efficiency}
 
 \chapter{Recurrent Neural Networks}
+Recurrent Neural Network(RNN) is a special structure of neural network that has recurrent connections. In the following sections of this chapter, we are going to discuss the details of this model.
 \section{Feedforward Neural Networks}
+In year 1957, the simplest structure of neural network called Perceptron was introduce by Frank Rosenblatt in Conell's Aeronautical Laboratory. This model consists only one cell and multiple connections. Figure~\ref{proceptron} shows the basic structure of proceptron.
+\begin{figure}[h!]
+
+  \centering
+    \includegraphics[width=0.5\textwidth]{proceptron}
+  \caption{This picture shows the structure of Proceptron, the i'th input is shown as $X_i$ and corresponded weights are denoted as $w_i$. There is also a bias term name $b$ connected to cell, which, with a addition function, generates the output.}\label{proceptron}
+\end{figure}
+
+The formula of representing input and output is defined as:
+
+\begin{equation}
+y = \mathbf{w}\cdot\mathbf{x} + b
+\end{equation}
+
+If we consider $b$ also as one of the inputs, then the formula can be defined as:
+
+\begin{equation}
+y = \hat{\mathbf{w}}\hat{\cdot\mathbf{x}}
+\end{equation}\label{pronceptron_formula}
+
+where $ \hat{\mathbf{w}} = [\mathbf{w};b] $ and $\hat{\mathbf{x}} = [\mathbf{x};1]$.
+
+This simple structure was considered promising initially from several points of view. But after further investigation, the Proceptron was proven that it can not classify many non-linear classes of patterns. However, its discovery leads to a field of research called neural networks in area artificial intelligence. As a consequence, since 1957, people started trying different methods for modifying this model to adapt to different problems. One important modification is to add a non-linear transformation function to the system i.e. after getting $y$ from Formula\ref{pronceptron_formula}, we use a function like tanh to get a new $\hat{y}$ to ensure the output is restricted in a range. Anther important modification of the system is to stack many proceptrons together to build a larger and complex model for the classification purpose. This kind of networks is normally called feed-forward neural networks as information send to this system is propagated only from lower layer to higher layer. Figure~\ref{feedforward_nn} shows the structure of feed-forward neural network system.
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.7\textwidth]{feedforward_nn}
+  \caption{This picture shows the structure of feedforward neural network. There are three layers in this network the input layer, hidden layer and the output layer. For connections from input layer to hidden layer, the i'th input is shown as $x_i$ and corresponded weights of hidden neuron $j$ is denoted as $W_{ij}$.}\label{feedforward_nn}
+\end{figure}
+
+The formula describing the each layer is then defined as:
+
+\begin{equation}
+y = f(W\mathbf{x})
+\end{equation}
+where $f(\cdot)$ is a non-linear transformation function. e.g. tanh.
+
 \section{Recurrent Neural Networks}
+The Recurrent Neural Networks(RNN) contain at least one neuron that has at least one recurrent connection i.e. a connection that connects to itself or to lower layer. This special structure makes memory cell to be internal memory which enables network to memories the change of sequential data. Unlike the feed-forward neural network, the recurrent neural network is used for predicting next data point.
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.3\textwidth]{recurrent_nn}
+  \caption{This picture shows the structure of recurrent neural network. The cell in the hidden layer has a connection to itself.}\label{feedforward_nn}
+\end{figure}
+
+Based on the types of connection and types of layers, there are many kinds of RNNs. 
+
 \subsection{Finite Unfolding in Time}
 \subsection{Overshooting}
 \subsection{Dynamical Consistency}
