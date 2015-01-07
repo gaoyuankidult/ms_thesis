@@ -3,6 +3,7 @@
 \usepackage[latin1]{inputenc}
 \usepackage{latexsym}
 \usepackage{graphicx}
+\usepackage[]{algorithm2e}
 
 % 
 \usepackage{xargs}
@@ -175,30 +176,85 @@ This simple structure was considered promising initially from several points of 
 The formula describing the each layer is then defined as:
 
 \begin{equation}
-y = f(W\mathbf{x})
+\mathbf{o} = \sigma(W\mathbf{x})
 \end{equation}
-where $f(\cdot)$ is a non-linear transformation function. e.g. tanh.
+where $f(\cdot)$ is a non-linear transformation function.(e.g. tanh)
 
 \section{Recurrent Neural Networks}
 The Recurrent Neural Networks(RNN) contain at least one neuron that has at least one recurrent connection i.e. a connection that connects to itself or to lower layer. This special structure makes memory cell to be internal memory which enables network to memories the change of sequential data. Unlike the feed-forward neural network, the recurrent neural network is used for predicting next data point.
 
 \begin{figure}[h!]
   \centering
-    \includegraphics[width=0.3\textwidth]{recurrent_nn}
-  \caption{This picture shows the structure of recurrent neural network. The cell in the hidden layer has a connection to itself.}\label{feedforward_nn}
+    \includegraphics[width=0.5\textwidth]{recurrent_nn}
+  \caption{This picture shows the structure of recurrent neural network. There are two layers in this networ namely input layer and hidden layer, the first layer contains notes connected to the input data. The second layer stores information and also forwards information to next layer. The cell in the hidden layer has a connection to itself which means the information stored in the cell at time $t-1$ also influences the information stored in the cell at time $t$}\label{feedforward_nn}
 \end{figure}
 
-Based on the types of connection and types of layers, there are many kinds of RNNs. 
-
 \subsection{Finite Unfolding in Time}
+When considering the structure of neural network, people normally application Finite Unfolding in Time for RNN. It means to introduce another dimension for RNN. In this way, the recurrent connection can be dealt with more easily.  In the following section, we will use a simple example for explaining this idea. The model we are going to use contains one input neuron, one hidden neuron and one output neuron. See Figure~\ref{simple_rnn} for reference.
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.2\textwidth]{simple_rnn}
+  \caption{This picture shows the structure of a simple RNN. It contains three layers i.e. one input layer, one hidden layer and one output layer.}\label{simple_rnn}
+\end{figure}
+\change{This picture should be remade using tikz later}
+
+In this figure, we mark input layer as $\mathbf{x}$, hidden layer as $\mathbf{s}$ and output layer as $\mathbf{o}$.
+
+The basics idea of unfolding RNN in time is to copy RNN several times and connect them in a chronological order. If the connection is recurrent, then the connection should be connect to the same neuron of next time step.Figure~\ref{unfolded_simple_rnn} illustrates the model of unfolding simple RNN  for three time steps.
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.5\textwidth]{unfolded_simple_rnn}
+  \caption{This picture contains model that unfolds a simple RNN described in Figure\ref{simple_rnn} in three time steps. }\label{unfolded_simple_rnn}
+\end{figure}
+\change{This picture should be remade using tikz later}
+
+The finite unfolding technique transforms a neural network with recurrent connection to a network that is easier to compute gradients. It is also easy for us to write this neural network's expression.
+
+\begin{equation}
+\mathbf{s_{t}} = \sigma(W\mathbf{x_t} + B\mathbf{s_{t-1}})
+\end{equation}
+Where $\mathbf{s_t}$ is the value of hidden state at time $t$ and $B$ is the weight matrix for updating hidden state information from time $t-1$ to $t$.
+
+
 \subsection{Overshooting}
+Considering that we only one time series, the task for RNN is to predict next data based on previous data we have. There are two steps for solving this problem. First we need to copy the data into two set and 
+
 \subsection{Dynamical Consistency}
 \section{Universal Approximation}
 \subsection{Approximation by FFNN}
 
 \subsection{Approximation by RNN}
 \section{Training of RNN}
+
 \subsection{Shared Weight Extended Backpropagation}
+
+After getting data and designing the structure of network, the next important step is to train the network to model the data we have and also to predict next point in the data sequence. Training algorithm of recurrent neural network, called back-propagation, is introduced from feed-forward neural network. For simplicity of this algorithm, we consider a simple feed-forward neural network defined as:
+
+\begin{equation}
+y = \sigma(W\mathbf{x})
+\end{equation}
+
+where $W$ is a 3x4 matrix, $x$ is a vector of length 4 and $\sigma(\cdot)$ is an element-wise non-linear transformation.
+
+This network only contains two layers including input layer and output layer. Input layer has four input neurons and output layer has three output neurons. The data we have is list of input-output pairs.
+
+Formally the backpropagation algorithm is defined as :
+
+\begin{algorithm}
+ \KwData{List of input-output pairs }
+ \KwResult{return the network}
+ initialize network weights (often small random values)\;
+ \While{training example ex}{
+        prediction = neural-net-output(network, ex)
+        actual = teacher-output(ex)\;
+        compute error (prediction - actual) at the output units\;
+        compute $\Delta W$ for all weights from hidden layer to input layer\;
+        update network weights \;
+        until all examples classified correctly or another stopping criterion satisfied
+ }
+ \caption{Backpropagation for two layers feed-forward neural network.}\label{backpropagation}
+\end{algorithm}
 \subsection{Learning Methods}
 \subsection{Learning Long-Term Dependencies}
 
