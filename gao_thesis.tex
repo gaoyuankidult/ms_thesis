@@ -3,6 +3,7 @@
 \usepackage[latin1]{inputenc}
 \usepackage{latexsym}
 \usepackage{graphicx}
+\usepackage{amsmath}
 \usepackage[]{algorithm2e}
 
 % 
@@ -212,41 +213,102 @@ The basics idea of unfolding RNN in time is to copy RNN several times and connec
 The finite unfolding technique transforms a neural network with recurrent connection to a network that is easier to compute gradients. It is also easy for us to write this neural network's expression.
 
 \begin{equation}
-\mathbf{s_{t}} = \sigma(W\mathbf{x_t} + B\mathbf{s_{t-1}})
+\mathbf{s_{t}} = \sigma(W\mathbf{x_t} + B\mathbf{s_{t-1}})\label{internal_state_fomula}
 \end{equation}
 Where $\mathbf{s_t}$ is the value of hidden state at time $t$ and $B$ is the weight matrix for updating hidden state information from time $t-1$ to $t$.
 
 
 \subsection{Overshooting}
-Considering that we only one time series, the task for RNN is to predict next data based on previous data we have. There are two steps for solving this problem. First we need to copy the data into two set and 
+Considering that we only one time series, the task for RNN is to predict next data point based on previous data we have. There are two steps for solving this problem. First we need to copy the data into two set and shift the input by one to produce output. It is illustrated as shown in Figure~\ref{overshot_rnn}.
 
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.6\textwidth]{overshot_rnn}
+  \caption{This picture shows structure of predicting time series based on previous data.}\label{overshot_rnn}
+\end{figure}
+
+Last training step takes input $\mathbf{x}(t-2)$, $\mathbf{x}(t-1)$, $\mathbf{x}(t)$ as input and produce $\mathbf{x}(t-1)$, $\mathbf{x}(t)$, $\mathbf{x}(t+1)$ as outputs. However it is very difficult to predict value at time t+2 as we don't have information of $\mathbf{x}(t+1)$. According to the Fomula~\ref{internal_state_fomula}, the input is set to $\mathbf{0}\quad \forall t > T$ then we get:
+
+\begin{equation}
+\mathbf{s_{t}} = \sigma(B\mathbf{s_{t-1}})\label{overshot_formula}
+\end{equation}
+
+As a consequence, the output defined as $\mathbf{x_{t+1}} = A\mathbf{s_{t}}$ is very inconsistent for predicting next value. This phenomenon is called overshoting.
 \subsection{Dynamical Consistency}
-\section{Universal Approximation}
-\subsection{Approximation by FFNN}
 
+Dynamical consistency is kept by introducing the output of last time step to input of current time step. Figure~\ref{series_prediction_rnn} illustrates how is it done through the modification of structure.
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.6\textwidth]{series_prediction_rnn}
+  \caption{This picture contains model for predicting data for time series. For the first unfolded structure of neural network, the data of series at time t-2 is fed to the network and we expect data at time t-1 are predict by the network.}\label{series_prediction_rnn}
+\end{figure}
+
+By remembering all the parameters in the network and unfold in time for several steps, the recurrent neural network is able to predict the next data point in the sequence. The relationship between input and output is listed as follows:
+
+\begin{align}
+\mathbf{s_{t}} &= \sigma(W\mathbf{x_t} + B\mathbf{s_{t-1}}) \\
+\mathbf{x_{t+1}} &= A\mathbf{s_{t}}
+\end{align}
+
+where $A$ means weight matrix of internal states to output states.
+
+
+To sum up, the dynamics of system becomes like following.
+
+\begin{align}
+\mathbf{s_{t}} &= \sigma(W\mathbf{x_t} + B\mathbf{s_{t-1}}) \quad \forall x \leq T \label{training_rnn}\\ 
+\mathbf{s_{t}} &= \sigma(W\mathbf{\hat{x}_t} + B\mathbf{s_{t-1}}) \quad \forall x > T \label{prediction_rnn}\\
+\mathbf{o_{t+1}} &= A\mathbf{s_{t}} \quad \forall x \leq T - 1 \label{train_output}\\
+\mathbf{\hat{x}_{t+1}} &= A\mathbf{s_{t}}  \quad \forall x > T - 1  \label{train_prediction}
+\end{align}
+
+Formula~\ref{training_rnn} shows how are values of internal states updated at the training stage. Formula~\ref{prediction_rnn} shows how are values of output data predicted after training stage. Formula~\ref{train_output} shows how outputs generated after training stage. Formula~\ref{train_prediction} shows how outputs predicted after training stage. The overall goal of the system is to minimize the different between the output and predicted output for all time series. Mathematically, it is defined as:
+
+\begin{equation}
+J = \sum_{i=1}^{T}\mathbf{o}_{t} - \mathbf{y}_{t}
+\end{equation}
+
+If we assume each input and output has N data points, then the cost becomes:
+
+\begin{equation}
+J = \sum_{i=1}^{T}\sum_{n=1}^{N}o^n_{t} - y^n_{t}
+\end{equation}
+
+The main goal of function is to minimize the cost over function parameters defined in the network.(See section ~\ref{training_rnn} for more reference.)
+
+\section{Universal Approximation}
+It has been proven that multi-layer feed-forward neural networks are universal approximators by Hornik in 1989. Similar works have also been mentioned by Cybenko and Funahashi in the same year. In this work, Hornik continued work of Minskey and Papert about two layers network. Minkey and Papert proved that two-layer neural networks are not able to approximate functions that do not belong to a special class. Then 	by adding a third layer, the neural network is able to approximate different functions.
+
+\subsection{Approximation by FFNN}
+\begin{itemize}
+\item Stone-Weierstrass Theorem
+\end{itemize}
 \subsection{Approximation by RNN}
-\section{Training of RNN}
+
+\section{Training of RNN}\label{training_rnn}
+After getting data and designing the structure of network, the next important step is to train the network to model the data we have and also to predict next point in the data sequence. The main goal of training is to minimize the cost of objective function between expected outcome and real outcome. As a result, predicting data based on data we have.
 
 \subsection{Shared Weight Extended Backpropagation}
 
-After getting data and designing the structure of network, the next important step is to train the network to model the data we have and also to predict next point in the data sequence. Training algorithm of recurrent neural network, called back-propagation, is introduced from feed-forward neural network. For simplicity of this algorithm, we consider a simple feed-forward neural network defined as:
+Training algorithm of recurrent neural network, called back-propagation, is introduced from feed-forward neural network. For simplicity of this algorithm, we first consider a simple feed-forward neural network defined as:
 
 \begin{equation}
 y = \sigma(W\mathbf{x})
 \end{equation}
 
-where $W$ is a 3x4 matrix, $x$ is a vector of length 4 and $\sigma(\cdot)$ is an element-wise non-linear transformation.
+where $W$ is a 3x4 matrix, $\mathbf{x}$ is a vector of length 4 and $\sigma(\cdot)$ is an element-wise non-linear transformation.
 
-This network only contains two layers including input layer and output layer. Input layer has four input neurons and output layer has three output neurons. The data we have is list of input-output pairs.
+This network only contains two layers including input layer and output layer. Input layer has four input neurons and output layer has three output neurons. The data we have is a list of input-output pairs.
 
-Formally the backpropagation algorithm is defined as :
+Formally the backpropagation algorithm is defined as:
 
 \begin{algorithm}
  \KwData{List of input-output pairs }
- \KwResult{return the network}
+ \KwResult{return the network with parameters $W$}
  initialize network weights (often small random values)\;
  \While{training example ex}{
-        prediction = neural-net-output(network, ex)
+        prediction = neural-net-output(network, ex)\;
         actual = teacher-output(ex)\;
         compute error (prediction - actual) at the output units\;
         compute $\Delta W$ for all weights from hidden layer to input layer\;
@@ -255,6 +317,9 @@ Formally the backpropagation algorithm is defined as :
  }
  \caption{Backpropagation for two layers feed-forward neural network.}\label{backpropagation}
 \end{algorithm}
+
+The key element in 
+
 \subsection{Learning Methods}
 \subsection{Learning Long-Term Dependencies}
 
