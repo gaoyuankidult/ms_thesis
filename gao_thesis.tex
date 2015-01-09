@@ -318,10 +318,125 @@ Formally the backpropagation algorithm is defined as:
  \caption{Backpropagation for two layers feed-forward neural network.}\label{backpropagation}
 \end{algorithm}
 
-The key element in 
+The key element in this algorithm is the updating rule of the system. Based on 
 
-\subsection{Learning Methods}
+
 \subsection{Learning Long-Term Dependencies}
+
+Long-term dependences is important in control. Something happened at one particular time might has an influences at another time. If one system can identify these kinds of moment, it would be beneficial to to predict outcome influenced by environment. Although there are other algorithm like policy gradients and Optimal Ordered Problem Solver also can do this job for control, some specially designed RNN can remember long-term dependences under a flexible setting. 
+
+Transitional RNN has several problems. One famous problem is that it suffers exploding gradient and vanishing gradient problem as when RNN unfolds in time, it becomes neurally deep. The gradient becomes very small as we back-propagate it to first few layers.
+
+
+LSTM is normally treated as a hidden layer in a neural network system. It has input connections, three gate, outputs connection. A more illustrative example is shown in the following figure.
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.8\textwidth]{lstm}
+  \caption{This figure shows the basic strucuture of LSTM. In the middel, there is the memory cell which keeps the information of the data sequence. Around it, there are three gates, namely input gate, output gate and foget gate. Each of them gets information from the input and controls the updatting rule of memory cell. At the left side, there is input connection. On right side, there is output connection of this layer.}\label{series_prediction_rnn}
+\end{figure}
+
+The idea of LSTM is relatively straight forward. The memory cell stores information of the sequencial data and gates in this layer tries to when and how much this information shoud be updated.
+
+Reading Herbert Jaeger's paper "A tutorial on training recurrent neural networks, covering BPPT, RTRL, EKF and the "echo state network" approach ".
+
+The basic gradient descent approach (and its backpropagation algorithm implementation) is notorious for slow convergence, because the learning rate $\gamma$ must be typically chosen small to avoid instability. Many speed-up techniques are described in the literature, 
+
+* dynamic learning rate adaptation schemes. (complexity $O(TM)$, where T is number of epoch and M is number of connections)
+* use second-order gradient descent techniques, which exploit curvature of the gradient but have epoch complexity $O(TM^2)$. 
+
+local mimimum avoidance
+
+* local error minimum
+* adding noise
+* by repeating the entire learning from different initial weight settings
+* using task-specific prior information to start from an already plausible set of weights
+
+Starting from LSTM section
+
+* more complex unit is called a *memory cell*
+* there are many memory cells. We mark j'th cell as $c_j$.
+* $c_j$ gets input from $net_{c_j}$, $out_j$(output gate), $in_j$(input gate).
+* $in_j$'s activation at time t is denoted as $y^{in_j}(t)$ and we denote $out_j$'s activation at time t is denoted as $y^{out_j}(t)$
+
+\begin{equation}
+g^{out_j}(t) = f_{out_j}(net_{out_j}(t))
+\end{equation}
+
+
+where $f_{out_j}(\cdot (t))$ means activation function of out gate of memory cell $c_j$.
+
+similarly:
+
+
+\begin{equation}
+g^{in_j}(t) = f_{in_j}(net_{int_j}(t))
+\end{equation}
+
+
+where $f_{in_j}(\cdot (t))$ means activation function of out gate of memory cell $c_j$.
+
+and
+
+
+\begin{equation}
+net_{out_j}(t) = \sum_u w_{out_ju}y^u(t-1) \label{eq_netout}
+\end{equation}
+
+
+and
+
+
+\begin{equation}
+net_{in_j}(t) = \sum_u w_{in_ju}y^u(t-1) \label{eq_netin}
+\end{equation}
+
+
+We also have 
+
+
+\begin{equation}
+net_{c_j}(t) = \sum_u w_{c_ju}y^u(t-1) \label{eq_cell}
+\end{equation}
+
+
+In above $Equation~\ref{eq_netout}$, $equation~\ref{eq_netin}$, $equation~\ref{eq_cell}$, $w_{j}$ means the weight of connection from $j$'th node to $c_j$
+
+As a consequence, the $w_{out_ju}$ means for the outgate of $j'th$ memory cell, the wight of $u'th$ connection conneted to memory cell $c_j$ and it is similar to all of the connections.
+
+* All these dierent types of units may convey useful information about the current state of the net.
+* an input gate (output gate) may use inputs from other memory cells to decide whether to store(access) certain information in its memory cell.
+* There even may be recurrent self-connections like $w_{c_jc_j}$.
+
+We have considered three conponents of memory cell. Now we consider the output of the memory cell.
+The output of $c_j$ is defined as:
+
+
+\begin{equation}
+y^{c_j}(t) = y^{out_j}(t)h(s_{c_j}(t)) \label{eq_cell_out}
+\end{equation}
+
+
+Where $y^{c_j}(t)$ is the output of memory cell $c_j$ at time $t$. $y^{out_j}(t)$ is the output of outgate at time $t$. $h$ is a sigmoid function that scales the state of self-connected node which is center component of cell memory(we also call it as inner state of memory cell).
+
+The inner state of memory cell $c_j$ is defined as:
+
+
+\begin{equation}
+s_{c_j}(t) = s_{c_j}(t-1) + g(t-1)\cdot y^{in_j}(t-1)
+\end{equation}
+
+
+Where $g(t-1) = g(net_{cj}(t))$, $g(\cdot)$ is the activation function of new input. 
+
+* memory cell $c_j$ (the box) and its gate units $in_j$, $out_j$ builds *constant error carrousel*.(CEC)
+* Distributed output representations typically do require output gates. Not always are both gate types necessary, though one may be sucient. For instance, in Experiments 2a and 2b inSection 5, it will be possible to use input gates only.
+* outputgates can be benecial: they prevent the net's attempts at storing long time lag memories 
+
+
+Following is the picture of the structure of the system. 
+
+\subsection{Optimization Methods}
 
 \section{Improved Model-Building with RNN} 
 \subsection{Handling Data Noise} 
