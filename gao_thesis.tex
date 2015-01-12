@@ -4,6 +4,7 @@
 \usepackage{latexsym}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage[]{algorithm2e}
 
 % 
@@ -98,8 +99,6 @@ Based on the two trends we noticed, a natural path of research is to use deep le
 
 The researches done in J{\"u}rgen Schmidhuber's team provided several interesting structures that might be potentially useful for robot control. The name of one of these structures is called Long Short Term Memory (LSTM), which is one variation of Recurrent Neural Network(RNN). Several experiments like generating sequences\cite{Graves2013}, speech recognition\cite{Graves2013b} and neural turing machine \cite{Graves2014} show that it has ability of extracting and storing temporal information from data. As a consequence, this specific structure of RNN, with modification, can be applied for control problems of robots.
 
-The main contribution of author is to invent a novel optimization method for system combining with POMDP reinforcement learning and LSTM.
-
 There are two main focuses of this thesis. One main focus of this Thesis is to introduce general learning methods for robot control problem with an emphasize on deep learning method. this thesis tries to describe the transitional learning method as well as the emerging deep learning methods for robot control problem. Anther focus of this thesis is to introduce the main contribution of author in this field. With experiments, the author is able to show his own method can outperform the transitional machine learning methods of robot control problems.
 
 \chapter{Reinforcement Learning}
@@ -126,8 +125,110 @@ The problems of MDP is more clear to researchers as it is based on mathematical 
 \end{itemize}
 The data is normally high dimensional, continuous and erroneous data in robot systems. It is considered to be difficult questions to neglect these issues and it is also hard to specify the goal of system i.e. what robot needs to be at last.
 
-\section{Partially Observable Markov Decision Process}
-\section{Dynamic Programming}
+\subsection{Partially Observable Markov Decision Process}
+A partially observable Markov decision process (POMDP) is a generalization of a Markov decision process (MDP). A POMDP models an agent decision process in which it is assumed that the system dynamics are determined by an MDP, but the agent cannot directly observe the underlying state. Instead, it must maintain a probability distribution over the set of possible states, based on a set of observations and observation probabilities, and the underlying MDP.
+
+The POMDP framework is general enough to model a variety of real-world sequential decision processes. Applications include robot navigation problems, machine maintenance, and planning under uncertainty in general. The framework originated in the operations research community, and was later taken over by the artificial intelligence and automated planning communities.
+
+An exact solution to a POMDP yields the optimal action for each possible belief over the world states. The optimal action maximizes (or minimizes) the expected reward (or cost) of the agent over a possibly infinite horizon. The sequence of optimal actions is known as the optimal policy of the agent for interacting with its environment.
+\todo{This introduction needs to be changed latter}
+
+More precisely, the POMDP is a discrete time stochastic control process. We may consider a robot in a state $s_t$ of discrete space $\mathcal{S}$ where t means iteration number. Now the robot can take an action a in all possible action set A resulting in a state $s_{t+1}$. We can denote this process as transition function Ta($s_t$,$s_{t+1}$) meaning the probability of moving from state $s_t$ to state $s_{t+1}$ through action $a$. Then after the robot executes action a and results in st+1, it will receive a reward according to reward function denoted as $R_a(s_t,s_{t+1}$).
+
+Formally, we define MDP as follows:
+
+A Markov decision process is a 4-tuple denoted as ($S$,$A$,$T\cdot(\cdot,\cdot)$,$R\cdot(\cdot,\cdot)$)
+In this tuple
+\begin{itemize}
+\item	$\mathcal{S}$ is a finite set of states. It describes all possible states of the space.
+\item	$\mathcal{A}$ is a finite set of actions. It describes all possible states that robot can take.
+\item	$T\cdot(\cdot,\cdot)$ is a function that takes three arguments. e.g $T_{a_t}(s_t,s_{t+1})$ means probability of transferring from $s_t$ to $s_{t+1}$ with action $a_t$.
+\item	$R\cdot(\cdot,\cdot)$ is also a function that takes three arguments. e.g $R_{a_t}(s_t,s_{t+1})$ means reward of transferring from $s_t$ to $s_{t+1}$ with action $a_t$.
+\end{itemize}
+
+
+The main problem of reinforcement learning is to find a policy function $\pi(s) : s \rightarrow a$ to map every state s with action $a$ so that a cumulative reward $R$ is maximized, where $0 \leq \gamma \leq 1$ is a discount factor. As the discount factor generalizes discounted situation and undiscounted situation, it broadens our theory.
+
+\subsection{Markov Decision Process with Continuous States}
+Now considering the environment of robots, we need some modifications to original POMDP. First we still assume the process to be discrete time but we consider continuous space $S \in R^n$ and continuous action set $A \in R^m$ where $n$ is dimension of space and $m$ is dimension of actions. For initial state $s_0$, we assign a distribution $p(s_0)$ where $s_0 \in \mathcal{S}$. At any state $s_t \in \mathcal{S}$, we have a continuous policy $\pi(a_t|s_t) = p(a_t|s_t,\theta)$ parametrized by $\theta$. Transfer function now also becomes continuous. It is corresponded to a probability distribution $T_{a_t}(s_t,s_{t+1}) = p(s_{t+1}|s_t,a_t)$. After this step is completed, the process will general a reward function $R_{a_t}(s_t,s_{t+1}$) which is defined as $R\cdot(\cdot,\cdot) : S  \times S \times A \rightarrow [0,\inf)$.
+After these modifications, we can now formalize continuous MDP.
+
+Continuous Markov Decision Process With Infinite States is a modified version of ordinary POMDP. Mathematically, it is defined as a 5-tuple ($P_{init},S,A,T\cdot(\cdot,\cdot),R\cdot(\cdot,\cdot))$ where in this tuple
+\begin{itemize}
+\item	$P_{init}$ is a initial distribution of the states.
+\item	$S = Rn$ is a infinite set of states. It describes all possible states of the space.
+\item	$A = Rm$ is a infinite set of actions. It describes all possible actions of the agent.
+\item	$T\cdot(\cdot,\cdot)$ is a function that takes three arguments. e.g $Tat(st,st+1)$ means probability of transferring from st to st+1 with action at.
+\item	$R\cdot(\cdot,\cdot)$ is a function that takes three arguments. e.g $Rat(st,st+1)$ means reward of transferring from st to st+1 with action at.
+\end{itemize}
+
+With this continuous setting, we have objective function defined as follows:
+\begin{figure}[h!]
+
+  \centering
+    \includegraphics[width=0.5\textwidth]{objective_func}
+\end{figure}
+
+Where $d^\pi(\vec{s})$ refers to $1 - \gamma^tp(\vec{s} = \vec{s_t})$, $0 \geq \gamma \geq 1$ refers to discount factor and $\pi(\vec{a}|\vec{s})$ is parametrized by $\theta$.
+\subsection{Value Functions}
+We define two functions to further describes this process. First function is statevalue
+function denoted as $V^\pi(\vec{x})$. This means expected value of an agent that follows
+an policy of $\pi$ with initial value $\vec{s}$. It characterizes the rewards of following a policy $\pi$. Mathematically, it is defined as:
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.4\textwidth]{value1}
+\end{figure}
+where $\tau$ stands for trajectory of agent.
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.5\textwidth]{value2}
+\end{figure}
+State-value function only depends on the first state of agent. After that the system
+is governed by policy $\pi$. Another value function we need to defines is state-action
+value function.
+\subsection{Natural Actor Critic Model}
+The first thing of demonstrating Natural Actor-Critic is to explain the term. Natural
+stands for gradient framework called natural gradient while Actor-Critic means an
+iterative method of evaluating and improving objective function.
+
+Robot learning is based on Markov Decision Process with discrete time and continuous
+states. The objective function is defined in section Markov Decision Process
+by Formula 1. A normal gradient of objective function is defined as :
+
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.5\textwidth]{actor_critic}
+\end{figure}
+
+Please note $\theta$ is related to $\pi(\vec{a}|\vec{s})$ as it is defined by $\pi(\vec{a}|\vec{s}|\theta)$.
+
+However, here we need to redefine this gradient as vanilla gradient. Pointed out
+and nicely presented by Shun-ichi Amari, another kind of gradient called natural
+gradient is more efficient in many machine learning application than vanilla gradient.
+Mathematically we define following formula as natural gradient:
+\begin{equation}
+\nabla J(\theta) = G^{-1}\nabla J(\theta)
+\end{equation}
+
+Where G is fisher information metrix[].
+Fisher information matrix is a matrix defined on Romanian space. This metric
+is interesting on several aspects. One of them is that it shows true direction of
+a function's steepest direction and on the contrary, the vanilla gradient does not.
+The long proof of previous statement is based by showing natural gradient descent
+method is fisher efficient. We recommend a further reading on Amari's paper[].
+
+If we rewrite Formula 5 as:
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.7\textwidth]{gradient}
+\end{figure}
+
+Where $Q^\pi(a, s)$ is state-action value function and $b^\pi(x)$ is kind of baseline. Two
+papers [] [] demonstrate why $R(s, a)$ is replace by $Q^\pi(a, s) - b^\pi(x)$. It can be
+shown that $R(s, a)$ is further approximated as $(\nabla_\theta \log\pi(a,s)^\pi(s))^T \vec{w}$ parametrized by $\vec{w}$.
 \section{Reinforcement Learning Methods}
 \subsection{Temporal Difference Learning}
 \subsection{Q-Learning}
@@ -336,21 +437,19 @@ LSTM is normally treated as a hidden layer in a neural network system. It has in
   \caption{This figure shows the basic strucuture of LSTM. In the middel, there is the memory cell which keeps the information of the data sequence. Around it, there are three gates, namely input gate, output gate and foget gate. Each of them gets information from the input and controls the updatting rule of memory cell. At the left side, there is input connection. On right side, there is output connection of this layer.}\label{series_prediction_rnn}
 \end{figure}
 
-The idea of LSTM is relatively straight forward. The memory cell stores information of the sequencial data and gates in this layer tries to when and how much this information shoud be updated.
-
-Reading Herbert Jaeger's paper "A tutorial on training recurrent neural networks, covering BPPT, RTRL, EKF and the "echo state network" approach ".
+The idea of LSTM is relatively straight forward. The memory cell stores information of the sequential data and gates in this layer tries to when and how much this information should be updated.
 
 The basic gradient descent approach (and its backpropagation algorithm implementation) is notorious for slow convergence, because the learning rate $\gamma$ must be typically chosen small to avoid instability. Many speed-up techniques are described in the literature, 
 
-* dynamic learning rate adaptation schemes. (complexity $O(TM)$, where T is number of epoch and M is number of connections)
-* use second-order gradient descent techniques, which exploit curvature of the gradient but have epoch complexity $O(TM^2)$. 
+\begin{itemize}
+\item dynamic learning rate adaptation schemes. (complexity $O(TM)$, where T is number of epoch and M is number of connections)
+\item use second-order gradient descent techniques, which exploit curvature of the gradient but have epoch complexity $O(TM^2)$. 
+\item local error minimum
+\item adding noise
+\item by repeating the entire learning from different initial weight settings
+\item using task-specific prior information to start from an already plausible set of weights
+\end{itemize}
 
-local mimimum avoidance
-
-* local error minimum
-* adding noise
-* by repeating the entire learning from different initial weight settings
-* using task-specific prior information to start from an already plausible set of weights
 
 Starting from LSTM section
 
