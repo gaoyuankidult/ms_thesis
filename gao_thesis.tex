@@ -5,6 +5,22 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\tikzset{basic/.style={draw,fill=blue!50!green!20,
+                       text badly centered,minimum width=3em}}
+\tikzset{input/.style={basic,circle}}
+\tikzset{weights/.style={basic,rectangle,minimum width=2em}}
+\tikzset{functions/.style={basic,circle,fill=blue!50!green!20}}
+\def\layersep{2.5cm}
+
+
+\newcommand{\addsymbol}{\draw[thick] (0.5em,0.5em) -- (0,0.5em) -- 
+                        (0,-0.5em) --  (-0.5em,-0.5em)
+                        (0em,0.75em) -- (0em,-0.75em)
+                        (0.75em,0em) -- (-0.75em,0em);}
+                        
+                        
 \usepackage[]{algorithm2e}
 
 % 
@@ -245,12 +261,31 @@ shown that $R(s, a)$ is further approximated as $(\nabla_\theta \log\pi(a,s)^\pi
 \chapter{Recurrent Neural Networks}
 Recurrent Neural Network(RNN) is a special structure of neural network that has recurrent connections. In the following sections of this chapter, we are going to discuss the details of this model.
 \section{Feedforward Neural Networks}
-In year 1957, the simplest structure of neural network called Perceptron was introduce by Frank Rosenblatt in Conell's Aeronautical Laboratory. This model consists only one cell and multiple connections. Figure~\ref{proceptron} shows the basic structure of proceptron.
+In year 1957, the simplest structure of neural network called perceptron was introduced by Frank Rosenblatt in Conell's Aeronautical Laboratory. This model consists only one cell and multiple connections. Figure~\ref{perceptron} shows the basic structure of perceptron.
 \begin{figure}[h!]
-
   \centering
-    \includegraphics[width=0.5\textwidth]{proceptron}
-  \caption{This picture shows the structure of Proceptron, the i'th input is shown as $X_i$ and corresponded weights are denoted as $w_i$. There is also a bias term name $b$ connected to cell, which, with a addition function, generates the output.}\label{proceptron}
+	\begin{tikzpicture}[scale=1.2, shorten >=1pt,->,draw=black!80, node distance=\layersep]
+    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=17pt,inner sep=0pt]
+    \tikzstyle{annot} = [text width=4em, text centered]
+            
+    
+    \node[neuron] (sum) at (4,0) {$\sum$};
+    \foreach \h [count=\hi ] in {$x_n$,$x_2$,$x_1$,$1$}{%
+          \node[neuron] (f\hi) at (2,\hi*1cm-2.5 cm) {\h};
+          \draw[->] (f\hi) -- (sum);
+		}
+
+    \node[neuron] (tanh) at (6,0) {};
+       \begin{scope}[xshift=6cm,scale=.75]
+         \node [] {$tanh$};
+       \end{scope}
+    \draw[->] (sum) -- (tanh);
+    \draw[->] (tanh) -- ++(1,0);
+    % Labels
+    \node[above=1cm]  at (f4) {inputs};
+    \end{tikzpicture}
+  \caption{This picture shows the structure of perceptron, the i'th input is shown as $x_i$ and corresponded weights are denoted as $w_i$. There is also a bias term name $b$ connected to cell, which, with a addition function, generates the output.}\label{proceptron}
 \end{figure}
 
 The formula of representing input and output is defined as:
@@ -267,12 +302,53 @@ y = \hat{\mathbf{w}}\hat{\cdot\mathbf{x}}
 
 where $ \hat{\mathbf{w}} = [\mathbf{w};b] $ and $\hat{\mathbf{x}} = [\mathbf{x};1]$.
 
-This simple structure was considered promising initially from several points of view. But after further investigation, the Proceptron was proven that it can not classify many non-linear classes of patterns. However, its discovery leads to a field of research called neural networks in area artificial intelligence. As a consequence, since 1957, people started trying different methods for modifying this model to adapt to different problems. One important modification is to add a non-linear transformation function to the system i.e. after getting $y$ from Formula\ref{pronceptron_formula}, we use a function like tanh to get a new $\hat{y}$ to ensure the output is restricted in a range. Anther important modification of the system is to stack many proceptrons together to build a larger and complex model for the classification purpose. This kind of networks is normally called feed-forward neural networks as information send to this system is propagated only from lower layer to higher layer. Figure~\ref{feedforward_nn} shows the structure of feed-forward neural network system.
+This simple structure was considered promising initially from several points of view. But after further investigation, the perceptron was proven that it can not classify many non-linear classes of patterns. However, its discovery leads to a field of research called neural networks in area artificial intelligence. As a consequence, since 1957, people started trying different methods for modifying this model to adapt to different problems. One important modification is to add a non-linear transformation function to the system i.e. after getting $y$ from Formula\ref{pernceptron_formula}, we use a function like tanh to get a new $\hat{y}$ to ensure the output is restricted in a range. Anther important modification of the system is to stack many perceptrons together to build a large and complex model for the classification purpose. This kind of networks is normally called Feed-forward Neural Networks(FFNN) as information send to this system is propagated only from lower layer to higher layer. Figure~\ref{feedforward_nn} shows the structure of FFNN system.
+
+
 
 \begin{figure}[h!]
   \centering
-    \includegraphics[width=0.7\textwidth]{feedforward_nn}
-  \caption{This picture shows the structure of feedforward neural network. There are three layers in this network the input layer, hidden layer and the output layer. For connections from input layer to hidden layer, the i'th input is shown as $x_i$ and corresponded weights of hidden neuron $j$ is denoted as $W_{ij}$.}\label{feedforward_nn}
+
+	\begin{tikzpicture}[scale=1.2, shorten >=1pt,->,draw=black!80, node distance=\layersep]
+    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=17pt,inner sep=0pt]
+    \tikzstyle{annot} = [text width=4em, text centered]
+
+    % Draw the input layer nodes
+    \foreach \name / \y in {1/1,2/2,$d$/4}
+    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+        \node[neuron] (I-\name) at (0,-\y) {\name};
+    \node (I-3) at (0,-3) {\vdots};
+
+    % Draw the hidden layer nodes
+    \foreach \name / \y in {1/1,2/2,$K$/5}
+        \path[yshift=0.5cm]
+            node[neuron] (H-\name) at (\layersep,-\y cm) {\name};
+    \node (H-3) at (\layersep,-3) {\vdots};
+
+    \foreach \name / \y in {1/1.5,2/2.5,$M$/4.5}
+        \path[yshift=0.5cm]
+            node[neuron] (O-\name) at (2*\layersep,-\y cm) {\name};
+    \node (O-3) at (2*\layersep,-3) {\vdots};
+
+    % Connect every node in the input layer with every node in the
+    % hidden layer.
+    \foreach \source in {1,2,$d$}
+        \foreach \dest in {1,2,$K$}
+            \path (I-\source) edge (H-\dest);
+    
+   
+    % Connect every node in the hidden layer with the output layer
+    \foreach \source in {1,2,$K$}
+        \foreach \dest in {1,2,$M$}
+            \path (H-\source) edge (O-\dest);
+
+    % Annotate the layers
+    \node[annot,above of=H-1, node distance=1cm] (hl) {Hidden layer};
+    \node[annot,left of=hl] {Input layer};
+    \node[annot,right of=hl] {Output layer};
+	\end{tikzpicture}
+  \caption{This picture shows the structure of Feed-forward Neural Network. There are three layers in this network, namely the input layer, hidden layer and the output layer. For connections from input layer to hidden layer, the i'th input is shown as $x_i$ and corresponded weights of hidden neuron $j$ is denoted as $W_{ij}$.}\label{feedforward_nn}
 \end{figure}
 
 The formula describing the each layer is then defined as:
@@ -287,7 +363,46 @@ The Recurrent Neural Networks(RNN) contain at least one neuron that has at least
 
 \begin{figure}[h!]
   \centering
-    \includegraphics[width=0.5\textwidth]{recurrent_nn}
+  \begin{tikzpicture}[scale=1.2, shorten >=1pt,->,draw=black!80, node distance=\layersep]
+    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=17pt,inner sep=0pt]
+    \tikzstyle{annot} = [text width=4em, text centered]
+
+    % Draw the input layer nodes
+    \foreach \name / \y in {1/1,2/2,$d$/4}
+    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+        \node[neuron] (I-\name) at (0,-\y) {\name};
+    \node (I-3) at (0,-3) {\vdots};
+
+    % Draw the hidden layer nodes
+    \foreach \name / \y in {1/1,2/2,$K$/5}
+        \path[yshift=0.5cm]
+            node[neuron] (H-\name) at (\layersep,-\y cm) {\name};
+
+    \node (H-3) at (\layersep,-3) {\vdots};
+
+    \foreach \name / \y in {1/1.5,2/2.5,$M$/4.5}
+        \path[yshift=0.5cm]
+            node[neuron] (O-\name) at (2*\layersep,-\y cm) {\name};
+    \node (O-3) at (2*\layersep,-3) {\vdots};
+
+    % Connect every node in the input layer with every node in the
+    % hidden layer.
+    \foreach \source in {1,2,$d$}
+        \foreach \dest in {1,2,$K$}
+            \path (I-\source) edge (H-\dest);
+    
+   
+    % Connect every node in the hidden layer with the output layer
+    \foreach \source in {1,2,$K$}
+        \foreach \dest in {1,2,$M$}
+            \path (H-\source) edge (O-\dest);
+    
+    
+
+    ($K$) edge [loop above] node {PrRd/-, PrWr/-} ($K$)
+;
+\end{tikzpicture}
   \caption{This picture shows the structure of recurrent neural network. There are two layers in this networ namely input layer and hidden layer, the first layer contains notes connected to the input data. The second layer stores information and also forwards information to next layer. The cell in the hidden layer has a connection to itself which means the information stored in the cell at time $t-1$ also influences the information stored in the cell at time $t$}\label{feedforward_nn}
 \end{figure}
 
@@ -295,7 +410,7 @@ The Recurrent Neural Networks(RNN) contain at least one neuron that has at least
 When considering the structure of neural network, people normally application Finite Unfolding in Time for RNN. It means to introduce another dimension for RNN. In this way, the recurrent connection can be dealt with more easily.  In the following section, we will use a simple example for explaining this idea. The model we are going to use contains one input neuron, one hidden neuron and one output neuron. See Figure~\ref{simple_rnn} for reference.
 \begin{figure}[h!]
   \centering
-    \includegraphics[width=0.2\textwidth]{simple_rnn}
+
   \caption{This picture shows the structure of a simple RNN. It contains three layers i.e. one input layer, one hidden layer and one output layer.}\label{simple_rnn}
 \end{figure}
 \change{This picture should be remade using tikz later}
