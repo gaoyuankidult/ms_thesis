@@ -37,7 +37,7 @@
 %
 
 
-\title{Deep Learning Algorithms \\ for Control}
+\title{Deep Recurrent Neural Network for Robot Reinforcement Learning \\}
 \author{Yuan Gao}
 \authorcontact{gaoyuankidult@gmail.com\par
   http://www.cs.helsinki.fi/u/yuangao/}
@@ -81,26 +81,11 @@
 \maketitle
 \listoftodos
 \begin{abstract}
-Controlling a complicated mechanical system to perform a certain task, for example, making robot to dance, is a traditional problem studied in the area of control theory. Many successful applications like Google BigDog\cite{Raibert2008} and Google Self-driving car \todo{citation of self driving car} have been made in accordance to the new theories found in this field.
 
-However more evidences show that in-cooperating with machine learning techniques in robotics can enable people to get rid of tedious engineering works of adjusting environmental parameters\todo{citation}. Many researchers like Jan Peters\todo{citation}, Sethu Vijayakumar, Stefan Schaal, Andrew Ng and Sebastian Thrun are the early explorers in this field. Based on the Partial Observable Markov Decision Process(POMDP) reinforcement learning, they contributed theory and practical implementation of several bench marks in this field.
-
-Recently, one sub-field of machine learning called deep learning gained a lot of attention as a method attempting to model high-level abstractions by using model architectures composed by multiple non-linear layers. (for example \cite{Krizhevsky2012}). Several architectures of deep learning networks like deep belief network \cite{Hinton2006}, deep Boltzman machine \cite{Salakhutdinov2009}, convolutional neural network \cite{Krizhevsky2012} and deep de-noising auto-encoder \cite{Vincent2010} have shown its advantages in specific areas. Especially, convolutional neural network, which was invented by Krizhevsky, outperformed all the traditional feature-based machine learning techniques in ImageNet competition.
-
-The main works of deep learning is more related to perception which deals with the problems like Sensor Fusion{OConnor2013}, Nature Language Processing(NLP)\cite{Cho2014} and Object Recognition\cite{Lenz2013}\cite{Hoffman2014}. Although considered briefly in J{\"u}rgen Schmidhuber's team\cite{Mayer2006}, the other area of robotics, namely control, remains more-or-less unexplored in the realm of deep learning.
-
-There are two reasons about why these areas remain unexplored. The first reason is that deep learning method emphasizes on data driving techniques in which we need a lot of data to enable system to find important features whilst we don't have any dataset that can offer large amount of data. The second reason is that applying deep learning techniques requires introducing real robot platform to test the algorithm. This process is hard for researchers as they normally don't have resources for this complicated task.
-
-The main focus of this thesis is to introduce general learning methods for robot control problem with an emphasize on deep learning method. As a consequence, this thesis tries to describe the transitional learning method as well as the emerging deep learning methods for robot control problem.
-
-Ultimately, the author hope the readers of this thesis, even without much background in machine learning or robotics can understand the gists of solution for robot learning problems. \improvement{All paragraphs abstract needs to be rechecked.}
 \end{abstract}
 
 \begin{acknowledgements}
-  This is a sample sentence that should look like normal text, and
-  this is another. This is a sample sentence that should look like
-  normal text, and this is another. This is a sample sentence that
-  should look like normal text, and this is another.
+
 \end{acknowledgements}
 
 \tableofcontents
@@ -261,8 +246,9 @@ shown that $R(s, a)$ is further approximated as $(\nabla_\theta \log\pi(a,s)^\pi
 \subsection{Continuous State and Action Spaces}
 \subsection{Data-Efficiency}
 
-\chapter{Recurrent Neural Networks}
+\chapter{Deep Recurrent Neural Networks}
 Recurrent Neural Network(RNN) is a special structure of neural network that has recurrent connections. In the following sections of this chapter, we are going to discuss the details of this model.
+\section{Deep Learning and its Recent Advances}
 \section{Feedforward Neural Networks}
 In year 1957, the simplest structure of neural network called perceptron was introduced by Frank Rosenblatt in Conell's Aeronautical Laboratory. This model consists only one cell and multiple connections. Figure~\ref{perceptron} shows the basic structure of perceptron.
 \begin{figure}[h!]
@@ -892,6 +878,8 @@ Where $g(t-1) = g(net_{cj}(t))$, $g(\cdot)$ is the activation function of new in
 Following is the picture of the structure of the system. 
 
 \subsection{Optimization Methods}
+\subsubsection{Nesterov Momentum}
+\subsubsection{Dropout}
 
 \section{Improved Model-Building with RNN} 
 \subsection{Handling Data Noise} 
@@ -902,31 +890,31 @@ Following is the picture of the structure of the system.
 \section{Neural Actor-Critic(idasi's group)}
 \section{LSTM with POMDP objective function}
 \section{PhD thesis, by Remi Coulom ?}
-
-\section{DQN?}
-\section{Hybrid Approch(RL with RNN)}
+\section{Deep Q Network}
+\section{Hybrid Approch}
 \section{Recurrent Models of Visual Attention?}       
 \section{stanley gecco021 2002?}
+
+\chapter{Proposed Recurrent Neural Network Structure}
+\section{LSTM as Actor-Critic Approach}
+\section{LSTM as Model-Critic Approach}
+\section{Mikolov's Context Layer}
+
 \chapter{Experiment}
-\section{RNN(LSTM) Implementation}
+\section{System Implementation}
 \section{Cart-pole Balancing Simulator}
-\section{Learning a task of stacking wooden blocks}
+\section{Stacking Wooden Blocks}
+\section{Cart-pole balancing Using Baxter Robot}
 
-This is a sample sentence that should look like normal text, and this
-is another. This is a sample sentence that should look like normal
-text, and this is another. This is a sample sentence that should look
-like normal text, and this is another.
+\chapter{Future Research}
+\section{Combining Control with Vision Using Deep Neural Network}
+\begin{itemize}
+\item One may use unified neural network model for vision and control together.
+\item Deep neural network archived state-of-art or close to state-of-art result in video recognition tasks.(also in )
+\end{itemize}
+\section{Transfer Learning for Learning Repetitive Behaviour Using Deep Neural Network}
 
 
-\begin{theorem}
-This is a sample sentence that should look like normal text,
-and this is another:
-\[ y = x+3 \]
-\end{theorem}
-
-\begin{proof}
-This is a sample sentence.
-\end{proof}
 
 \bibliography{library}
 \bibliographystyle{siam}
