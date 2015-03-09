@@ -7,6 +7,9 @@
 \usepackage{amssymb}
 \usepackage{tikz}
 \usetikzlibrary{arrows}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{fit}					% fitting shapes to coordinates
+\usetikzlibrary{backgrounds}
 \tikzset{basic/.style={draw,fill=blue!50!green!20,
                        text badly centered,minimum width=3em}}
 \tikzset{input/.style={basic,circle}}
@@ -392,16 +395,15 @@ The Recurrent Neural Networks(RNN) contain at least one neuron that has at least
         \foreach \dest in {1,2,$K$}
             \path (I-\source) edge (H-\dest);
     
-   
+    % Connect hidden layer to hidden layer
+    \foreach \source in {1,2,$K$}
+		\path (H-\source) edge [loop above] (H-\source);
+    
+    
     % Connect every node in the hidden layer with the output layer
     \foreach \source in {1,2,$K$}
         \foreach \dest in {1,2,$M$}
             \path (H-\source) edge (O-\dest);
-    
-    
-
-    ($K$) edge [loop above] node {PrRd/-, PrWr/-} ($K$)
-;
 \end{tikzpicture}
   \caption{This picture shows the structure of recurrent neural network. There are two layers in this networ namely input layer and hidden layer, the first layer contains notes connected to the input data. The second layer stores information and also forwards information to next layer. The cell in the hidden layer has a connection to itself which means the information stored in the cell at time $t-1$ also influences the information stored in the cell at time $t$}\label{feedforward_nn}
 \end{figure}
@@ -421,8 +423,92 @@ The basics idea of unfolding RNN in time is to copy RNN several times and connec
 
 \begin{figure}[h!]
   \centering
-    \includegraphics[width=0.5\textwidth]{unfolded_simple_rnn}
-  \caption{This picture contains model that unfolds a simple RNN described in Figure\ref{simple_rnn} in three time steps. }\label{unfolded_simple_rnn}
+% The input, state transition, and measurement matrices
+% are represented by gray squares.
+% They have a smaller minimal size for aesthetic reasons.
+\tikzstyle{matrx}=[rectangle,
+                                    thick,
+                                    minimum size=1cm,
+                                    draw=gray!80,
+                                    fill=gray!20]
+
+
+% Everything is drawn on underlying gray rectangles with
+% rounded corners.
+\tikzstyle{background}=[rectangle,
+                                                fill=gray!10,
+                                                inner sep=0.5cm,
+                                                rounded corners=5mm]
+
+\begin{tikzpicture}[>=latex,text height=1.5ex,text depth=0.25ex]
+    % "text height" and "text depth" are required to vertically
+    % align the labels with and without indices.
+  
+  % The various elements are conveniently placed using a matrix:
+  \matrix[row sep=0.5cm,column sep=0.5cm] {
+    % First line: Control input
+    		&
+        \node (x_t-1) [matrx]{$\mathbf{x}_{t-1}$}; &
+        &
+        \node (x_t)   [matrx]{$\mathbf{x}_t$};     &
+        &
+        \node (x_t+1) [matrx]{$\mathbf{x}_{t+1}$}; &
+
+        \\
+        % Third line: State & state transition matrix
+		\\
+		&
+        \node (s_t-1) [matrx] {$\mathbf{s}_{t-1}$}; &
+		&
+        \node (s_t)   [matrx] {$\mathbf{s}_t$};     &
+		&
+        \node (s_t+1) [matrx] {$\mathbf{s}_{t+1}$}; &
+		\\
+		\\
+
+        % Fifth line: Measurement
+        &
+        \node (o_t-1) [matrx] {$\mathbf{o}_{t-1}$}; &
+        &
+        \node (o_t)   [matrx] {$\mathbf{o}_t$};     &
+        &
+        \node (o_t+1) [matrx] {$\mathbf{o}_{t+1}$}; &
+        \\
+    };
+    
+    % The diagram elements are now connected through arrows:
+    \path[->]
+    	    (x_t-1) edge[thick] (s_t-1)
+        (x_t) edge[thick] (s_t)
+        (x_t+1) edge[thick] (s_t+1)
+        	        	
+        (s_t-1) edge[thick] (s_t)
+        (s_t) edge[thick] (s_t+1)  
+        
+    	    (s_t-1) edge[thick] (o_t-1)
+        (s_t) edge[thick] (o_t)
+        (s_t+1) edge[thick] (o_t+1)
+        ;
+    
+    % Now that the diagram has been drawn, background rectangles
+    % can be fitted to its elements. This requires the TikZ
+    % libraries "fit" and "background".
+    % Control input and measurement are labeled. These labels have
+    % not been translated to English as "Measurement" instead of
+    % "Messung" would not look good due to it being too long a word.
+    \begin{pgfonlayer}{background}
+        \node [background,
+                    fit=(x_t-1) (x_t+1),
+                    label=left:Inputs:] {};
+        \node [background,
+                    fit=(s_t-1) (s_t+1),
+                    label=left:Hidden States:] {};
+        \node [background,
+                    fit=(o_t-1) (o_t+1),
+                    label=left:Outputs:] {};
+    \end{pgfonlayer}
+\end{tikzpicture}
+  \caption{This picture contains model that unfolds a simple RNN described in Figure\ref{simple_rnn} in three time steps. In this figure, $x_t$ represents input layer at time $t$, $s_t$ representes the hiddent states at time $t$ and $o_t$ representes output layer at time $t$.}\label{unfolded_simple_rnn}
 \end{figure}
 \change{This picture should be remade using tikz later}
 
@@ -439,8 +525,82 @@ Considering that we only one time series, the task for RNN is to predict next da
 
 \begin{figure}[h!]
   \centering
-    \includegraphics[width=0.6\textwidth]{overshot_rnn}
-  \caption{This picture shows structure of predicting time series based on previous data.}\label{overshot_rnn}
+\tikzstyle{matrx}=[rectangle,
+                                    thick,
+                                    minimum size=1cm,
+                                    draw=gray!80,
+                                    fill=gray!20]
+
+
+% Everything is drawn on underlying gray rectangles with
+% rounded corners.
+\tikzstyle{background}=[rectangle,
+                                                fill=gray!10,
+                                                inner sep=0.5cm,
+                                                rounded corners=5mm]
+\begin{tikzpicture}[>=latex,text height=1.5ex,text depth=0.25ex]
+    % "text height" and "text depth" are required to vertically
+    % align the labels with and without indices.
+  
+  % The various elements are conveniently placed using a matrix:
+  \matrix[row sep=0.5cm,column sep=0.5cm] {
+    % First line: Control input
+		\node (x_t-2) [matrx]{$\mathbf{x}_{t-2}$}; &
+    		&
+        \node (x_t-1) [matrx]{$\mathbf{x}_{t-1}$}; &
+        &
+        \node (x_t)   [matrx]{$\mathbf{x}_t$};     &
+        &
+        & &
+
+        \\
+        % Third line: State & state transition matrix
+		\\
+		\node (s_t-2) [matrx]{$\mathbf{s}_{t-2}$}; &
+		&
+        \node (s_t-1) [matrx] {$\mathbf{s}_{t-1}$}; &
+		&
+        \node (s_t)   [matrx] {$\mathbf{s}_t$};     &
+		&
+        \node (s_t+1) [matrx] {$\mathbf{s}_{t+1}$}; &
+		\\
+		\\
+		
+        \node (hat_x_t-1) [matrx]{$\mathbf{\hat{x}}_{t-1}$}; &
+        &
+        \node (hat_x_t) [matrx] {$\mathbf{\hat{x}}_{t}$}; &
+        &
+        \node (hat_x_t+1)   [matrx] {$\mathbf{\hat{x}}_{t+1}$};     &
+        &
+        \node (hat_x_t+2) [matrx] {$\mathbf{\hat{x}}_{t+2}$}; &
+        \\
+    };
+    
+    % The diagram elements are now connected through arrows:
+    \path[->]
+    		(x_t-2) edge[thick] (s_t-2)
+    	    (x_t-1) edge[thick] (s_t-1)
+        (x_t) edge[thick] (s_t)
+        	  
+	    (s_t-2) edge[thick] (s_t-1)        	        	
+        (s_t-1) edge[thick] (s_t)
+        (s_t) edge[thick] (s_t+1)  
+
+		(s_t-2) edge[thick] (hat_x_t-1)       
+    	    (s_t-1) edge[thick] (hat_x_t)
+        (s_t) edge[thick] (hat_x_t+1)
+        (s_t+1) edge[thick] (hat_x_t+2)
+        ;
+    
+    % Now that the diagram has been drawn, background rectangles
+    % can be fitted to its elements. This requires the TikZ
+    % libraries "fit" and "background".
+    % Control input and measurement are labeled. These labels have
+    % not been translated to English as "Measurement" instead of
+    % "Messung" would not look good due to it being too long a word.
+
+\end{tikzpicture}
+  \caption{This figure isllustrates in a predictive model made by RNN, how does it generate $\hat{x_t}$ based on previous data. After using all training example, the model lacks input data. Then the neural caluclation of hidden defined as $\mathbf{s_{t}} = \sigma(W\mathbf{x_t} + B\mathbf{s_{t-1}}))$ becomes $\mathbf{s_{t}} = \sigma(B\mathbf{s_{t-1}})$}\label{overshot_rnn}
 \end{figure}
 
 Last training step takes input $\mathbf{x}(t-2)$, $\mathbf{x}(t-1)$, $\mathbf{x}(t)$ as input and produce $\mathbf{x}(t-1)$, $\mathbf{x}(t)$, $\mathbf{x}(t+1)$ as outputs. However it is very difficult to predict value at time t+2 as we don't have information of $\mathbf{x}(t+1)$. According to the Fomula~\ref{internal_state_fomula}, the input is set to $\mathbf{0}\quad \forall t > T$ then we get:
@@ -449,14 +609,95 @@ Last training step takes input $\mathbf{x}(t-2)$, $\mathbf{x}(t-1)$, $\mathbf{x}
 \mathbf{s_{t}} = \sigma(B\mathbf{s_{t-1}})\label{overshot_formula}
 \end{equation}
 
-As a consequence, the output defined as $\mathbf{x_{t+1}} = A\mathbf{s_{t}}$ is very inconsistent for predicting next value. This phenomenon is called overshoting.
+As a consequence, the output defined as $\mathbf{x_{t+1}} = A\mathbf{s_{t}}$ becomes the prediction for next value. This phenomenon is called overshooting.
 \subsection{Dynamical Consistency}
 
 Dynamical consistency is kept by introducing the output of last time step to input of current time step. Figure~\ref{series_prediction_rnn} illustrates how is it done through the modification of structure.
 
 \begin{figure}[h!]
   \centering
-    \includegraphics[width=0.6\textwidth]{series_prediction_rnn}
+  \tikzstyle{matrx}=[rectangle,
+                                    thick,
+                                    minimum size=1cm,
+                                    draw=gray!80,
+                                    fill=gray!20]
+
+\tikzstyle{dashed_matrx}=[rectangle,
+                                    thick,
+                                    dashed,
+                                    minimum size=1cm,
+                                    draw=gray!80,
+                                    fill=gray!20]
+
+\tikzstyle{background}=[rectangle,
+                                                fill=gray!10,
+                                                inner sep=0.5cm,
+                                                rounded corners=5mm]
+\begin{tikzpicture}[>=latex,text height=1.5ex,text depth=0.25ex]
+    % "text height" and "text depth" are required to vertically
+    % align the labels with and without indices.
+  
+  % The various elements are conveniently placed using a matrix:
+  \matrix[row sep=0.5cm,column sep=0.5cm] {
+    % First line: Control input
+		\node (x_t-2) [matrx]{$\mathbf{x}_{t-2}$}; &
+    		&
+        \node (x_t-1) [matrx]{$\mathbf{x}_{t-1}$}; &
+        &
+        \node (x_t)   [matrx]{$\mathbf{x}_t$};     &
+        &
+        \node (x_t+1)   [dashed_matrx]{$\mathbf{\hat{x}}_{t+1}$}; 	  & 
+        &
+
+        \\
+        % Third line: State & state transition matrix
+		\\
+		\node (s_t-2) [matrx]{$\mathbf{s}_{t-2}$}; &
+		&
+        \node (s_t-1) [matrx] {$\mathbf{s}_{t-1}$}; &
+		&
+        \node (s_t)   [matrx] {$\mathbf{s}_t$};     &
+		&
+        \node (s_t+1) [matrx] {$\mathbf{s}_{t+1}$}; &
+		\\
+		\\
+		
+        \node (hat_x_t-1) [matrx]{$\mathbf{\hat{x}}_{t-1}$}; &
+        &
+        \node (hat_x_t) [matrx] {$\mathbf{\hat{x}}_{t}$}; &
+        &
+        \node (hat_x_t+1)   [matrx] {$\mathbf{\hat{x}}_{t+1}$};     &
+        &
+        \node (hat_x_t+2) [matrx] {$\mathbf{\hat{x}}_{t+2}$}; &
+        \\
+    };
+    
+    % The diagram elements are now connected through arrows:
+    \path[->]
+    		(x_t-2) edge[thick] (s_t-2)
+    	    (x_t-1) edge[thick] (s_t-1)
+        (x_t) edge[thick] (s_t)
+        (x_t+1) edge[thick,dashed] (s_t+1)
+        	  
+	    (s_t-2) edge[thick] (s_t-1)        	        	
+        (s_t-1) edge[thick] (s_t)
+        (s_t) edge[thick] (s_t+1)  
+
+		(s_t-2) edge[thick] (hat_x_t-1)       
+    	    (s_t-1) edge[thick] (hat_x_t)
+        (s_t) edge[thick] (hat_x_t+1)
+        (s_t+1) edge[thick] (hat_x_t+2)
+        (hat_x_t+1) edge[thick, dashed, -latex, out=45,in=225] (x_t+1)
+        ;
+    
+    % Now that the diagram has been drawn, background rectangles
+    % can be fitted to its elements. This requires the TikZ
+    % libraries "fit" and "background".
+    % Control input and measurement are labeled. These labels have
+    % not been translated to English as "Measurement" instead of
+    % "Messung" would not look good due to it being too long a word.
+
+\end{tikzpicture}
   \caption{This picture contains model for predicting data for time series. For the first unfolded structure of neural network, the data of series at time t-2 is fed to the network and we expect data at time t-1 are predict by the network.}\label{series_prediction_rnn}
 \end{figure}
 
@@ -470,7 +711,7 @@ By remembering all the parameters in the network and unfold in time for several 
 where $A$ means weight matrix of internal states to output states.
 
 
-To sum up, the dynamics of system becomes like following.
+To sum up, the dynamics of system becomes as follows.
 
 \begin{align}
 \mathbf{s_{t}} &= \sigma(W\mathbf{x_t} + B\mathbf{s_{t-1}}) \quad \forall x \leq T \label{training_rnn}\\ 
