@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.12.17)  22 APR 2015 17:39
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.12.17)  22 APR 2015 18:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -588,18 +588,18 @@ LaTeX Warning: Label `algo:adam' multiply defined.
 )
 \openout1 = `gao_thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
  (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count137
@@ -662,17 +662,17 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 ABD: EveryShipout initializing macros
-LaTeX Font Info:    Try loading font information for U+lasy on input line 86.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 88.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 86.
+LaTeX Font Info:    Try loading font information for U+msa on input line 88.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 86.
+LaTeX Font Info:    Try loading font information for U+msb on input line 88.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -683,24 +683,31 @@ Non-PDF special ignored!
 
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 86.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 88.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 86.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 88.
  [2
 
 
-] [3
+]
+
+LaTeX Warning: Marginpar on page iii moved.
 
 
-] [4
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [3
 
 
-] [5]
-[6
+]
+[4] [5
+
+
+] [6
 
 
 ] (./gao_thesis.toc [7])
@@ -714,21 +721,21 @@ Chapter 1.
 
 ]
 
-LaTeX Warning: Citation `Graves2013b' on page 2 undefined on input line 111.
+LaTeX Warning: Citation `Graves2013b' on page 2 undefined on input line 128.
 
 [2]
 Chapter 2.
 
-LaTeX Warning: Citation `Sutton1998a' on page 3 undefined on input line 123.
+LaTeX Warning: Citation `Sutton1998a' on page 3 undefined on input line 140.
 
 
 LaTeX Warning: Citation `williams1989learning' on page 3 undefined on input lin
-e 123.
+e 140.
 
 [3
 
 ] [4] [5] [6]
-Overfull \hbox (8.16573pt too wide) in paragraph at lines 240--243
+Overfull \hbox (8.16573pt too wide) in paragraph at lines 257--260
 \OT1/cmr/m/n/10.95 It can be shown that $\OML/cmm/m/it/10.95 R\OT1/cmr/m/n/10.9
 5 (\OML/cmm/m/it/10.95 s; a\OT1/cmr/m/n/10.95 )$ is fur-ther ap-prox-i-mated as
  $(\OMS/cmsy/m/n/10.95 r[] [] \OML/cmm/m/it/10.95 ^^Y\OT1/cmr/m/n/10.95 (\OML/c
@@ -737,17 +744,17 @@ mm/m/it/10.95 a; s\OT1/cmr/m/n/10.95 )[](\OML/cmm/m/it/10.95 s\OT1/cmr/m/n/10.9
  []
 
 [7] [8]
-Overfull \hbox (17.0pt too wide) detected at line 300
+Overfull \hbox (17.0pt too wide) detected at line 318
 [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 283--301
+Underfull \hbox (badness 10000) in paragraph at lines 301--319
 
  []
 
 [9] [10] [11] [12] [13] [14]
-Underfull \hbox (badness 10000) in paragraph at lines 469--487
+Underfull \hbox (badness 10000) in paragraph at lines 487--505
 
  []
 
@@ -756,25 +763,25 @@ Underfull \hbox (badness 10000) in paragraph at lines 469--487
 ]
 Chapter 3.
 
-LaTeX Warning: Reference `perceptron' on page 17 undefined on input line 497.
+LaTeX Warning: Reference `perceptron' on page 17 undefined on input line 516.
 
 [17]
 
 LaTeX Warning: Reference `pernceptron_formula' on page 18 undefined on input li
-ne 538.
+ne 557.
 
 [18] [19]
-Underfull \hbox (badness 10000) in paragraph at lines 732--732
+Underfull \hbox (badness 10000) in paragraph at lines 751--751
  [][][][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 735--735
+Underfull \hbox (badness 10000) in paragraph at lines 754--754
  [][][][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 738--738
+Underfull \hbox (badness 10000) in paragraph at lines 757--757
  [][][][] 
  []
 
@@ -782,17 +789,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 738--738
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [20]
-Underfull \hbox (badness 2753) in paragraph at lines 827--827
+Underfull \hbox (badness 2753) in paragraph at lines 846--846
  [][][][] 
  []
 
 
-Underfull \hbox (badness 2753) in paragraph at lines 830--830
+Underfull \hbox (badness 2753) in paragraph at lines 849--849
  [][][][] 
  []
 
 
-Underfull \hbox (badness 2753) in paragraph at lines 833--833
+Underfull \hbox (badness 2753) in paragraph at lines 852--852
  [][][][] 
  []
 
@@ -800,10 +807,10 @@ Underfull \hbox (badness 2753) in paragraph at lines 833--833
 File: lstm.png Graphic file (type png)
 
 <use lstm.png>
-Package pdftex.def Info: lstm.png used on input line 1109.
+Package pdftex.def Info: lstm.png used on input line 1128.
 (pdftex.def)             Requested size: 284.52863pt x 216.7749pt.
  [26 <./lstm.png>] [27] [28]
-Overfull \hbox (17.0pt too wide) detected at line 1261
+Overfull \hbox (17.0pt too wide) detected at line 1281
 [][] 
  []
 
@@ -818,17 +825,17 @@ Chapter 5.
 <cart_pendulum.png, id=149, 301.125pt x 331.2375pt>
 File: cart_pendulum.png Graphic file (type png)
  <use cart_pendulum.png>
-Package pdftex.def Info: cart_pendulum.png used on input line 1277.
+Package pdftex.def Info: cart_pendulum.png used on input line 1297.
 (pdftex.def)             Requested size: 150.56212pt x 165.61833pt.
 
 [33]
-Overfull \hbox (4.80891pt too wide) in paragraph at lines 1306--1308
+Overfull \hbox (4.80891pt too wide) in paragraph at lines 1326--1328
 \OT1/cmr/m/n/10.95 Traditional con-trol al-go-rithms like proportional-integral
 -derivative con-troller
  []
 
 [34 <./cart_pendulum.png>]
-Overfull \hbox (2.041pt too wide) in paragraph at lines 1318--1319
+Overfull \hbox (2.041pt too wide) in paragraph at lines 1338--1339
 \OT1/cmr/m/n/10.95 struc-tures in-clud-ing Con-vo-lu-tional Neu-ron Net-works(C
 NN), Deep Blief Net-
  []
@@ -837,13 +844,13 @@ NN), Deep Blief Net-
 File: model_pgpe_benchatk.png Graphic file (type png)
 
 <use model_pgpe_benchatk.png>
-Package pdftex.def Info: model_pgpe_benchatk.png used on input line 1338.
+Package pdftex.def Info: model_pgpe_benchatk.png used on input line 1358.
 (pdftex.def)             Requested size: 354.12057pt x 404.70924pt.
  [35]
 <baxter.png, id=163, 1450.6697pt x 1693.07532pt>
 File: baxter.png Graphic file (type png)
  <use baxter.png>
-Package pdftex.def Info: baxter.png used on input line 1348.
+Package pdftex.def Info: baxter.png used on input line 1368.
 (pdftex.def)             Requested size: 246.61058pt x 287.819pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -853,7 +860,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 File: baxter_arm_annotated.png Graphic file (type png)
 
 <use baxter_arm_annotated.png>
-Package pdftex.def Info: baxter_arm_annotated.png used on input line 1356.
+Package pdftex.def Info: baxter_arm_annotated.png used on input line 1376.
 (pdftex.def)             Requested size: 283.29646pt x 380.08943pt.
 
 
@@ -861,20 +868,16 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 [37 <./baxter.png>]
 
-LaTeX Warning: Reference `alg:pgpe' on page 38 undefined on input line 1365.
+LaTeX Warning: Reference `alg:pgpe' on page 38 undefined on input line 1385.
 
-[38] [39 <./baxter_arm_annotated.png>] [40
+(./gao_thesis.bbl [38] [39 <./baxter_arm_annotated.png>] [40
 
-]
-Chapter 6.
-(./gao_thesis.bbl [41] [42
-
-] [43]
+] [41]
 Underfull \hbox (badness 8113) in paragraph at lines 58--61
 []\OT1/cmr/m/sc/10.95 V. Mnih, K. Kavukcuoglu, D. Sil-ver, A. Graves,
  []
 
-[44]) [45] (./gao_thesis.aux)
+[42]) [43] (./gao_thesis.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -884,13 +887,13 @@ LaTeX Warning: There were multiply-defined labels.
  )
 (\end occurred when \ifcase on line 102 was incomplete) 
 Here is how much of TeX's memory you used:
- 15026 strings out of 493304
- 274356 string characters out of 6139870
- 367380 words of memory out of 5000000
- 18144 multiletter control sequences out of 15000+600000
+ 15076 strings out of 493304
+ 275447 string characters out of 6139870
+ 374558 words of memory out of 5000000
+ 18194 multiletter control sequences out of 15000+600000
  12333 words of font info for 47 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 56i,18n,60p,1134b,983s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 56i,18n,76p,1134b,983s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts
@@ -907,10 +910,10 @@ ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf
 fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/symbols/msbm10.pfb>
-Output written on gao_thesis.pdf (53 pages, 9120701 bytes).
+Output written on gao_thesis.pdf (51 pages, 9127726 bytes).
 PDF statistics:
- 252 PDF objects out of 1000 (max. 8388607)
- 171 compressed objects within 2 object streams
+ 246 PDF objects out of 1000 (max. 8388607)
+ 167 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  38 words of extra memory for PDF output out of 10000 (max. 10000000)
 

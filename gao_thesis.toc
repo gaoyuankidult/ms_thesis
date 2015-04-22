@@ -35,7 +35,4 @@
 \contentsline {subsection}{\numberline {5.2.1}System Implementation}{37}
 \contentsline {subsection}{\numberline {5.2.2}Experiment Result Using Baxter Simulator}{38}
 \contentsline {subsection}{\numberline {5.2.3}Experiment Result Using Baxter Robot}{38}
-\contentsline {chapter}{\numberline {6}Future Research}{41}
-\contentsline {section}{\numberline {6.1}Combining Control with Vision Using Deep Neural Network}{41}
-\contentsline {section}{\numberline {6.2}Transfer Learning for Learning Repetitive Behaviour Using Deep Neural Network}{41}
-\contentsline {chapter}{References}{43}
+\contentsline {chapter}{References}{41}
