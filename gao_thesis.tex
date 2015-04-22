@@ -21,6 +21,7 @@
                         (0,-0.5em) --  (-0.5em,-0.5em)
                         (0em,0.75em) -- (0em,-0.75em)
                         (0.75em,0em) -- (-0.75em,0em);}
+<<<<<<< HEAD
                         
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}    
                         
@@ -36,6 +37,10 @@
 \usepackage{algorithmic,color}
 \usepackage{float}
 \usepackage[super]{nth}
+=======
+\newcommand{\bsym}{\boldsymbol}
+\usepackage[]{algorithm2e}
+>>>>>>> 9d26e63884aa0bd61180d660b7fb84028c2c0c82
 
 % 
 \usepackage{xargs}
@@ -48,7 +53,7 @@
 %
 
 
-\title{Deep Recurrent Neural Network for Robot Reinforcement Learning \\}
+\title{Deep Learning Algorithms \\ for Control}
 \author{Yuan Gao}
 \authorcontact{gaoyuankidult@gmail.com\par
   http://www.cs.helsinki.fi/u/yuangao/}
@@ -85,11 +90,26 @@
 \frontmatter
 \maketitle
 \begin{abstract}
+Controlling a complicated mechanical system to perform a certain task, for example, making robot to dance, is a traditional problem studied in the area of control theory. Many successful applications like Google BigDog\cite{Raibert2008} and Google Self-driving car \todo{citation of self driving car} have been made in accordance to the new theories found in this field.
 
+However more evidences show that in-cooperating with machine learning techniques in robotics can enable people to get rid of tedious engineering works of adjusting environmental parameters\todo{citation}. Many researchers like Jan Peters\todo{citation}, Sethu Vijayakumar, Stefan Schaal, Andrew Ng and Sebastian Thrun are the early explorers in this field. Based on the Partial Observable Markov Decision Process(POMDP) reinforcement learning, they contributed theory and practical implementation of several bench marks in this field.
+
+Recently, one sub-field of machine learning called deep learning gained a lot of attention as a method attempting to model high-level abstractions by using model architectures composed by multiple non-linear layers. (for example \cite{Krizhevsky2012}). Several architectures of deep learning networks like deep belief network \cite{Hinton2006}, deep Boltzman machine \cite{Salakhutdinov2009}, convolutional neural network \cite{Krizhevsky2012} and deep de-noising auto-encoder \cite{Vincent2010} have shown its advantages in specific areas. Especially, convolutional neural network, which was invented by Krizhevsky, outperformed all the traditional feature-based machine learning techniques in ImageNet competition.
+
+The main works of deep learning is more related to perception which deals with the problems like Sensor Fusion{OConnor2013}, Nature Language Processing(NLP)\cite{Cho2014} and Object Recognition\cite{Lenz2013}\cite{Hoffman2014}. Although considered briefly in J{\"u}rgen Schmidhuber's team\cite{Mayer2006}, the other area of robotics, namely control, remains more-or-less unexplored in the realm of deep learning.
+
+There are two reasons about why these areas remain unexplored. The first reason is that deep learning method emphasizes on data driving techniques in which we need a lot of data to enable system to find important features whilst we don't have any dataset that can offer large amount of data. The second reason is that applying deep learning techniques requires introducing real robot platform to test the algorithm. This process is hard for researchers as they normally don't have resources for this complicated task.
+
+The main focus of this thesis is to introduce general learning methods for robot control problem with an emphasize on deep learning method. As a consequence, this thesis tries to describe the transitional learning method as well as the emerging deep learning methods for robot control problem.
+
+Ultimately, the author hope the readers of this thesis, even without much background in machine learning or robotics can understand the gists of solution for robot learning problems. \improvement{All paragraphs abstract needs to be rechecked.}
 \end{abstract}
 
 \begin{acknowledgements}
-
+  This is a sample sentence that should look like normal text, and
+  this is another. This is a sample sentence that should look like
+  normal text, and this is another. This is a sample sentence that
+  should look like normal text, and this is another.
 \end{acknowledgements}
 %Print the glossary
 
@@ -175,11 +195,19 @@ Continuous Markov Decision Process With Infinite States is a modified version of
 \end{itemize}
 
 With this continuous setting, we have objective function defined as follows:
+<<<<<<< HEAD
 \begin{align}
 J(\theta) &= \vec{E_\tau}\{(1-\gamma)\sum_{t=0}^{\infty}\gamma^tR_t|\theta\} \\
 &= \int_\mathbb{S}d^\pi(\vec{s})\int_\mathbb{A}\pi(\vec{a}|\vec{s})R(\vec{a}, \vec{s})d\vec{a}d\vec{s}
 \end{align}
 
+=======
+
+\begin{align}
+J(\theta) &= \mathbb{E}_\gamma\{(1-\gamma)\sum_{t=0}^tR_t|\theta\} \\
+&=\int_\mathbb{S}d^\pi(\vec{s})\int_\mathbb{A}\pi(\vec{a}|\vec{s})R(\vec{a}, \vec{s})d\vec{a}d\vec{s}
+\end{align}
+>>>>>>> 9d26e63884aa0bd61180d660b7fb84028c2c0c82
 
 Where $d^\pi(\vec{s})$ refers to $1 - \gamma^tp(\vec{s} = \vec{s_t})$, $0 \geq \gamma \geq 1$ refers to discount factor and $\pi(\vec{a}|\vec{s})$ is parametrized by $\theta$.
 \subsection{Value Functions}
@@ -241,6 +269,7 @@ Where $Q^\pi(a, s)$ is state-action value function and $b^\pi(x)$ is kind of bas
 papers [] [] demonstrate why $R(s, a)$ is replace by $Q^\pi(a, s) - b^\pi(x)$. It can be
 shown that $R(s, a)$ is further approximated as $(\nabla_\theta \log\pi(a,s)^\pi(s))^T \vec{w}$ parametrized by $\vec{w}$.
 \section{Reinforcement Learning Methods}
+<<<<<<< HEAD
 In this section, we introduce common ideas in robotics including temporal difference learning, Episodic learning and policy gradient method.
 \subsection{Policy Evaluation}
 Policy evaluation is a process that computes state-value function based on a policy $\pi$. Generally, there are three ways of doing policy evaluation. 
@@ -493,6 +522,58 @@ Recurrent Neural Network(RNN) is a special structure of neural network that has 
 \section{Deep Learning and its Recent Advances}
 Deep learning attracted a lot of attention since 2006. In year 2006, Geoffrey Hinton, one of the founders of idea deep learning, published a paper called "Reducing the Dimensionality of
 Data with Neural Networks"\cite{hinton2006reducing}. In this paper, Hinton and Slakhutdinow showed how a many-layered feedforward neural network can be pre-trained layer by layer. Since this paper, the work "deep learning" become famous in the community. However, before Hinton's work, several deep learning algorithms were developed. One of the initial works belongs to Kunihiko Fukushima who invented a model called Neocognitron in 1980. After that, in 1989, Yann Lecun was able to use an optimization algorithm called back-propagation to train the neuron network. Then Yann Lecun further simplified network to be so-called \textit{Convolutional Neuron Network(CNN)} in 1998. As CNN becomes so successful in the area of computer vision, the deep learning embraced boost after that period. However, other models that has more than one hidden layer is also normally discussed in the context of deep learning. For example, Deep Belief Network (DBN) and Deep Boltzmann Machine(DBM) are not normally considered as neuron network models, but they also have application in the area of computer vision.
+=======
+\subsection{Temporal Difference Learning}
+\subsection{Q-Learning}
+\subsection{Adaptive Heuristic Critic}
+\subsection{Prioritised Sweeping}
+
+
+\section{Classification of the Regarded RL Problems}
+\subsection{High-Dimensionality}
+\subsection{Partial-Observability}
+\subsection{Continuous State and Action Spaces}
+\subsection{Data-Efficiency}
+\section{Policy Gradient Methods}
+Policy gradient methods are important class of robot learning methods. This class of method tries to update a policy function directly based observed performance of a particular policy setting. The performance of policy depends contains an observed trajectory $\boldsymbol{\gamma}$ in action-state space, where, for each position, there is also a corresponding reward $R(\boldsymbol{a}|\boldsymbol{s})$. Hence the cost function of reinforcement learning can be redefined by using policy parameters $\boldsymbol{\theta}$.
+
+\begin{align}
+J(\theta) &=\int_\mathbb{S}d^\pi(\boldsymbol{s})\int_\mathbb{A}\pi(\boldsymbol{a}|\boldsymbol{s})R(\boldsymbol{a}, \boldsymbol{s})d\boldsymbol{a}d\boldsymbol{s} \\
+&=\int_\mathbb{S}d^\pi(\boldsymbol{s})\int_\mathbb{A}\pi(\boldsymbol{a}|\boldsymbol{s})p(\boldsymbol{s}|\boldsymbol{\theta})R(\boldsymbol{a}, \boldsymbol{s})d\boldsymbol{a}d\boldsymbol{s}
+\end{align}
+
+With certain parameter $\bsym\theta$, policy can generate a communicative reward of one trial of the agent, which can also be viewed as quality or fitness of the policy. Based on the evaluation and its corresponded gradient information, we can update $\bsym{\theta}_t$ to $\bsym{\theta}_{t+1}$. Following algorithm \ref{policy_gradient} shows pseudo-code of policy search:
+
+\begin{algorithm}
+ \While{Policy not converged ($\pi_t \neq \pi_{t+1}$)}{
+		\textbf{Explore:} 
+		Sample $\bsym{\theta}$ to generate one policy $\pi_t$\;
+		Use policy $\pi_t$ to generate trajectory $\bsym{\gamma}$ and receive cumulative reward $r$;
+		
+		\textbf{Evaluate:}
+		Evaluate the policy based trajectory $\bsym{\gamma}$ and reward $r$.;
+		
+		\textbf{Update:}
+		Update the $\bsym{\theta}$ using optimization method.;
+ }
+ \caption{Gneral Framework of Policy Gradient Algorithm}\label{policy_gradient}
+\end{algorithm}
+\subsection{Learning Method of Policy Gradient Method}
+The philosophy behind Policy gradient methods are different from traditional reinforcement learning methods. As a consequence, the learning method is also different from traditional reinforcement learning. Although the policy gradient method can also be learned in a step-by-step fashion, they prefer episodic updating rules.\cite{Stulp2012}\cite{Sun2009}\cite{Daniel2012}. This leads to the use of cumulative reward of system:
+
+\begin{equation}
+R=R(\theta)=\mathbb{E}_{p_{\theta}(\gamma)}\left[\sum_{t=0}r^t|\theta\right]
+\end{equation}
+
+However this method suffers from the variance of reward $R$. Due to different configurations of initial state, noise of system and stochasticity of system, few evaluation of policy parameters does not always show true gradient direction of the optimization.  Hence, in practice, the policy $\pi$ is always modelled as deterministic to avoid perturbation in optimization phase.
+
+Optimization of policy gradient methods are also different. As the process of generating reward is not known, the optimization can only be done by 
+
+\subsection{Policy Gradient Based on Parameter Exploration}
+
+\chapter{Recurrent Neural Networks}
+Recurrent Neural Network(RNN) is a special structure of neural network that has recurrent connections. In the following sections of this chapter, we are going to discuss the details of this model.
+>>>>>>> 9d26e63884aa0bd61180d660b7fb84028c2c0c82
 \section{Feedforward Neural Networks}
 In year 1957, the simplest structure of neural network called perceptron was introduced by Frank Rosenblatt in Conell's Aeronautical Laboratory. This model consists only one cell and multiple connections. Figure~\ref{perceptron} shows the basic structure of perceptron.
 \begin{figure}[h!]
@@ -1209,6 +1290,7 @@ Where $g(t-1) = g(net_{cj}(t))$, $g(\cdot)$ is the activation function of new in
 Following is the picture of the structure of the system. 
 
 \subsection{Optimization Methods}
+<<<<<<< HEAD
 Optimizing neuron network is not a simple task. People tried different method since perceptron was introduced. However, only until the back-propagation algorithm was introduced, the neuron network models have a role in the machine learning field. Currently, back-propagation has become standard of training neuron network and many optimization algorithms for neuron network are based on that. In the following section, I will describe two optimization methods I used in the experiments. One of them is call \textit{Nesterov's Accelerated Gradient}(NAG) and another of them is called \textit{Adam}. 
 \subsubsection{Nesterovs Accelerated Gradient}
 Nesterov's Accelerated Gradient is sometimes called Nesterov's momentum. Here momentum refers to Classic Momentum(CM) method which is a technique to accelerate the standard gradient descent algorithm. Let recall the original gradient descent algorithm, which update parameters based on a step size $\alpha$ and gradient information of objective function. Formula~\ref{normal_gradient_descent}
@@ -1375,16 +1457,43 @@ Now we follow the formulation of PGPE algorithm, using two hidden parameters $\m
 \subsection{Experiment Result Using Baxter Simulator}
 Based on the Robot Operating System(ROS), several simulators supports simulation of Bater robot. One of them is Gazebo, an official simulator provided by ROS.
 \subsection{Experiment Result Using Baxter Robot}
+=======
 
-\chapter{Future Research}
-\section{Combining Control with Vision Using Deep Neural Network}
-\begin{itemize}
-\item One may use unified neural network model for vision and control together.
-\item Deep neural network archived state-of-art or close to state-of-art result in video recognition tasks.(also in )
-\end{itemize}
-\section{Transfer Learning for Learning Repetitive Behaviour Using Deep Neural Network}
+\section{Improved Model-Building with RNN} 
+\subsection{Handling Data Noise} 
+\subsection{Handling the Uncertainty of the Initial State}
+\subsection{Optimal Weight Initialisation}
+
+\chapter{Prior Arts of Combining RNN and RL}
+\section{Neural Actor-Critic(idasi's group)}
+\section{LSTM with POMDP objective function}
+\section{PhD thesis, by Remi Coulom ?}
+
+\section{DQN?}
+\section{Hybrid Approch(RL with RNN)}
+\section{Recurrent Models of Visual Attention?}       
+\section{stanley gecco021 2002?}
+\chapter{Experiment}
+\section{RNN(LSTM) Implementation}
+\section{Cart-pole Balancing Simulator}
+\section{Learning a task of stacking wooden blocks}
+
+This is a sample sentence that should look like normal text, and this
+is another. This is a sample sentence that should look like normal
+text, and this is another. This is a sample sentence that should look
+like normal text, and this is another.
+>>>>>>> 9d26e63884aa0bd61180d660b7fb84028c2c0c82
 
 
+\begin{theorem}
+This is a sample sentence that should look like normal text,
+and this is another:
+\[ y = x+3 \]
+\end{theorem}
+
+\begin{proof}
+This is a sample sentence.
+\end{proof}
 
 \bibliography{library}
 \bibliographystyle{siam}
