@@ -1,0 +1,59 @@
+\begin{thebibliography}{10}
+
+\bibitem{Cho2014}
+{\sc K.~Cho, B.~van Merrienboer, C.~Gulcehre, F.~Bougares, H.~Schwenk, and
+  Y.~Bengio}, {\em {Learning Phrase Representations using RNN Encoder-Decoder
+  for Statistical Machine Translation}}, arXiv,  (2014).
+
+\bibitem{Graves2013}
+{\sc A.~Graves}, {\em {Generating sequences with recurrent neural networks}},
+  arXiv preprint arXiv:1308.0850,  (2013), pp.~1--43.
+
+\bibitem{Graves2014}
+{\sc A.~Graves, G.~Wayne, and I.~Danihelka}, {\em {Neural Turing Machines}},
+  (2014), pp.~1--26.
+
+\bibitem{Hinton2006}
+{\sc G.~E. Hinton, S.~Osindero, and Y.~W. Teh}, {\em {A fast learning algorithm
+  for deep belief nets.}}, Neural computation, 18 (2006), pp.~1527--54.
+
+\bibitem{Hoffman2014}
+{\sc J.~Hoffman, S.~Guadarrama, E.~Tzeng, R.~Hu, J.~Donahue, R.~Girshick,
+  T.~Darrell, and K.~Saenko}, {\em {LSDA: Large Scale Detection Through
+  Adaptation}},  (2014), pp.~1--9.
+
+\bibitem{Krizhevsky2012}
+{\sc A.~Krizhevsky, I.~Sutskever, and G.~E. Hinton}, {\em {ImageNet
+  Classification with Deep Convolutional Neural Networks}}, Advances In Neural
+  Information Processing Systems,  (2012), pp.~1--9.
+
+\bibitem{Lenz2013}
+{\sc I.~Lenz, H.~Lee, and A.~Saxena}, {\em {Deep Learning for Detecting Robotic
+  Grasps}}, CoRR, abs/1301.3 (2013).
+
+\bibitem{Mayer2006}
+{\sc H.~Mayer, F.~Gomez, D.~Wierstra, I.~Nagy, A.~Knoll, and J.~Schmidhuber},
+  {\em {A system for robotic heart surgery that learns to tie knots using
+  recurrent neural networks}}, in IEEE International Conference on Intelligent
+  Robots and Systems, 2006, pp.~543--548.
+
+\bibitem{OConnor2013}
+{\sc P.~O'Connor, D.~Neil, S.~C. Liu, T.~Delbruck, and M.~Pfeiffer}, {\em
+  {Real-time classification and sensor fusion with a spiking deep belief
+  network}}, Frontiers in Neuroscience,  (2013).
+
+\bibitem{Raibert2008}
+{\sc M.~Raibert, K.~Blankespoor, G.~Nelson, and R.~Playter}, {\em {BigDog , the
+  Rough-Terrain Quaduped Robot}}, tech. rep., 2008.
+
+\bibitem{Salakhutdinov2009}
+{\sc R.~Salakhutdinov and G.~Hinton}, {\em {Deep Boltzmann Machines}},
+  Artificial Intelligence, 5 (2009), pp.~448--455.
+
+\bibitem{Vincent2010}
+{\sc P.~Vincent, H.~Larochelle, I.~Lajoie, Y.~Bengio, and P.-A. Manzagol}, {\em
+  {Stacked Denoising Autoencoders: Learning Useful Representations in a Deep
+  Network with a Local Denoising Criterion}}, Journal of Machine Learning
+  Research, 11 (2010), pp.~3371--3408.
+
+\end{thebibliography}

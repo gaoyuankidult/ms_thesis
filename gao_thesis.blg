@@ -1,0 +1,53 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: gao_thesis.aux
+The style file: siam.bst
+Database file #1: library.bib
+Warning--I didn't find a database entry for "Graves2013b"
+Warning--I didn't find a database entry for "Sutton1998a"
+Warning--I didn't find a database entry for "williams1989learning"
+Warning--empty journal in Graves2014
+Warning--empty journal in Hoffman2014
+Warning--empty institution in Raibert2008
+You've used 26 entries,
+            2030 wiz_defined-function locations,
+            661 strings with 8570 characters,
+and the built_in function-call counts, 10496 in all, are:
+= -- 991
+> -- 573
+< -- 0
++ -- 226
+- -- 200
+* -- 867
+:= -- 1647
+add.period$ -- 26
+call.type$ -- 26
+change.case$ -- 177
+chr.to.int$ -- 0
+cite$ -- 29
+duplicate$ -- 443
+empty$ -- 703
+format.name$ -- 200
+if$ -- 2193
+int.to.chr$ -- 0
+int.to.str$ -- 26
+missing$ -- 26
+newline$ -- 81
+num.names$ -- 52
+pop$ -- 173
+preamble$ -- 1
+purify$ -- 151
+quote$ -- 0
+skip$ -- 365
+stack$ -- 0
+substring$ -- 666
+swap$ -- 186
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 102
+warning$ -- 3
+while$ -- 106
+width$ -- 28
+write$ -- 229
+(There were 6 warnings)

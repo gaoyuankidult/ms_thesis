@@ -1,0 +1,50 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [0][-]{chapter.2}{Reinforcement Learning}{}% 2
+\BOOKMARK [1][-]{section.2.1}{Markov Decision Process}{chapter.2}% 3
+\BOOKMARK [2][-]{subsection.2.1.1}{Partially Observable Markov Decision Process}{section.2.1}% 4
+\BOOKMARK [2][-]{subsection.2.1.2}{Markov Decision Process with Continuous States}{section.2.1}% 5
+\BOOKMARK [2][-]{subsection.2.1.3}{Value Functions}{section.2.1}% 6
+\BOOKMARK [1][-]{section.2.2}{Reinforcement Learning Methods}{chapter.2}% 7
+\BOOKMARK [2][-]{subsection.2.2.1}{Temporal Difference Learning}{section.2.2}% 8
+\BOOKMARK [2][-]{subsection.2.2.2}{Q-Learning}{section.2.2}% 9
+\BOOKMARK [2][-]{subsection.2.2.3}{Adaptive Heuristic Critic}{section.2.2}% 10
+\BOOKMARK [2][-]{subsection.2.2.4}{Policy Gradient Methods}{section.2.2}% 11
+\BOOKMARK [1][-]{section.2.3}{Properties of the Regarded RL Problems}{chapter.2}% 12
+\BOOKMARK [2][-]{subsection.2.3.1}{High-Dimensionality}{section.2.3}% 13
+\BOOKMARK [2][-]{subsection.2.3.2}{Real-World Samples}{section.2.3}% 14
+\BOOKMARK [2][-]{subsection.2.3.3}{Under-Modelling and Model Uncertainty}{section.2.3}% 15
+\BOOKMARK [2][-]{subsection.2.3.4}{Goal Specification}{section.2.3}% 16
+\BOOKMARK [0][-]{chapter.3}{Deep Recurrent Neural Networks}{}% 17
+\BOOKMARK [1][-]{section.3.1}{Deep Learning and its Recent Advances}{chapter.3}% 18
+\BOOKMARK [1][-]{section.3.2}{Feedforward Neural Networks}{chapter.3}% 19
+\BOOKMARK [1][-]{section.3.3}{Recurrent Neural Networks}{chapter.3}% 20
+\BOOKMARK [2][-]{subsection.3.3.1}{Finite Unfolding in Time}{section.3.3}% 21
+\BOOKMARK [2][-]{subsection.3.3.2}{Overshooting}{section.3.3}% 22
+\BOOKMARK [2][-]{subsection.3.3.3}{Dynamical Consistency}{section.3.3}% 23
+\BOOKMARK [1][-]{section.3.4}{Universal Approximation}{chapter.3}% 24
+\BOOKMARK [2][-]{subsection.3.4.1}{Approximation by FFNN}{section.3.4}% 25
+\BOOKMARK [2][-]{subsection.3.4.2}{Approximation by RNN}{section.3.4}% 26
+\BOOKMARK [1][-]{section.3.5}{Training of RNN}{chapter.3}% 27
+\BOOKMARK [2][-]{subsection.3.5.1}{Shared Weight Extended Backpropagation}{section.3.5}% 28
+\BOOKMARK [2][-]{subsection.3.5.2}{Learning Long-Term Dependencies}{section.3.5}% 29
+\BOOKMARK [2][-]{subsection.3.5.3}{Optimization Methods}{section.3.5}% 30
+\BOOKMARK [1][-]{section.3.6}{Improved Model-Building with RNN}{chapter.3}% 31
+\BOOKMARK [2][-]{subsection.3.6.1}{Handling Data Noise}{section.3.6}% 32
+\BOOKMARK [2][-]{subsection.3.6.2}{Optimal Weights Initialization}{section.3.6}% 33
+\BOOKMARK [0][-]{chapter.4}{Prior Arts of Combining Deep NN and RL}{}% 34
+\BOOKMARK [1][-]{section.4.1}{RL-LSTM based on Model/Critic}{chapter.4}% 35
+\BOOKMARK [1][-]{section.4.2}{Deep Q Network}{chapter.4}% 36
+\BOOKMARK [1][-]{section.4.3}{Recurrent Attention Model}{chapter.4}% 37
+\BOOKMARK [0][-]{chapter.5}{Proposed Recurrent Neural Network Structure}{}% 38
+\BOOKMARK [1][-]{section.5.1}{Stacked LSTM Layers as Model-Critic Approach}{chapter.5}% 39
+\BOOKMARK [1][-]{section.5.2}{Stacked Bidirectional LSTM Layers as Model-Critic Approach}{chapter.5}% 40
+\BOOKMARK [1][-]{section.5.3}{Replacing LSTM with Mikolov's Context Layer}{chapter.5}% 41
+\BOOKMARK [0][-]{chapter.6}{Experiment}{}% 42
+\BOOKMARK [1][-]{section.6.1}{System Implementation}{chapter.6}% 43
+\BOOKMARK [1][-]{section.6.2}{Cart-pole Balancing}{chapter.6}% 44
+\BOOKMARK [1][-]{section.6.3}{Stacking Wooden Blocks}{chapter.6}% 45
+\BOOKMARK [1][-]{section.6.4}{Cart-pole Balancing Using Baxter Robot}{chapter.6}% 46
+\BOOKMARK [0][-]{chapter.7}{Future Research}{}% 47
+\BOOKMARK [1][-]{section.7.1}{Combining Control with Vision Using Deep Neural Network}{chapter.7}% 48
+\BOOKMARK [1][-]{section.7.2}{Transfer Learning for Learning Repetitive Behaviour Using Deep Neural Network}{chapter.7}% 49
+\BOOKMARK [0][-]{chapter*.8}{References}{}% 50

@@ -17,14 +17,25 @@
 \tikzset{functions/.style={basic,circle,fill=blue!50!green!20}}
 \def\layersep{2.5cm}
 
-
-\newcommand{\addsymbol}{\draw[thick] (0.5em,0.5em) -- (0,0.5em) -- 
+\newcommand{\addsymbol}{\draw (0.5em,0.5em) -- (0,0.5em) -- 
                         (0,-0.5em) --  (-0.5em,-0.5em)
                         (0em,0.75em) -- (0em,-0.75em)
                         (0.75em,0em) -- (-0.75em,0em);}
                         
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}    
                         
-\usepackage[]{algorithm2e}
+
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{algorithmic,color}
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+
+\usepackage{algorithmic,color}
+\usepackage{float}
+\usepackage[super]{nth}
 
 % 
 \usepackage{xargs}
@@ -65,21 +76,14 @@
 \item[C.0.0] Another Example
 }
 \permissionnotice{
-  To be presented in \ldots{} text of a long permission notice. Text of
-  a long permission notice. Text of a long permission notice. Text of
-  a long permission notice. Text of a long permission notice. Text of
-  a long permission notice.
 }
 
-\newtheorem{theorem}{Theorem}[chapter]
-\newenvironment{proof}{\noindent\textbf{Proof.} }{$\Box$}
+
 
 \begin{document}
 
 \frontmatter
-
 \maketitle
-\listoftodos
 \begin{abstract}
 
 \end{abstract}
@@ -87,23 +91,28 @@
 \begin{acknowledgements}
 
 \end{acknowledgements}
+%Print the glossary
 
 \tableofcontents
+
+
 
 \mainmatter
 \chapter{Introduction}
 
-Controlling a complicated mechanical system to perform a certain task, for example making robot to dance, is a traditional problem studied in the field of control theory. Many successful applications like Google BigDog\cite{Raibert2008} and Google Self-driving car \cite{Guizzo2011a} have been made in accordance to the new theories found in this field.
+Controlling a complicated mechanical system to perform a certain task, for example making robot to dance, is a traditional problem studied in the field of control theory. Many successful applications like Google BigDog\cite{Raibert2008} and Google Self-driving car \cite{guizzo2011google} have been made in accordance to the new theories found in this field.
 
-However more evidences show that in-cooperating with machine learning techniques in robotics can enable people to get rid of tedious engineering works of adjusting environmental parameters\todo{citation}. Many researchers like Jan Peters\todo{citation}, Sethu Vijayakumar, Stefan Schaal, Andrew Ng and Sebastian Thrun are the early explorers in this field. Based on the Partial Observable Markov Decision Process(POMDP) reinforcement learning, they contributed first several algorithms enabling robot to learn to perform a certain task overtime.
+However more evidences show that in-cooperating with machine learning techniques in robotics can enable people to get rid of tedious engineering works of adjusting environmental parameters. Many researchers like Jan Peters, Sethu Vijayakumar, Stefan Schaal, Andrew Ng and Sebastian Thrun are the early explorers in this field. Based on the Partial Observable Markov Decision Process(POMDP) reinforcement learning, they contributed first several algorithms that enable robot to learn to perform a certain task overtime.
 
-Recently, one sub-field of machine learning called deep learning gained a lot of attention as a method attempting to model high-level abstractions by using model architectures composed by multiple non-linear layers. (for example \cite{Krizhevsky2012}). Several architectures of deep learning networks like deep belief network \cite{Hinton2006}, deep Boltzman machine \cite{Salakhutdinov2009}, convolutional neural network \cite{Krizhevsky2012} and deep de-noising auto-encoder \cite{Vincent2010} have shown its advantages in specific areas. Especially, convolutional neural network, which was invented by Krizhevsky, outperformed all the traditional feature-based machine learning techniques in ImageNet competition.
+Recently, one sub-field of machine learning called deep learning gained a lot of attention as a method attempting to model high-level abstractions by using model architectures composed by multiple non-linear layers. (for example \cite{Krizhevsky2012}). Several architectures of deep learning networks like deep belief network \cite{Hinton2006}, deep Boltzman machine \cite{Salakhutdinov2009}, convolutional neural network \cite{Krizhevsky2012} and deep de-noising auto-encoder \cite{Vincent2010} have shown its advantages in specific areas. Especially, one of convolutional neural networks, which was invented by Krizhevsky, outperformed all the traditional feature-based machine learning techniques in ImageNet competition.
 
 Based on the two trends we noticed, a natural path of research is to use deep learning methods for controlling movements of robot. Until the end of 2014,  the main works of deep learning are more related to a category of robotics called perception, which deals with problems like Sensor Fusion \cite{OConnor2013}, Nature Language Processing(NLP)\cite{Cho2014} and Object Recognition\cite{Lenz2013}\cite{Hoffman2014}. Although considered briefly in J{\"u}rgen Schmidhuber's team\cite{Mayer2006}, the other area of robotics, namely control, remains more-or-less unexplored in the realm of deep learning.
 
 The researches done in J{\"u}rgen Schmidhuber's team provided several interesting structures that might be potentially useful for robot control. The name of one of these structures is called Long Short Term Memory (LSTM), which is one variation of Recurrent Neural Network(RNN). Several experiments like generating sequences\cite{Graves2013}, speech recognition\cite{Graves2013b} and neural turing machine \cite{Graves2014} show that it has ability of extracting and storing temporal information from data. As a consequence, this specific structure of RNN, with modification, can be applied for control problems of robots.
 
-There are two main focuses of this thesis. One main focus of this Thesis is to introduce general learning methods for robot control problem with an emphasize on deep learning method. this thesis tries to describe the transitional learning method as well as the emerging deep learning methods for robot control problem. Anther focus of this thesis is to introduce the main contribution of author in this field. With experiments, the author is able to show his own method can outperform the transitional machine learning methods of robot control problems.
+Currently the main machine learning algorithm used for learning a action is based on reinforcement learning. Specifically, it is based on a category called policy gradient algorithm, which means the algorithm needs to directly search in policy space instead of state-action space. In this framework, there are normally two parts, namely actor part and critic part. Actor part is used for generating different actions based on policy parameters, the critic part is for simulating the environment in order to provide an accurate approximation for the environment. Deep Learning can be used in this case as it is general function approximator and environment is considered as a function that takes several parameters in and output an action.
+
+In thesis, we consider several kind of deep learning models to approximate the environment to reduce the real word samples needed. As a consequence, two major aspects are considered, one main focus of this Thesis is to introduce general learning methods for robot control problem with an emphasize on deep learning method. this thesis tries to describe the transitional learning method as well as the emerging deep learning methods for robot control problem. Another focus of this thesis is to introduce the main contribution of author in this field. With experiments, the author is able to show his own method can outperform the transitional machine learning methods of robot control problems.
 
 \chapter{Reinforcement Learning}
 
@@ -135,17 +144,16 @@ A partially observable Markov decision process (POMDP) is a generalization of a 
 The POMDP framework is general enough to model a variety of real-world sequential decision processes. Applications include robot navigation problems, machine maintenance, and planning under uncertainty in general. The framework originated in the operations research community, and was later taken over by the artificial intelligence and automated planning communities.
 
 An exact solution to a POMDP yields the optimal action for each possible belief over the world states. The optimal action maximizes (or minimizes) the expected reward (or cost) of the agent over a possibly infinite horizon. The sequence of optimal actions is known as the optimal policy of the agent for interacting with its environment.
-\todo{This introduction needs to be changed latter}
 
 More precisely, the POMDP is a discrete time stochastic control process. We may consider a robot in a state $s_t$ of discrete space $\mathcal{S}$ where t means iteration number. Now the robot can take an action a in all possible action set A resulting in a state $s_{t+1}$. We can denote this process as transition function Ta($s_t$,$s_{t+1}$) meaning the probability of moving from state $s_t$ to state $s_{t+1}$ through action $a$. Then after the robot executes action a and results in st+1, it will receive a reward according to reward function denoted as $R_a(s_t,s_{t+1}$).
 
 Formally, we define MDP as follows:
 
-A Markov decision process is a 4-tuple denoted as ($S$,$A$,$T\cdot(\cdot,\cdot)$,$R\cdot(\cdot,\cdot)$)
+A Markov decision process is a 4-tuple denoted as ($\mathbb{S}$,$\mathbb{A}$,$T\cdot(\cdot,\cdot)$,$R\cdot(\cdot,\cdot)$)
 In this tuple
 \begin{itemize}
-\item	$\mathcal{S}$ is a finite set of states. It describes all possible states of the space.
-\item	$\mathcal{A}$ is a finite set of actions. It describes all possible states that robot can take.
+\item	$\mathbb{S}$ is a finite set of states. It describes all possible states of the space.
+\item	$\mathbb{A}$ is a finite set of actions. It describes all possible states that robot can take.
 \item	$T\cdot(\cdot,\cdot)$ is a function that takes three arguments. e.g $T_{a_t}(s_t,s_{t+1})$ means probability of transferring from $s_t$ to $s_{t+1}$ with action $a_t$.
 \item	$R\cdot(\cdot,\cdot)$ is also a function that takes three arguments. e.g $R_{a_t}(s_t,s_{t+1})$ means reward of transferring from $s_t$ to $s_{t+1}$ with action $a_t$.
 \end{itemize}
@@ -154,40 +162,39 @@ In this tuple
 The main problem of reinforcement learning is to find a policy function $\pi(s) : s \rightarrow a$ to map every state s with action $a$ so that a cumulative reward $R$ is maximized, where $0 \leq \gamma \leq 1$ is a discount factor. As the discount factor generalizes discounted situation and undiscounted situation, it broadens our theory.
 
 \subsection{Markov Decision Process with Continuous States}
-Now considering the environment of robots, we need some modifications to original POMDP. First we still assume the process to be discrete time but we consider continuous space $S \in R^n$ and continuous action set $A \in R^m$ where $n$ is dimension of space and $m$ is dimension of actions. For initial state $s_0$, we assign a distribution $p(s_0)$ where $s_0 \in \mathcal{S}$. At any state $s_t \in \mathcal{S}$, we have a continuous policy $\pi(a_t|s_t) = p(a_t|s_t,\theta)$ parametrized by $\theta$. Transfer function now also becomes continuous. It is corresponded to a probability distribution $T_{a_t}(s_t,s_{t+1}) = p(s_{t+1}|s_t,a_t)$. After this step is completed, the process will general a reward function $R_{a_t}(s_t,s_{t+1}$) which is defined as $R\cdot(\cdot,\cdot) : S  \times S \times A \rightarrow [0,\inf)$.
+Now considering the environment of robots, we need some modifications to original POMDP. First we still assume the process to be discrete time but we consider continuous space $\mathbb{S} \subseteq R^n$ and continuous action set $\mathbb{A} \subseteq R^m$ where $n$ is dimension of space and $m$ is dimension of actions. For initial state $s_0$, we assign a distribution $p(s_0)$ where $s_0 \in \mathcal{S}$. At any state $s_t \in \mathcal{S}$, we have a continuous policy $\pi(a_t|s_t) = p(a_t|s_t,\theta)$ parametrized by $\theta$. Transfer function now also becomes continuous. It is corresponded to a probability distribution $T_{a_t}(s_t,s_{t+1}) = p(s_{t+1}|s_t,a_t)$. After this step is completed, the process will general a reward function $R_{a_t}(s_t,s_{t+1}$) which is defined as $R\cdot(\cdot,\cdot) : S  \times S \times A \rightarrow [0,\inf)$.
 After these modifications, we can now formalize continuous MDP.
 
 Continuous Markov Decision Process With Infinite States is a modified version of ordinary POMDP. Mathematically, it is defined as a 5-tuple ($P_{init},S,A,T\cdot(\cdot,\cdot),R\cdot(\cdot,\cdot))$ where in this tuple
 \begin{itemize}
 \item	$P_{init}$ is a initial distribution of the states.
-\item	$S = Rn$ is a infinite set of states. It describes all possible states of the space.
-\item	$A = Rm$ is a infinite set of actions. It describes all possible actions of the agent.
-\item	$T\cdot(\cdot,\cdot)$ is a function that takes three arguments. e.g $Tat(st,st+1)$ means probability of transferring from st to st+1 with action at.
-\item	$R\cdot(\cdot,\cdot)$ is a function that takes three arguments. e.g $Rat(st,st+1)$ means reward of transferring from st to st+1 with action at.
+\item	$\mathbb{S} \subseteq \mathbb{R}^n$ is a infinite set of states. It describes all possible states of the space.
+\item	$\mathbb{A} \subseteq \mathbb{R}^m$ is a infinite set of actions. It describes all possible actions of the agent.
+\item	$T\cdot(\cdot,\cdot)$ is a function that takes three arguments. e.g $T_{a_t}(s_t,s_{t+1})$ means probability of transferring from st to st+1 with action at.
+\item	$R\cdot(\cdot,\cdot)$ is a function that takes three arguments. e.g $R_{a_t}(s_t,s_{t+1})$ means reward of transferring from $s_t$ to $s_{t+1}$ with action at.
 \end{itemize}
 
 With this continuous setting, we have objective function defined as follows:
-\begin{figure}[h!]
+\begin{align}
+J(\theta) &= \vec{E_\tau}\{(1-\gamma)\sum_{t=0}^{\infty}\gamma^tR_t|\theta\} \\
+&= \int_\mathbb{S}d^\pi(\vec{s})\int_\mathbb{A}\pi(\vec{a}|\vec{s})R(\vec{a}, \vec{s})d\vec{a}d\vec{s}
+\end{align}
 
-  \centering
-    \includegraphics[width=0.5\textwidth]{objective_func}
-\end{figure}
 
 Where $d^\pi(\vec{s})$ refers to $1 - \gamma^tp(\vec{s} = \vec{s_t})$, $0 \geq \gamma \geq 1$ refers to discount factor and $\pi(\vec{a}|\vec{s})$ is parametrized by $\theta$.
 \subsection{Value Functions}
-We define two functions to further describes this process. First function is statevalue
+We define two functions to further describe this process. First function is statevalue
 function denoted as $V^\pi(\vec{x})$. This means expected value of an agent that follows
 an policy of $\pi$ with initial value $\vec{s}$. It characterizes the rewards of following a policy $\pi$. Mathematically, it is defined as:
 
-\begin{figure}[h!]
-  \centering
-    \includegraphics[width=0.4\textwidth]{value1}
-\end{figure}
+\begin{equation}
+V^\pi(\vec{s}) = \vec{E}_\tau\{\sum_{t=0}^\infty\gamma^tr_t|\vec{s} = \vec{s_0}\}
+\end{equation}
+
 where $\tau$ stands for trajectory of agent.
-\begin{figure}[h!]
-  \centering
-    \includegraphics[width=0.5\textwidth]{value2}
-\end{figure}
+\begin{equation}
+Q^\pi(\vec{s}, \vec{a}) = \vec{E}_\tau\{\sum_{t=0}^\infty\gamma^tr_t|\vec{s} = \vec{s_0}, \vec{a} = \vec{a_0}\}
+\end{equation}
 State-value function only depends on the first state of agent. After that the system
 is governed by policy $\pi$. Another value function we need to defines is state-action
 value function.
@@ -199,12 +206,11 @@ iterative method of evaluating and improving objective function.
 Robot learning is based on Markov Decision Process with discrete time and continuous
 states. The objective function is defined in section Markov Decision Process
 by Formula 1. A normal gradient of objective function is defined as :
+\begin{equation}
+\nabla J(\theta) = \int_\mathbb{S} d^\pi(\vec{s})\int_\mathbb{A}\nabla_\theta \pi(\vec{a}, \vec{s})R(\vec{a}, \vec{s})d\vec{a}d\vec{s}
+\label{objective_function}
+\end{equation}
 
-
-\begin{figure}[h!]
-  \centering
-    \includegraphics[width=0.5\textwidth]{actor_critic}
-\end{figure}
 
 Please note $\theta$ is related to $\pi(\vec{a}|\vec{s})$ as it is defined by $\pi(\vec{a}|\vec{s}|\theta)$.
 
@@ -225,37 +231,275 @@ method is fisher efficient. We recommend a further reading on Amari's paper[].
 
 If we rewrite Formula 5 as:
 
-\begin{figure}[h!]
-  \centering
-    \includegraphics[width=0.7\textwidth]{gradient}
-\end{figure}
+\begin{equation}
+\nabla_\theta J(\theta) = \int_\mathbb{S} d^\pi(\vec{s})\int_\mathbb{A}\nabla_\theta \pi(\vec{a}, \vec{s})(Q^\pi(\vec{a}, \vec{s}) -b^\pi(\vec{x}))d\vec{a}d\vec{s}
+\end{equation}
+
+
 
 Where $Q^\pi(a, s)$ is state-action value function and $b^\pi(x)$ is kind of baseline. Two
 papers [] [] demonstrate why $R(s, a)$ is replace by $Q^\pi(a, s) - b^\pi(x)$. It can be
 shown that $R(s, a)$ is further approximated as $(\nabla_\theta \log\pi(a,s)^\pi(s))^T \vec{w}$ parametrized by $\vec{w}$.
 \section{Reinforcement Learning Methods}
-\subsection{Temporal Difference Learning}
-\subsection{Q-Learning}
-\subsection{Adaptive Heuristic Critic}
-\subsection{Prioritised Sweeping}
+In this section, we introduce common ideas in robotics including temporal difference learning, Episodic learning and policy gradient method.
+\subsection{Policy Evaluation}
+Policy evaluation is a process that computes state-value function based on a policy $\pi$. Generally, there are three ways of doing policy evaluation. 
+
+The simple every-visit Monte-Carlo method used for evaluating policy is defined as:
+\begin{equation}
+V^\pi(\vec{s}) \leftarrow V^\pi(s_t) + \gamma (R(s_t) - V(s_t))
+\end{equation}
+where $V^\pi(s_t)$ is the state-value of state $s_t$, $\gamma$ is discount factor and $R(s_t)$ is the reward of state $s_t$. 
+
+The most well-known one is based on dynamic programming. It computes the best state-value for each state and iteratively update the value to each possible state. This update process can be defined as:
+\begin{equation}
+V^\pi(\vec{s}) \leftarrow \vec{E}\{r_{s_1} + \gamma V(s_t)\}
+\end{equation}
+
+Temporal Difference Learning is another important concept in the area of reinforcement learning. It uses temporal difference information to learn a value function. As a result, it does not need to know every state.(this issue will be address )
+
+As we can see, the simple every-visit Monte-Carlo method only in-cooperate information of current state. However, considering future information may result a better converging rate.
+
+Based on this idea, the simplest TD method(TD(0)) is developed and defined as:
+\begin{equation}
+V^\pi(\vec{s}) \leftarrow V^\pi(s_t) + \gamma (r_{t+1} + \gamma V(s_{t+1})- V(s_t))
+\end{equation}
+
+We may notice that each method requires different kind of data to be used. The simple every-visit Monte-Carlo method only in-cooperate information of current state, so it can be updated just by using the information observed at each state. The TD(0) requires successive two states and dynamic programming requires information of every state.
+
+We may further consider the differences between these three methods based on characteristics they have. Generally, bootstrapping means using estimate of successor state in reinforcement learning. In this case, we can classify these three methods as follows:
+\begin{itemize}
+\item MC does not bootstrap, as it always uses current state for updating
+\item DP bootstraps, as it needs to calculate expectation of all the successive states.
+\item TD(0) bootstraps, as it needs to know the state-value function of next state.
+\end{itemize}
+If we consider whether they use sampling method for not, we also can classify them as following:
+\begin{itemize}
+\item MC samples
+\item DP does not sample
+\item TD samples
+\end{itemize}
+
+Now I will use TD(0) policy evaluation algorithm as example to show how is policy evaluated.
+\newline
+\newline
+\begin{algorithm}[t]
+\caption{Tabular TD(0) policy evaluation algorithm}
+\label{algo:adam}
+\begin{algorithmic}
+ \REQUIRE Policy $\pi$
+ Initialize $V(s)$ arbitrarily \;
+ \While{until $s$ is terminal(for each episode)}{
+  a $\leftarrow$ action given by $\pi$ for state $s$\;
+  take action $a$, observe reward $r$ and next state $s'$
+  $V^\pi(\vec{s}) \leftarrow V^\pi(s_t) + \gamma (r_{t+1} + \gamma V(s_{t+1})- V(s_t))$
+  $s \leftarrow s'$
+  }
+\end{algorithmic}
+\vspace{-0.05in}
+\end{algorithm}
+
+\newcommand{\wm}{\widehat{m}_t}
+\newcommand{\wv}{\widehat{v}_t}
+
+
+
 \subsection{Policy Gradient Methods}
+The previous policy evaluation algorithms updates state-value for each state. However, there are also episodic algorithms to evaluate policy based on parameters. In the following text, we are going to introduce policy gradient method for robotics.
+
+Reinforcement learning is probably the most general framework where such robot learning problems can be phrased. Despite the fact that many reinforcement learning algorithm fails to scale where robots have more degrees of freedom, policy gradient methods is one of the exception.
+
+There are several advantages of policy gradient algorithms. According to Jan Peters' paper about policy gradient method\cite{peters2006policy}, firstly the policy representations can be chosen to be meaningful. Secondly the parameters can incorporate previous domain knowledge. The third reason is that policy gradient algorithm has a rather strong theoretical underpinning and additionally, policy gradient algorithms can be used in a model-free fashion.
+
+All these advantages ensures that with only few parameters, robots can learn a decent policy for certain task. Mathematically, policy gradient algorithm tries to optimize policy parameters $\theta \in \mathbb{R}^n$ so that the expected return:
+\begin{equation}
+J(\theta) = \vec{E}\{\sum_{k=0}^Ha_k r_k\}
+\end{equation}
+is maximized. where $a_k$ is a weighting factor. It can be set as $\gamma^k$ in discounted case or $\frac{1}{H}$ in average case. The steepest decent algorithm is normally set to be optimization method as for each iteration, we would like to have small changes to the robot system. 
+\begin{equation}
+\theta_{h+1} = \theta_h + \alpha_h \nabla_\theta J|_{\theta=\theta_h}
+\end{equation}
+where $\alpha_h$ is learning rate for current updating step $h$.
 
 \section{Classification of the Regarded RL Problems}
-\subsection{High-Dimensionality}
-\subsection{Partial-Observability}
-\subsection{Continuous State and Action Spaces}
-\subsection{Data-Efficiency}
+Many literatures have pointed out the complexity of RL problem in the area of robotics.\cite{Kober2013}\cite{peters2006policy}. Especially in Kober's paper\cite{Kober2013}, four different aspects were mentioned. He considers these four aspects as four curses for applying RL to robotics. These four curses are curse of High dimensionality, curse of real world samples, curse of under modelling and model uncertainty and curse of goal specification.
+
+\textbf{High-Dimensionality} is the first characteristics considered in the area of robotics. Robot systems normally have many degrees of freedom(DOF), especially in modern anthropomorphic robots. For example, Baxter robot has two arms, each arm has 7 DOF including three pitch degrees and four roll degrees. This continuity makes traditional reinforcement learning fail as many traditional methods are based on discretization of each DOF. If the we discretize $n$ DOFs and discretize each DOF to $m$ states, the total states for the system is $m^n$, which is in inapplicable in most of the cases.
+
+Need of \textbf{Real Samples} is another curse of applying RL to robotics. Robot system inherently interacts with physical system in real world. During test with environment, robot hardware may experience wear and tear. As a consequence, in many cases, this is an expansive process. Despite failure is costly, the test process also requires some kind of supervision from human. For example, we used Baxter to reach certain position as fast as possible. In optimization process, it stucks at a position that is hard to set. If optimization process happens in more complex dynamic environment(e.g. helicopter robot), a supervision process conducted by several human's cooperation is needed. For all these reasons, generating real word samples require different resources and is a expansive process.
+
+\textit{Under-modelling and model uncertainty} is the next problem in robot system. For reducing the cost of real world samples, people build accurate simulators to accelerate learning process. Unfortunately, building such kind of models involves a lot of engineering work, which is also expansive. For small robot system, the simulator can improve learning process to some extend. But if we use simulator to simulate complex system, a small turbulence can cause learned system to diverge from real system.
+
+Last but not the least, \textit{goal specification } means to specify the reward function for the robot system. As in reinforcement learning algorithm, policy optimization process depends on the observing different rewards of two different policies. If a same reward is always received, there is no way of telling which policy is better. In practice, it is surprisingly difficult to specify the reward function of the system. 
+
+These four areas are notorious when people try to apply RL algorithm to robotics. Here we only discuss basic ideas of these problems. However, people who studies applying reinforcement learning in robotics have explored these problems more thoroughly than discussed here. If readers have interest, please refer to paper "Reinforcement learning in robotics: A survey"\cite{Kober2013}
+
+\section{Policy Gradient with Parameter Exploration}
+As one of the policy gradient method, Policy Gradient with Parameter Exploration(PGPE) has shown its advantages in several scenarios. This algorithm was developed by Frank Sehnke and described in his paper "Policy Gradient with Parameter Exploration" \cite{sehnke2008policy}. PGPE algorithm follows basic idea of policy gradient algorithm, that is optimizing policy without using value estimation.
+
+\subsection{PGPE algorithm}
+As previously mentioned, the policy uses several policy parameters $\vec{\theta}$ to represent policy of the system. In the case of PGPE, the policy is represented as a simple linear model. For formalizing the algorithm, we will uses previous symbols as basis of system.
+
+Considering a robot interacting with environment, at time $t$, the robot is in a state $\vec{s_t}$, making action $\vec{a_t}$ and resulting in state $\vec{s}_{t+1}$ according a stochastic function $\vec{s}_{t+1}\sim p(\vec{s_{t+1}}|\vec{s_t}, \vec{a_t})$. Now with parameter $\vec{\theta}$, the action is defined as $ \vec{a_{t}}\sim p(\vec{a}{t}|\vec{s}_{t},\vec{\theta})$.
+
+In PGPE, the action is determined by $n$ weight matrices($W_i, \forall i \in \{1,2,\cdots, n\}$). Mathematically, the action vector $\vec{a}$ is determined by :
+\begin{align}
+\vec{a} &= f(\vec{s}) \\
+&= \sum_i^n\vec{W_i} \cdot \vec{s}
+\end{align}
+
+where $f(\vec{s})$ is defined as $f(\vec{s})$.(sometimes, it is also called a multi-layer linear neural network.).
+
+Each parameter in matrix $W_{ijk}$ is defined by a Gaussian function:
+\begin{equation}
+W_{ijk} \sim \mathcal{N}(\mu, \sigma^2) = \frac{1}{{\sigma \sqrt {2\pi } }}e^{{{ - \left( {x - \mu } \right)^2 } \mathord{\left/ {\vphantom {{ - \left( {x - \mu } \right)^2 } {2\sigma ^2 }}} \right. \kern-\nulldelimiterspace} {2\sigma ^2 }}}
+\label{pgpe_gaussian}
+\end{equation}
+where $\mu$ and $sigma$ are mean and variance of the algorithm, $W_{ijk}$ means element of $j'th$ row and $k'th$ column of $i'th$ matrix.
+
+
+
+The learning process of PGPE is a little bit different than other algorithm. Previously, the objective function is defined according to Formula~\ref{objective_function}. However, in episodic setting, the parameters are updated after each episode, which makes algorithm to depend on sampling of all parameters of this linear neuron network. After sampling parameters for all weights of network, we receive a sequence of all the reward $r_t$ in this episode which results reward of this episode to be $r(h) = \sum_{t=1}^T r_t$. We then modify the algorithm to be:
+\begin{equation}
+J(\theta) = \int_H p(h|\vec{\theta})r(h)dh
+\end{equation}
+where $H$ is set of all possible history $h$ of this episode, $h$ is defined as $h = [s_{1:T}, a_{1:T}]$.
+
+Further expanding the formula by using standard identity $\nabla_x y(x) = y(x) \nabla_x \log(x)$:
+\begin{equation}
+\nabla_{\vec{\theta}} J(\vec{\theta}) = \int_H p(h|\vec{\theta}) \nabla_{\vec{\theta}} \log p(h|\vec{\theta})r(h)dh
+\label{stadard_identity_transformation}
+\end{equation}
+Since the whole process is Markovian process, i.e. we have $ \vec{a_{t}}\sim p(\vec{a}_{t}|\vec{s}_{t},\vec{\theta})$ defined as the transition function. The following property holds: 
+
+\begin{equation}
+p(h|\vec{\theta}) = \prod_{i=1}^Tp(\vec{s}_{i+1}|\vec{a}_i, \vec{s}_i)p(\vec{a}_{i}|\vec{s}_{i}, \vec{\theta})p(\vec{s_0})
+\label{markov_property}
+\end{equation}
+
+\begin{align}
+\log(p(h|\vec{\theta})) = \sum_{i=1}^T\log(p(\vec{s}_{i+1}|\vec{a}_i, \vec{s}_i)p(\vec{a}_{i}|\vec{s}_{i}, \vec{\theta})) + \log(\vec{s_0})
+\label{log_markov_property}
+\end{align}
+
+The term $\nabla_{\vec{\theta}} \log p(h|\vec{\theta})$ in the Formula ~\ref{stadard_identity_transformation} can be rewritten as:
+\begin{align}
+\nabla_{\vec{\theta}} \log p(h|\vec{\theta})  &= \nabla_{\vec{\theta}} \sum_{i=1}^T\log(p(\vec{s}_{i+1}|\vec{s}_{i}, \vec{\theta})) + \nabla_{\vec{\theta}} \log(\vec{s_0}) \\
+&= \nabla_{\vec{\theta}} \sum_{i=1}^T\log(p(\vec{s}_{i+1}|\vec{a}_i, \vec{s}_i)p(\vec{a}_{i}|\vec{s}_{i}, \vec{\theta})) \\
+&= \nabla_{\vec{\theta}} \sum_{i=1}^T\log(p(\vec{a}_{i}|\vec{s}_{i}, \vec{\theta}))
+\label{expansion_of_log_history}
+\end{align}
+
+Then if we substitute the result of Formula~\ref{expansion_of_log_history} to Formula~\ref{stadard_identity_transformation}, we get more convenient form:
+
+
+\begin{equation}
+\nabla_{\vec{\theta}} J(\vec{\theta}) = \int_H p(h|\vec{\theta}) \nabla_{\vec{\theta}} \sum_{i=1}^T\log(p(\vec{a}_{i}|\vec{s}_{i}, \vec{\theta}))r(h)dh
+\label{standard_identity_transformation}
+\end{equation}
+
+In continuous case, it is impossible to get all the histories for certain set of policy parameters. We need to estimate the gradient based on the samples of this distribution as a result, we further modify our formulas to:
+\begin{equation}
+\nabla_{\vec{\theta}} J(\vec{\theta}) = \frac{1}{P}\sum_{p=1}^P  \sum_{i=1}^T\nabla_{\vec{\theta}}\log(p(\vec{a_{ip}}|\vec{s_{ip}}, \vec{\theta_p}))r(h_p)
+\label{pgpe_policy}
+\end{equation}
+where, in formula, subscription $p$ means $p'th$ sample of the distribution.
+
+Previously, we discussed that, in PGPE, each parameter of matrices is determined by a Gaussian function as defined in Fomula~\ref{pgpe_gaussian}. As we use weights matrices $W_i$ as hidden policy parameters, the Formula~\ref{standard_identity_transformation} becomes as:
+\begin{align*}
+\nabla_{\vec{\mu}, \vec{\sigma^2}} J(\vec{\theta}) = \int_H p(h|\vec{\theta}) \nabla_{\vec{\theta}} \sum_{i=1}^T\log(\int_\theta p(\vec{a}_{i}|\vec{s}_{i}, \vec{\theta})p(\vec{\theta}|\vec{\mu},\vec{\sigma^2}))r(h)dh \numberthis \label{standard_identity_transformation_replaced_by_mean_sigma}
+\end{align*}
+
+According to this formula, we can make a optimization process for both vectors of means and variances of Gaussian distribution. There are two ways of optimizing the function. One way is to calculate the gradient information of each mean $\mu_i$ and gradient information of each $\sigma$ with respect with respect to $\log(p(\theta| \vec{\mu}, \vec{\sigma^2}))$. From definition of Gaussian function we can get:
+
+\begin{align*}
+\nabla_\mu \log(p(\theta| \vec{\mu}, \vec{\sigma^2})) &= \nabla_\mu \log(\frac{1}{\sigma\sqrt{2\pi}}\exp\frac{-(\theta - \mu)}{2\sigma^2}) \\
+&= \nabla_\mu -\frac{-(\mu - x)^2}{2\sigma^2} \\
+&= \frac{\mu-x}{\sigma^2}   \numberthis \label{gaussian_mean_gradient} 
+\end{align*}
+
+and 
+
+\begin{align*}
+\nabla_\sigma \log(p(\theta| \vec{\mu}, \vec{\sigma^2})) &= \nabla_\sigma \log(\frac{1}{\sigma\sqrt{2\pi}}\exp\frac{-(\theta - \mu)}{2\sigma^2}) \\
+&= -\frac{1}{\sigma} + \frac{(x-\mu)^2}{\sigma^3} \\
+&= \frac{(x-\mu)^2 - \sigma^2}{\sigma^3}   \numberthis \label{gaussian_sigma_gradient}
+\end{align*}
+
+After getting gradient information of mean $\mu$ and variance $\sigma^2$ of system, we can use method proposed by Williams\cite{williams1992simple}. Instead of knowing exact step size, Williams uses a so-called reference reward to calculate the step size. Formula~\ref{wiliams_update_mean}~\ref{wiliams_update_sigma} shows the updating rules of mean and variances.
+
+\begin{equation}
+\Delta \mu = \alpha (r - b)\frac{\mu - x}{\sigma^2}
+\label{wiliams_update_mean}
+\end{equation}
+
+\begin{equation}
+\Delta \sigma = \alpha (r - b)\frac{(x-\mu)^2 - \sigma^2}{\sigma^3}
+\label{wiliams_update_sigma}
+\end{equation}
+
+This method was influenced by Williams' REINFORCE algorithm as consequence, it inherits the advantages and disadvantages of this algorithm. On one hand, this method has proof of convergence, which means with more trials, this method will finally converge. On the anther hand, this method is also slow and unstable. A better solution based on Simultaneous Perturbation Stochastic Approximation(SPSA) provides fast convergence rate.
+
+This method uses a symmetric sampling process for determining rewards of a specific mean $\mu$ and variance $\sigma$ of random variable. Using SPSA, we first generate small perturbation $\epsilon$ from normal distribution $\mathcal{N}(0, \sigma^2)$. Then we then use two parameters $\vec{\theta}^+ = \vec{\mu} + \vec{\epsilon}$ and $\vec{\theta}^- = \vec{\mu} - \vec{\epsilon}$ for the system to get two rewards $r^+$ and $r^-$. Combining with Formula~\ref{gaussian_mean_gradient} and Formula~\ref{gaussian_sigma_gradient}, we can get gradient information for $\vec{\mu}$ as:
+\begin{equation}
+\nabla_{\mu_i}J(\vec{\mu}, \vec{\sigma^2}) \approx \frac{\alpha\epsilon(r^+ + r^-)}{\sigma^2}
+\end{equation}
+
+Then we use central different method and apply the same step size, then updating rule becomes:
+\begin{equation}
+\Delta_{u_i} = \alpha \epsilon \frac{(r^+ - r^-)}{2}
+\label{sys_update_mu}
+\end{equation}
+
+However, we can not use similar method for updating $\sigma$, since the selected two parameters $\theta^+$ and $\theta^-$ have same variances. As a consequence, instead of using information from sample parameter $\epsilon$ along, we also consider the average value of two rewards to update $\sigma$. This updating algorithm is called SyS sampling method in some literature.\cite{sehnke2013efficient}
+
+\begin{equation}
+\Delta_{\sigma_i} = \alpha \left(\frac{(r^+ + r^-)}{2} - b) \right)\left(\frac{\epsilon_i^2 - \sigma_i^2}{\sigma_i}\right)
+\label{sys_update_sigma}
+\end{equation}
+where $b$ is baseline and updated before updating hidden policy parameters $\vec{\mu}$ and $\vec{\sigma^2}$.
+
+Formula~\ref{b_update} shows how baseline is updated. Some literature mentioned that variance of the base can affect quite a lot the learning speed of the system.\cite{zhao2011analysis}. But here we only use the simplest way of updating the algorithm.
+\begin{equation}
+b = 0.1 \cdot b + 0.9 \cdot \frac{r^+ + r^-}{2}
+\label{b_update}
+\end{equation}
+
+
+In the following section, we use pseudo code for whole PGPE algorithm.
+\newline
+\newline
+\begin{algorithm}[H]
+\caption{Policy Gradient with Parameter Exploration}
+ \KwData{The MDP Process Parameters }
+ \KwResult{Optimal Policy $\pi*$}
+ 
+ \While{average reward not converged}{
+	Get mean $\vec{\mu}$ and variances $\vec{\sigma^2}$ of random variables. \\
+	For each parameter, sample $\epsilon$ from Normal Distribution $\mathcal{N}(0, \sigma^2)$ and form a vector $\vec{\epsilon}$.  \\
+	Get two parameters using $\vec{\theta^-} = \vec{\mu} - \vec{\epsilon}$, $\vec{\theta^+} = \vec{\mu} + \vec{\epsilon}$ \\
+	Use two parameters as policy parameters, get cumulative reward $r^+$, $r^-$ from system.\\
+	Update baseline $b$ of algorithm according to Formula~\ref{b_update}. \\
+	Update $\mu$ and $\sigma$ using Formula~\ref{sys_update_mu} and Formula~\ref{sys_update_sigma}. \\
+	
+  } 
+\label{alg:pepg}
+\end{algorithm}
+ 
+
 
 \chapter{Deep Recurrent Neural Networks}
-Recurrent Neural Network(RNN) is a special structure of neural network that has recurrent connections. In the following sections of this chapter, we are going to discuss the details of this model.
+Recurrent Neural Network(RNN) is a special structure of neural network that has recurrent connections. And further more, deep recurrent neural networks are a neural network models that have more than one hidden layer.  In the following sections of this chapter, we are going to discuss the details of this kind of model. 
 \section{Deep Learning and its Recent Advances}
+Deep learning attracted a lot of attention since 2006. In year 2006, Geoffrey Hinton, one of the founders of idea deep learning, published a paper called "Reducing the Dimensionality of
+Data with Neural Networks"\cite{hinton2006reducing}. In this paper, Hinton and Slakhutdinow showed how a many-layered feedforward neural network can be pre-trained layer by layer. Since this paper, the work "deep learning" become famous in the community. However, before Hinton's work, several deep learning algorithms were developed. One of the initial works belongs to Kunihiko Fukushima who invented a model called Neocognitron in 1980. After that, in 1989, Yann Lecun was able to use an optimization algorithm called back-propagation to train the neuron network. Then Yann Lecun further simplified network to be so-called \textit{Convolutional Neuron Network(CNN)} in 1998. As CNN becomes so successful in the area of computer vision, the deep learning embraced boost after that period. However, other models that has more than one hidden layer is also normally discussed in the context of deep learning. For example, Deep Belief Network (DBN) and Deep Boltzmann Machine(DBM) are not normally considered as neuron network models, but they also have application in the area of computer vision.
 \section{Feedforward Neural Networks}
 In year 1957, the simplest structure of neural network called perceptron was introduced by Frank Rosenblatt in Conell's Aeronautical Laboratory. This model consists only one cell and multiple connections. Figure~\ref{perceptron} shows the basic structure of perceptron.
 \begin{figure}[h!]
   \centering
 	\begin{tikzpicture}[scale=1.2, shorten >=1pt,->,draw=black!80, node distance=\layersep]
     \tikzstyle{every pin edge}=[<-,shorten <=1pt]
-    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=17pt,inner sep=0pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
     \tikzstyle{annot} = [text width=4em, text centered]
             
     
@@ -280,16 +524,16 @@ In year 1957, the simplest structure of neural network called perceptron was int
 The formula of representing input and output is defined as:
 
 \begin{equation}
-y = \mathbf{w}\cdot\mathbf{x} + b
+y = \vec{w}\cdot\vec{x} + b
 \end{equation}
 
 If we consider $b$ also as one of the inputs, then the formula can be defined as:
 
 \begin{equation}
-y = \hat{\mathbf{w}}\hat{\cdot\mathbf{x}}
+y = \vec{w}_{new}\cdot\vec{x}_{new}
 \end{equation}\label{pronceptron_formula}
 
-where $ \hat{\mathbf{w}} = [\mathbf{w};b] $ and $\hat{\mathbf{x}} = [\mathbf{x};1]$.
+where $ \vec{w}_{new} = [\vec{w};b] $ and $\vec{x} = [\vec{x};1]$.
 
 This simple structure was considered promising initially from several points of view. But after further investigation, the perceptron was proven that it can not classify many non-linear classes of patterns. However, its discovery leads to a field of research called neural networks in area artificial intelligence. As a consequence, since 1957, people started trying different methods for modifying this model to adapt to different problems. One important modification is to add a non-linear transformation function to the system i.e. after getting $y$ from Formula\ref{pernceptron_formula}, we use a function like tanh to get a new $\hat{y}$ to ensure the output is restricted in a range. Anther important modification of the system is to stack many perceptrons together to build a large and complex model for the classification purpose. This kind of networks is normally called Feed-forward Neural Networks(FFNN) as information send to this system is propagated only from lower layer to higher layer. Figure~\ref{feedforward_nn} shows the structure of FFNN system.
 
@@ -300,7 +544,7 @@ This simple structure was considered promising initially from several points of 
 
 	\begin{tikzpicture}[scale=1.2, shorten >=1pt,->,draw=black!80, node distance=\layersep]
     \tikzstyle{every pin edge}=[<-,shorten <=1pt]
-    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=17pt,inner sep=0pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
     \tikzstyle{annot} = [text width=4em, text centered]
 
     % Draw the input layer nodes
@@ -343,18 +587,18 @@ This simple structure was considered promising initially from several points of 
 The formula describing the each layer is then defined as:
 
 \begin{equation}
-\mathbf{o} = \sigma(W\mathbf{x})
+f(\vec{x}) = \sigma(W\vec{x})
 \end{equation}
-where $f(\cdot)$ is a non-linear transformation function.(e.g. tanh)
+where $\sigma(\cdot)$ is a nonlinear function.(e.g. tanh)
 
 \section{Recurrent Neural Networks}
-The Recurrent Neural Networks(RNN) contain at least one neuron that has at least one recurrent connection i.e. a connection that connects to itself or to lower layer. This special structure makes memory cell to be internal memory which enables network to memories the change of sequential data. Unlike the feed-forward neural network, the recurrent neural network is used for predicting next data point.
+The Recurrent Neural Networks(RNN) contains at least one neuron that has at least one recurrent connection i.e. a connection that connects to itself or to lower layer. This special structure makes memory cell to be internal memory which enables network to memories the change of sequential data. Unlike the feed-forward neural network, the recurrent neural network is used for predicting next data point.
 
 \begin{figure}[h!]
   \centering
   \begin{tikzpicture}[scale=1.2, shorten >=1pt,->,draw=black!80, node distance=\layersep]
     \tikzstyle{every pin edge}=[<-,shorten <=1pt]
-    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=17pt,inner sep=0pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
     \tikzstyle{annot} = [text width=4em, text centered]
 
     % Draw the input layer nodes
@@ -396,14 +640,108 @@ The Recurrent Neural Networks(RNN) contain at least one neuron that has at least
 
 \subsection{Finite Unfolding in Time}
 When considering the structure of neural network, people normally application Finite Unfolding in Time for RNN. It means to introduce another dimension for RNN. In this way, the recurrent connection can be dealt with more easily.  In the following section, we will use a simple example for explaining this idea. The model we are going to use contains one input neuron, one hidden neuron and one output neuron. See Figure~\ref{simple_rnn} for reference.
-\begin{figure}[h!]
-  \centering
 
+
+
+\begin{figure}[h!]
+\centering
+\tikzstyle{background}=[rectangle,fill=gray!10,inner sep=0.5cm, rounded corners=5mm]
+\begin{tikzpicture}[>=latex,text height=1.5ex,text depth=0.25ex]
+	\tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
+	\tikzstyle{cdots_neuron}=[circle,fill=gray!10,minimum size=25pt,inner sep=0pt]
+    % "text height" and "text depth" are required to vertically
+    % align the labels with and without indices.
+  
+  % The various elements are conveniently placed using a matrix:
+  \matrix[row sep=0.6cm,column sep=0.5cm] {
+    % First line: Control input
+    		&
+        \node (x_t-1) [neuron]{$\vec{x}_{t-1}$}; &
+        &
+        \node (x_t)   [neuron]{$\vec{x}_t$};     &
+		&
+		\node (cdots_x)   [cdots_neuron] {$\cdots$};
+													&
+        	&
+        	\node (x_n-1)   [neuron] {$\vec{x}_{n-1}$};
+													&
+        	&         	
+        \node (x_n) [neuron]{$\vec{x}_{n}$}; &
+
+        \\
+        % Third line: State & state transition matrix
+		\\
+		&
+        \node (s_t-1) [neuron] {$\vec{s}_{t-1}$}; &
+		&
+        \node (s_t)   [neuron] {$\vec{s}_t$};     &
+        
+		&
+		\node (cdots_s)   [cdots_neuron] {$\cdots$};
+													&
+        	&
+        	\node (s_n-1)   [neuron] {$\vec{s}_{n-1}$};
+													&
+        	&        		
+        \node (s_n) [neuron] {$\vec{s}_{n}$}; &
+		\\
+		\\
+
+        % Fifth line: Measurement
+        &
+        \node (o_t-1) [neuron] {$\vec{o}_{t-1}$}; &
+        &
+        \node (o_t)   [neuron] {$\vec{o}_t$};     &
+        	&
+		\node (cdots_o)   [cdots_neuron] {$\cdots$};
+													&
+        	&
+        	\node (o_n-1)   [neuron] {$\vec{o}_{n-1}$};
+													&
+        	&         	
+        \node (o_n) [neuron] {$\vec{o}_{n}$}; &
+        \\
+    };
+    
+    % The diagram elements are now connected through arrows:
+    \path[->]
+    	    (x_t-1) edge (s_t-1)
+        (x_t) edge (s_t)
+        (x_n-1) edge (s_n-1)
+        (x_n) edge (s_n)
+        	        	
+        (s_t-1) edge (s_t)
+        (s_t) edge (cdots_s)  
+        
+        (cdots_s) edge (s_n-1)
+    	    (s_t-1) edge (o_t-1)
+        (s_t) edge (o_t)
+        (s_n-1) edge (o_n-1)
+        (s_n) edge (o_n)
+        ;
+    
+    % Now that the diagram has been drawn, background rectangles
+    % can be fitted to its elements. This requires the TikZ
+    % libraries "fit" and "background".
+    % Control input and measurement are labeled. These labels have
+    % not been translated to English as "Measurement" instead of
+    % "Messung" would not look good due to it being too long a word.
+    \begin{pgfonlayer}{background}
+        \node [background,
+                    fit=(x_t-1) (x_n),
+                    label=left:Inputs:] {};
+        \node [background,
+                    fit=(s_t-1) (s_n),
+                    label=left:Hidden States:] {};
+        \node [background,
+                    fit=(o_t-1) (o_n),
+                    label=left:Outputs:] {};
+    \end{pgfonlayer}
+\end{tikzpicture}
   \caption{This picture shows the structure of a simple RNN. It contains three layers i.e. one input layer, one hidden layer and one output layer.}\label{simple_rnn}
 \end{figure}
-\change{This picture should be remade using tikz later}
 
-In this figure, we mark input layer as $\mathbf{x}$, hidden layer as $\mathbf{s}$ and output layer as $\mathbf{o}$.
+In this figure, we mark input layer as $\vec{x}$, hidden layer as $\vec{s}$ and output layer as $\vec{o}$.
 
 The basics idea of unfolding RNN in time is to copy RNN several times and connect them in a chronological order. If the connection is recurrent, then the connection should be connect to the same neuron of next time step.Figure~\ref{unfolded_simple_rnn} illustrates the model of unfolding simple RNN  for three time steps.
 
@@ -427,53 +765,54 @@ The basics idea of unfolding RNN in time is to copy RNN several times and connec
                                                 rounded corners=5mm]
 
 \begin{tikzpicture}[>=latex,text height=1.5ex,text depth=0.25ex]
+	\tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
     % "text height" and "text depth" are required to vertically
     % align the labels with and without indices.
   
   % The various elements are conveniently placed using a matrix:
-  \matrix[row sep=0.5cm,column sep=0.5cm] {
+  \matrix[row sep=0.6cm,column sep=0.5cm] {
     % First line: Control input
     		&
-        \node (x_t-1) [matrx]{$\mathbf{x}_{t-1}$}; &
+        \node (x_t-1) [neuron]{$\vec{x}_{t-1}$}; &
         &
-        \node (x_t)   [matrx]{$\mathbf{x}_t$};     &
+        \node (x_t)   [neuron]{$\vec{x}_t$};     &
         &
-        \node (x_t+1) [matrx]{$\mathbf{x}_{t+1}$}; &
+        \node (x_t+1) [neuron]{$\vec{x}_{t+1}$}; &
 
         \\
         % Third line: State & state transition matrix
 		\\
 		&
-        \node (s_t-1) [matrx] {$\mathbf{s}_{t-1}$}; &
+        \node (s_t-1) [neuron] {$\vec{s}_{t-1}$}; &
 		&
-        \node (s_t)   [matrx] {$\mathbf{s}_t$};     &
+        \node (s_t)   [neuron] {$\vec{s}_t$};     &
 		&
-        \node (s_t+1) [matrx] {$\mathbf{s}_{t+1}$}; &
+        \node (s_t+1) [neuron] {$\vec{s}_{t+1}$}; &
 		\\
 		\\
 
         % Fifth line: Measurement
         &
-        \node (o_t-1) [matrx] {$\mathbf{o}_{t-1}$}; &
+        \node (o_t-1) [neuron] {$\vec{o}_{t-1}$}; &
         &
-        \node (o_t)   [matrx] {$\mathbf{o}_t$};     &
+        \node (o_t)   [neuron] {$\vec{o}_t$};     &
         &
-        \node (o_t+1) [matrx] {$\mathbf{o}_{t+1}$}; &
+        \node (o_t+1) [neuron] {$\vec{o}_{t+1}$}; &
         \\
     };
     
     % The diagram elements are now connected through arrows:
     \path[->]
-    	    (x_t-1) edge[thick] (s_t-1)
-        (x_t) edge[thick] (s_t)
-        (x_t+1) edge[thick] (s_t+1)
+    	    (x_t-1) edge (s_t-1)
+        (x_t) edge (s_t)
+        (x_t+1) edge (s_t+1)
         	        	
-        (s_t-1) edge[thick] (s_t)
-        (s_t) edge[thick] (s_t+1)  
+        (s_t-1) edge (s_t)
+        (s_t) edge (s_t+1)  
         
-    	    (s_t-1) edge[thick] (o_t-1)
-        (s_t) edge[thick] (o_t)
-        (s_t+1) edge[thick] (o_t+1)
+    	    (s_t-1) edge (o_t-1)
+        (s_t) edge (o_t)
+        (s_t+1) edge (o_t+1)
         ;
     
     % Now that the diagram has been drawn, background rectangles
@@ -494,16 +833,15 @@ The basics idea of unfolding RNN in time is to copy RNN several times and connec
                     label=left:Outputs:] {};
     \end{pgfonlayer}
 \end{tikzpicture}
-  \caption{This picture contains model that unfolds a simple RNN described in Figure\ref{simple_rnn} in three time steps. In this figure, $x_t$ represents input layer at time $t$, $s_t$ representes the hiddent states at time $t$ and $o_t$ representes output layer at time $t$.}\label{unfolded_simple_rnn}
+  \caption{This picture contains model that unfolds a simple RNN described in Figure\ref{simple_rnn} in abitary $n$ time steps. In this figure, $x_t$ represents input layer at time $t$, $s_t$ representes the hiddent states at time $t$ and $o_t$ representes output layer at time $t$.}\label{unfolded_simple_rnn}
 \end{figure}
-\change{This picture should be remade using tikz later}
 
 The finite unfolding technique transforms a neural network with recurrent connection to a network that is easier to compute gradients. It is also easy for us to write this neural network's expression.
 
 \begin{equation}
-\mathbf{s_{t}} = \sigma(W\mathbf{x_t} + B\mathbf{s_{t-1}})\label{internal_state_fomula}
+\vec{s_{t}} = \sigma(W\vec{x}_t + B\vec{s}_{t-1})\label{internal_state_fomula}
 \end{equation}
-Where $\mathbf{s_t}$ is the value of hidden state at time $t$ and $B$ is the weight matrix for updating hidden state information from time $t-1$ to $t$.
+Where $\vec{s_t}$ is the value of hidden state at time $t$ and $B$ is the weight matrix for updating hidden state information from time $t-1$ to $t$.
 
 
 \subsection{Overshooting}
@@ -511,71 +849,65 @@ Considering that we only one time series, the task for RNN is to predict next da
 
 \begin{figure}[h!]
   \centering
-\tikzstyle{matrx}=[rectangle,
-                                    thick,
-                                    minimum size=1cm,
-                                    draw=gray!80,
-                                    fill=gray!20]
+\tikzstyle{matrx}=[rectangle,thick,minimum size=1cm,draw=gray!80,fill=gray!20]
 
 
 % Everything is drawn on underlying gray rectangles with
 % rounded corners.
-\tikzstyle{background}=[rectangle,
-                                                fill=gray!10,
-                                                inner sep=0.5cm,
-                                                rounded corners=5mm]
+\tikzstyle{background}=[rectangle,fill=gray!10,inner sep=0.5cm,rounded corners=5mm]
 \begin{tikzpicture}[>=latex,text height=1.5ex,text depth=0.25ex]
+	\tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
     % "text height" and "text depth" are required to vertically
     % align the labels with and without indices.
   
   % The various elements are conveniently placed using a matrix:
   \matrix[row sep=0.5cm,column sep=0.5cm] {
     % First line: Control input
-		\node (x_t-2) [matrx]{$\mathbf{x}_{t-2}$}; &
+		\node (x_t-2) [neuron]{$\vec{x}_{t-2}$}; &
     		&
-        \node (x_t-1) [matrx]{$\mathbf{x}_{t-1}$}; &
+        \node (x_t-1) [neuron]{$\vec{x}_{t-1}$}; &
         &
-        \node (x_t)   [matrx]{$\mathbf{x}_t$};     &
+        \node (x_t)   [neuron]{$\vec{x}_t$};     &
         &
         & &
 
         \\
         % Third line: State & state transition matrix
 		\\
-		\node (s_t-2) [matrx]{$\mathbf{s}_{t-2}$}; &
+		\node (s_t-2) [neuron]{$\vec{s}_{t-2}$}; &
 		&
-        \node (s_t-1) [matrx] {$\mathbf{s}_{t-1}$}; &
+        \node (s_t-1) [neuron] {$\vec{s}_{t-1}$}; &
 		&
-        \node (s_t)   [matrx] {$\mathbf{s}_t$};     &
+        \node (s_t)   [neuron] {$\vec{s}_t$};     &
 		&
-        \node (s_t+1) [matrx] {$\mathbf{s}_{t+1}$}; &
+        \node (s_t+1) [neuron] {$\vec{s}_{t+1}$}; &
 		\\
 		\\
 		
-        \node (hat_x_t-1) [matrx]{$\mathbf{\hat{x}}_{t-1}$}; &
+        \node (hat_x_t-1) [neuron]{$\vec{\hat{x}}_{t-1}$}; &
         &
-        \node (hat_x_t) [matrx] {$\mathbf{\hat{x}}_{t}$}; &
+        \node (hat_x_t) [neuron] {$\vec{\hat{x}}_{t}$}; &
         &
-        \node (hat_x_t+1)   [matrx] {$\mathbf{\hat{x}}_{t+1}$};     &
+        \node (hat_x_t+1)   [neuron] {$\vec{\hat{x}}_{t+1}$};     &
         &
-        \node (hat_x_t+2) [matrx] {$\mathbf{\hat{x}}_{t+2}$}; &
+        \node (hat_x_t+2) [neuron] {$\vec{\hat{x}}_{t+2}$}; &
         \\
     };
     
     % The diagram elements are now connected through arrows:
     \path[->]
-    		(x_t-2) edge[thick] (s_t-2)
-    	    (x_t-1) edge[thick] (s_t-1)
-        (x_t) edge[thick] (s_t)
+    		(x_t-2) edge (s_t-2)
+    	    (x_t-1) edge (s_t-1)
+        (x_t) edge (s_t)
         	  
-	    (s_t-2) edge[thick] (s_t-1)        	        	
-        (s_t-1) edge[thick] (s_t)
-        (s_t) edge[thick] (s_t+1)  
+	    (s_t-2) edge (s_t-1)        	        	
+        (s_t-1) edge (s_t)
+        (s_t) edge (s_t+1)  
 
-		(s_t-2) edge[thick] (hat_x_t-1)       
-    	    (s_t-1) edge[thick] (hat_x_t)
-        (s_t) edge[thick] (hat_x_t+1)
-        (s_t+1) edge[thick] (hat_x_t+2)
+		(s_t-2) edge (hat_x_t-1)       
+    	    (s_t-1) edge (hat_x_t)
+        (s_t) edge (hat_x_t+1)
+        (s_t+1) edge (hat_x_t+2)
         ;
     
     % Now that the diagram has been drawn, background rectangles
@@ -586,16 +918,16 @@ Considering that we only one time series, the task for RNN is to predict next da
     % "Messung" would not look good due to it being too long a word.
 
 \end{tikzpicture}
-  \caption{This figure isllustrates in a predictive model made by RNN, how does it generate $\hat{x_t}$ based on previous data. After using all training example, the model lacks input data. Then the neural caluclation of hidden defined as $\mathbf{s_{t}} = \sigma(W\mathbf{x_t} + B\mathbf{s_{t-1}}))$ becomes $\mathbf{s_{t}} = \sigma(B\mathbf{s_{t-1}})$}\label{overshot_rnn}
+  \caption{This figure isllustrates in a predictive model made by RNN, how does it generate $\hat{x_t}$ based on previous data. After using all training example, the model lacks input data. Then the neural caluclation of hidden defined as $\vec{s_{t}} = \sigma(W\vec{x_t} + B\vec{s_{t-1}}))$ becomes $\vec{s_{t}} = \sigma(B\vec{s_{t-1}})$}\label{overshot_rnn}
 \end{figure}
 
-Last training step takes input $\mathbf{x}(t-2)$, $\mathbf{x}(t-1)$, $\mathbf{x}(t)$ as input and produce $\mathbf{x}(t-1)$, $\mathbf{x}(t)$, $\mathbf{x}(t+1)$ as outputs. However it is very difficult to predict value at time t+2 as we don't have information of $\mathbf{x}(t+1)$. According to the Fomula~\ref{internal_state_fomula}, the input is set to $\mathbf{0}\quad \forall t > T$ then we get:
+Last training step takes input $\vec{x}(t-2)$, $\vec{x}(t-1)$, $\vec{x}(t)$ as input and produce $\vec{x}(t-1)$, $\vec{x}(t)$, $\vec{x}(t+1)$ as outputs. However it is very difficult to predict value at time t+2 as we don't have information of $\vec{x}(t+1)$. According to the Fomula~\ref{internal_state_fomula}, the input is set to $\vec{0}\quad \forall t > T$ then we get:
 
 \begin{equation}
-\mathbf{s_{t}} = \sigma(B\mathbf{s_{t-1}})\label{overshot_formula}
+\vec{s_{t}} = \sigma(B\vec{s_{t-1}})\label{overshot_formula}
 \end{equation}
 
-As a consequence, the output defined as $\mathbf{x_{t+1}} = A\mathbf{s_{t}}$ becomes the prediction for next value. This phenomenon is called overshooting.
+As a consequence, the output defined as $\vec{x_{t+1}} = A\vec{s_{t}}$ becomes the prediction for next value. This phenomenon is called overshooting.
 \subsection{Dynamical Consistency}
 
 Dynamical consistency is kept by introducing the output of last time step to input of current time step. Figure~\ref{series_prediction_rnn} illustrates how is it done through the modification of structure.
@@ -622,57 +954,58 @@ Dynamical consistency is kept by introducing the output of last time step to inp
 \begin{tikzpicture}[>=latex,text height=1.5ex,text depth=0.25ex]
     % "text height" and "text depth" are required to vertically
     % align the labels with and without indices.
-  
+  \tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
+  \tikzstyle{dashed_neuron}=[circle, dashed, fill=black!25,minimum size=25pt,inner sep=0pt]
   % The various elements are conveniently placed using a matrix:
   \matrix[row sep=0.5cm,column sep=0.5cm] {
     % First line: Control input
-		\node (x_t-2) [matrx]{$\mathbf{x}_{t-2}$}; &
+		\node (x_t-2) [neuron]{$\vec{x}_{t-2}$}; &
     		&
-        \node (x_t-1) [matrx]{$\mathbf{x}_{t-1}$}; &
+        \node (x_t-1) [neuron]{$\vec{x}_{t-1}$}; &
         &
-        \node (x_t)   [matrx]{$\mathbf{x}_t$};     &
+        \node (x_t)   [neuron]{$\vec{x}_t$};     &
         &
-        \node (x_t+1)   [dashed_matrx]{$\mathbf{\hat{x}}_{t+1}$}; 	  & 
+        \node (x_t+1)   [dashed_neuron]{$\vec{\hat{x}}_{t+1}$}; 	  & 
         &
 
         \\
         % Third line: State & state transition matrix
 		\\
-		\node (s_t-2) [matrx]{$\mathbf{s}_{t-2}$}; &
+		\node (s_t-2) [neuron]{$\vec{s}_{t-2}$}; &
 		&
-        \node (s_t-1) [matrx] {$\mathbf{s}_{t-1}$}; &
+        \node (s_t-1) [neuron] {$\vec{s}_{t-1}$}; &
 		&
-        \node (s_t)   [matrx] {$\mathbf{s}_t$};     &
+        \node (s_t)   [neuron] {$\vec{s}_t$};     &
 		&
-        \node (s_t+1) [matrx] {$\mathbf{s}_{t+1}$}; &
+        \node (s_t+1) [neuron] {$\vec{s}_{t+1}$}; &
 		\\
 		\\
 		
-        \node (hat_x_t-1) [matrx]{$\mathbf{\hat{x}}_{t-1}$}; &
+        \node (hat_x_t-1) [neuron]{$\vec{\hat{x}}_{t-1}$}; &
         &
-        \node (hat_x_t) [matrx] {$\mathbf{\hat{x}}_{t}$}; &
+        \node (hat_x_t) [neuron] {$\vec{\hat{x}}_{t}$}; &
         &
-        \node (hat_x_t+1)   [matrx] {$\mathbf{\hat{x}}_{t+1}$};     &
+        \node (hat_x_t+1) [neuron] {$\vec{\hat{x}}_{t+1}$};     &
         &
-        \node (hat_x_t+2) [matrx] {$\mathbf{\hat{x}}_{t+2}$}; &
+        \node (hat_x_t+2) [neuron] {$\vec{\hat{x}}_{t+2}$}; &
         \\
     };
     
     % The diagram elements are now connected through arrows:
     \path[->]
-    		(x_t-2) edge[thick] (s_t-2)
-    	    (x_t-1) edge[thick] (s_t-1)
-        (x_t) edge[thick] (s_t)
+    		(x_t-2) edge (s_t-2)
+    	    (x_t-1) edge (s_t-1)
+        (x_t) edge (s_t)
         (x_t+1) edge[thick,dashed] (s_t+1)
         	  
-	    (s_t-2) edge[thick] (s_t-1)        	        	
-        (s_t-1) edge[thick] (s_t)
-        (s_t) edge[thick] (s_t+1)  
+	    (s_t-2) edge (s_t-1)        	        	
+        (s_t-1) edge (s_t)
+        (s_t) edge (s_t+1)  
 
-		(s_t-2) edge[thick] (hat_x_t-1)       
-    	    (s_t-1) edge[thick] (hat_x_t)
-        (s_t) edge[thick] (hat_x_t+1)
-        (s_t+1) edge[thick] (hat_x_t+2)
+		(s_t-2) edge (hat_x_t-1)       
+    	    (s_t-1) edge (hat_x_t)
+        (s_t) edge (hat_x_t+1)
+        (s_t+1) edge (hat_x_t+2)
         (hat_x_t+1) edge[thick, dashed, -latex, out=45,in=225] (x_t+1)
         ;
     
@@ -690,8 +1023,8 @@ Dynamical consistency is kept by introducing the output of last time step to inp
 By remembering all the parameters in the network and unfold in time for several steps, the recurrent neural network is able to predict the next data point in the sequence. The relationship between input and output is listed as follows:
 
 \begin{align}
-\mathbf{s_{t}} &= \sigma(W\mathbf{x_t} + B\mathbf{s_{t-1}}) \\
-\mathbf{x_{t+1}} &= A\mathbf{s_{t}}
+\vec{s_{t}} &= \sigma(W\vec{x_t} + B\vec{s_{t-1}}) \\
+\vec{x_{t+1}} &= A\vec{s_{t}}
 \end{align}
 
 where $A$ means weight matrix of internal states to output states.
@@ -700,16 +1033,16 @@ where $A$ means weight matrix of internal states to output states.
 To sum up, the dynamics of system becomes as follows.
 
 \begin{align}
-\mathbf{s_{t}} &= \sigma(W\mathbf{x_t} + B\mathbf{s_{t-1}}) \quad \forall x \leq T \label{training_rnn}\\ 
-\mathbf{s_{t}} &= \sigma(W\mathbf{\hat{x}_t} + B\mathbf{s_{t-1}}) \quad \forall x > T \label{prediction_rnn}\\
-\mathbf{o_{t+1}} &= A\mathbf{s_{t}} \quad \forall x \leq T - 1 \label{train_output}\\
-\mathbf{\hat{x}_{t+1}} &= A\mathbf{s_{t}}  \quad \forall x > T - 1  \label{train_prediction}
+\vec{s_{t}} &= \sigma(W\vec{x_t} + B\vec{s}_{t-1}) \quad \forall t \leq T \label{training_rnn}\\ 
+\vec{s_{t}} &= \sigma(W\vec{\hat{x}}_t + B\vec{s}_{t-1}) \quad \forall t > T \label{prediction_rnn}\\
+\vec{o_{t+1}} &= A\vec{s_{t}} \quad \forall t \leq T - 1 \label{train_output}\\
+\vec{\hat{x}}_{t+1} &= A\vec{s_{t}}  \quad \forall t > T - 1  \label{train_prediction}
 \end{align}
 
 Formula~\ref{training_rnn} shows how are values of internal states updated at the training stage. Formula~\ref{prediction_rnn} shows how are values of output data predicted after training stage. Formula~\ref{train_output} shows how outputs generated after training stage. Formula~\ref{train_prediction} shows how outputs predicted after training stage. The overall goal of the system is to minimize the different between the output and predicted output for all time series. Mathematically, it is defined as:
 
 \begin{equation}
-J = \sum_{i=1}^{T}\mathbf{o}_{t} - \mathbf{y}_{t}
+J = \sum_{i=1}^{T}\vec{o}_{t} - \vec{y}_{t}
 \end{equation}
 
 If we assume each input and output has N data points, then the cost becomes:
@@ -723,11 +1056,9 @@ The main goal of function is to minimize the cost over function parameters defin
 \section{Universal Approximation}
 It has been proven that multi-layer feed-forward neural networks are universal approximators by Hornik in 1989. Similar works have also been mentioned by Cybenko and Funahashi in the same year. In this work, Hornik continued work of Minskey and Papert about two layers network. Minkey and Papert proved that two-layer neural networks are not able to approximate functions that do not belong to a special class. Then 	by adding a third layer, the neural network is able to approximate different functions.
 
-\subsection{Approximation by FFNN}
-\begin{itemize}
-\item Stone-Weierstrass Theorem
-\end{itemize}
-\subsection{Approximation by RNN}
+Details of approximation theory of multi-layer neuron network is governed by Stone-Weierstrass theorem. This theory states that every continuous function defined on a closed interval $[a, b]$ can be uniformly approximated by a polynomial function. As a result, it also proves that a neuron network with more than one hidden layer can approximate any function.
+
+RNN, as special model of neuron network model also follows Stone-Weierstrass theorem. Herrn Anton Maximilian Schafer proved that RNN is also a universal approximator.
 
 \section{Training of RNN}\label{training_rnn}
 After getting data and designing the structure of network, the next important step is to train the network to model the data we have and also to predict next point in the data sequence. The main goal of training is to minimize the cost of objective function between expected outcome and real outcome. As a result, predicting data based on data we have.
@@ -737,10 +1068,10 @@ After getting data and designing the structure of network, the next important st
 Training algorithm of recurrent neural network, called back-propagation, is introduced from feed-forward neural network. For simplicity of this algorithm, we first consider a simple feed-forward neural network defined as:
 
 \begin{equation}
-y = \sigma(W\mathbf{x})
+y = \sigma(W\vec{x})
 \end{equation}
 
-where $W$ is a 3x4 matrix, $\mathbf{x}$ is a vector of length 4 and $\sigma(\cdot)$ is an element-wise non-linear transformation.
+where $W$ is a 3$\times$4 matrix, $\vec{x}$ is a vector of length 4 and $\sigma(\cdot)$ is an element-wise non-linear transformation.
 
 This network only contains two layers including input layer and output layer. Input layer has four input neurons and output layer has three output neurons. The data we have is a list of input-output pairs.
 
@@ -878,33 +1209,172 @@ Where $g(t-1) = g(net_{cj}(t))$, $g(\cdot)$ is the activation function of new in
 Following is the picture of the structure of the system. 
 
 \subsection{Optimization Methods}
-\subsubsection{Nesterov Momentum}
-\subsubsection{Dropout}
+Optimizing neuron network is not a simple task. People tried different method since perceptron was introduced. However, only until the back-propagation algorithm was introduced, the neuron network models have a role in the machine learning field. Currently, back-propagation has become standard of training neuron network and many optimization algorithms for neuron network are based on that. In the following section, I will describe two optimization methods I used in the experiments. One of them is call \textit{Nesterov's Accelerated Gradient}(NAG) and another of them is called \textit{Adam}. 
+\subsubsection{Nesterovs Accelerated Gradient}
+Nesterov's Accelerated Gradient is sometimes called Nesterov's momentum. Here momentum refers to Classic Momentum(CM) method which is a technique to accelerate the standard gradient descent algorithm. Let recall the original gradient descent algorithm, which update parameters based on a step size $\alpha$ and gradient information of objective function. Formula~\ref{normal_gradient_descent}
+\begin{equation}
+\Delta_\theta = -\alpha \nabla_{\vec{\theta}} f(\vec{\theta})
+\label{normal_gradient_descent}
+\end{equation}
+CM method adds a momentum coefficient $\mu$ to system and use this parameter to include a momentum-like behaviour in the optimization process. The updating rule for parameters become influenced by the momentum as shown in Formula~\ref{class_momentum}.
 
-\section{Improved Model-Building with RNN} 
-\subsection{Handling Data Noise} 
-\subsection{Handling the Uncertainty of the Initial State}
-\subsection{Optimal Weight Initialisation}
+\begin{equation}
+\widetilde{\Delta}_{\theta t} =  \mu \widetilde{\Delta}_{\theta {t-1}}  -\alpha \nabla_{\vec{\theta}} f(\vec{\theta})
+\label{class_momentum}
+\end{equation}
 
-\chapter{Prior Arts of Combining RNN and RL}
-\section{Neural Actor-Critic(idasi's group)}
-\section{LSTM with POMDP objective function}
-\section{PhD thesis, by Remi Coulom ?}
+NAG, like CM algorithm, is a first order optimization algorithm. For a general smooth(non-strongly) convex functions and deterministic gradient, NAG has a convergence rate of $O(\frac{1}{T^2})$, where $T$ means optimization steps. Comparing convergence rate of $O(\frac{1}{T})$ for CM, it is exponentially faster. The updating rule for NAG is show in Formula~\ref{nag} .In fact, there is not much difference between CM and NAG. 
+
+\begin{equation}
+\widetilde{\Delta}_{\theta t} =  \mu \widetilde{\Delta}_{\theta {t-1}}  -\alpha \nabla_{\vec{\theta}} f(\vec{\theta} + \mu \widetilde{\Delta}_{\theta {t-1}})
+\label{nag}
+\end{equation}
+
+\subsubsection{Adam}
+Adam is a first-order gradient-based algorithm \cite{kingma2014adam} invented by 	Diederik Kingma and Jimmy Ba in 2015. It combines ideas of RMSProp and AdaGrad. Algorithm~\ref{algo:adam} shows the each step of this algorithm.
+
+\begin{algorithm}[ht]
+\caption{\emph{Adam}, $g^2_t$ indicates the elementwise square $g_t \odot g_t$. Good default settings for the tested machine learning problems are $\alpha=0.001$, $\beta_1=0.9$, $\beta_2=0.999$, $\epsilon = 10^{-8}$ and $\lambda = 1-10^{-8}$.}
+\label{algo:adam}
+\begin{algorithmic}
+\REQUIRE $\alpha$: Stepsize
+\REQUIRE $\beta_1,\beta_2\in [0,1)$, $\lambda\in[0,1]$ : Exponential decay rates for the moment estimates
+%\REQUIRE ${ (1-\beta_1)^2 / \sqrt{1-\beta_2}} < 1$: Constraint from convergence analysis
+\REQUIRE $f(\theta)$: Stochastic objective function with parameters $\theta$
+\REQUIRE $\theta_0$: Initial parameter vector
+\STATE $m_0 \gets 0$ (Initialize initial \nth{1} moment vector)
+\STATE $v_0 \gets 0$ (Initialize initial \nth{2} moment vector)
+\STATE $t \gets 0$ (Initialize timestep)
+\WHILE{$\theta_t$ not converged}
+\STATE $t \gets t + 1$
+\STATE $\beta_{1,t} \gets \beta_1\lambda^{t-1}$ (Decay the first moment running average coefficient)
+\STATE $g_t \gets \nabla_{\theta} f_t(\theta_{t-1})$ (Get gradients w.r.t. stochastic objective at timestep $t$)
+\STATE $m_t \gets \beta_{1,t} \cdot m_{t-1} + (1-\beta_{1,t}) \cdot g_t$ (Update biased first moment estimate)
+\STATE $v_t \gets \beta_2 \cdot v_{t-1} + (1-\beta_2) \cdot g^2_t$ (Update biased second raw moment estimate)
+\STATE $\wm \gets m_t / (1-\beta_1^t)$ (Compute bias-corrected first moment estimate)
+\STATE $\wv \gets v_t / (1-\beta_2^t)$ (Compute bias-corrected second raw moment estimate)
+\STATE $\theta_t \gets \theta_{t-1} - \alpha \cdot \wm / (\sqrt{\wv} + \epsilon)$ (Update parameters)
+\ENDWHILE
+\RETURN $\theta_t$ (Resulting parameters)
+\end{algorithmic}
+\vspace{-0.05in}
+\end{algorithm}
+
+\chapter{Prior Arts of Combining Deep Neuron Network and RL}
+Different research groups have tried different methods for combining deep neuron networks with reinforcement learning. The first thoughts turned out to be using neuron network as a general controller. In the early work applying neuron network to control algorithm, several algorithms using neuron network were proposed including Explanation-Based Neural Network Learning\cite{thrun1996explanation} and Neural networks for self-learning control systems. \cite{nguyen1990neural}. These early initiatives provide information about how could one formulate a 
 \section{Deep Q Network}
-\section{Hybrid Approch}
-\section{Recurrent Models of Visual Attention?}       
-\section{stanley gecco021 2002?}
+Deep Q Network is a network proposed by Google's deep learning group. It creates a direction of combining Convolutional Neuron Network with Q learning algorithm\cite{mnih2013playing}\cite{mnih2015human}. 
 
-\chapter{Proposed Recurrent Neural Network Structure}
-\section{LSTM as Actor-Critic Approach}
-\section{LSTM as Model-Critic Approach}
-\section{Mikolov's Context Layer}
+
+
 
 \chapter{Experiment}
-\section{System Implementation}
-\section{Cart-pole Balancing Simulator}
-\section{Stacking Wooden Blocks}
-\section{Cart-pole balancing Using Baxter Robot}
+
+\section{Cart-pole Balancing}
+Cart-pole balancing problem has been a basic test problem in the control theory. It considers a physical agent that tries to balance a pole attached to it. Figure~\ref{cart_pendulum} illustrates the situation of the system. The system consist several states including the position $s$ and velocity $\dot{s}$ of the cart, angle $\theta$ and angular velocity $\dot{\theta}$ of the pole. The task involved in this process is to apply a suitable force to enable the system to balance the pole $L$ so that the angle $\theta$ and position of cart $s$ are kept in a range.
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.5]{cart_pendulum}
+\caption{This figure shows the cart-pole balancing system. A force $\vec{F}$ is exerted on the cart C with mass $M$ to balance a pole l that also has length $l$ attached to it. A mass $m$ is attached on pole L. The system has four states including point of the system $s$, velocity of the system $\dot{s}$, angel between pole L and normal $\theta$ and angular acceleration $ \dot{\theta}$. When force $\vec{F}$ is exerted on cart C, the L will also have a force on the point of attachment with cart and the task is to provide forces that can keep position of cart as well as angel $\theta$ between pole and normal in a range of allowed values(e.g. $s \in [-4,4]$, $\theta \in [-0.2, 0.2]$)}
+\label{cart_pendulum}
+\end{figure}
+
+Based on the information we have about the system, we can write the Lagrangian of system. 
+\begin{equation}
+L = \frac{1}{2} M \dot{s}^2 + \frac{1}{2} m v_m^2 - mgl\cos(\theta)
+\end{equation}
+where, in this case, the $v_m$ is the speed of the a mass attached to pole $L$.
+We infer from system 
+
+\begin{equation}
+v_m^2=\left(	\frac{d}{dt}(x - l\sin(\theta) \right)^2 + \left(\frac{d}{dt}(l\cos(\theta)\right)^2
+\end{equation}
+Then it can be further simplified as 	
+\begin{equation}
+v_m^2=\dot{s}^2-2l\dot{x}\dot{\theta} \cos(\theta) + l^2\dot{\theta}^2
+\end{equation}
+
+Following the definition of Lagrange the equations of motion are defined as:
+\begin{align}
+\frac{d}{ds}\frac{\partial L}{\partial \dot{s}} - \frac{\partial L}{\partial s} = F \\
+\frac{d}{dt}\frac{\partial L}{\partial \dot{\theta}} - \frac{\partial L}{\partial \theta} = 0
+\end{align}
+If we substitute the Lagrangian into system, we find the two equations of motion become like 
+\begin{align}
+(M + m)\ddot{s} - 	ml\ddot{\theta} \cos(\theta) + \frac{1}{2}ml^2\dot{\theta}^2 - mgl\cos(\theta) = F \\
+l\ddot{\theta} - g\sin(\theta) = \ddot{s} \cos(\theta)
+\end{align}
+Traditional control algorithms like proportional-integral-derivative controller (PID) control can solve problem with high frequency loop. Although it is an entrance level problem in control theory and also in reinforcement learning, it is also a basic example to test effectiveness of the algorithm.
+
+We used this model for testing the basic performance of the policy gradient algorithm. In this case, the policy algorithm also needs to take into account the states and evaluate the action. During the process, it needs to update it policy parameters from experience gained from its failures.
+
+Normally the process' reward is calculated by simulator during the training of actor network. However, at mean time, we also learn a model that can also predict the reward and action according to the previous we gathered.
+\subsection{System Implementation}
+
+The system is implemented using a several libraries of python including Pybrain, Theano and nntools to provide easy use of the testing process. 
+
+Pybrain is library developed by IDSIA \cite{pybrain2010jmlr} in order to offer flexible, easy-to-use yet still powerful algorithms for machine learning tasks. It is excellent for reinforcement learning researchers as it separates reinforcement learning into three parts namely, environment, agent and task. In this way, the library actually builds a framework for further development.
+
+Theano is a GPU-based computational library for implementing deep learning algorithm. It has complete support for different deep learning structures including Convolutional Neuron Networks(CNN), Deep Blief Network(DBN) or Restricted Boltzmann Machine(RBM). It builds itself on scipy, which is a scientific computing library of python and numpy, which is a numerical computation library of python. This enables the library to provide the best computation performance for the system. It also uses Cuda-toolkit to support GPU-based computation, which ensures the nvidia-based system can have best performance.
+
+nntools is library built on Theano. It provides modularized APIs for different deep learning architectures.
+
+We use these libraries to build reinforcement learning platform. Following the the MDP process, we need to figure out four important elements of MDP process, namely, ($\mathbb{S}$,$\mathbb{A}$,$T\cdot(\cdot,\cdot)$,$R\cdot(\cdot,\cdot)$). $\mathbb{S}$ is the set of all states of the system. Each state $s \in \mathbb{S}$ contains four physical parameters including $s$ position of the cart, $\dot{s}$ velocity of the cart, $\theta$ angle of pole, $\dot{\theta}$ angular velocity of the pole. The action $a \in \mathbb{A}$ is decided by policy parameters and current states. Transition probability $T$ is decided by the physical system and reward function $R$ is defined as following:
+
+\begin{equation}
+    R(s,\theta, t)= 
+\begin{cases}
+    0,				& \text{if} |s|\leq 0.05, |\theta| \leq 0.05, t \leq 200\\
+    -1,              & 2.4 \geq |s|\geq 0.05, 0.7 \geq |\theta| \geq 0.05, t \leq 200\\
+    -2 \cdot (200 - t), 		& \text{otherwise}
+\end{cases}
+\end{equation}
+Where $t$ is the time steps that system has been running.
+
+\subsection{Experiment Result}
+The result of the algorithm for solving a cart-pole balancing problem is great. Within 300 trials, it can find best policy parameters for the system. However, it needs a little bit longer to get best average rewards. Figure~\ref{cart_pole_pgpe_benchmark} shows the performance of the PGPE algorithm on cart-pole balancing problem.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.7]{model_pgpe_benchatk}
+\caption{This figure shows the result of benchmark of cart-pole balancing problem. The x-axis represents the real word samples needed for training and the y-axis represents the average reward of 50 trials.}
+\label{cart_pole_pgpe_benchmark}
+\end{figure}
+
+
+\section{Baxter Robot Learning a Action}
+Baxter robot is a research robot developed by rethink company(as shown in Figure~\ref{baxter}).It has two arms, two gripper and animated face. In this experiment, we will use its arms and gripper to learn to perform a certain wood stacking task. In following sections, we will discuss how is this experiment implemented.
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.17]{baxter}
+\label{baxter}
+\caption{This figure shows a baxter research robot. We can see that it has a face and two arms.}
+\end{figure}
+\subsection{System Implementation}
+Each arm of Baxter contains seven degrees of freedom including four roll degrees of freedom $s_0$, $e_0$, $w_0$ and $w_2$, three pitch degrees of freedom $s_1$ , $e_1$ $w_1$. The detail of the information is presented in picture.
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{baxter_arm_annotated}
+\caption{This picture shows the Baxter robot and its corresponding joints. Seven degrees of freedom including shoulder roll $s_0$,  elbow roll $e_0$, wrist roll $w_0$, wrist roll $w_2$, shoulder pitch $s_1$ , elbow pitch $e_1$ and wrist pitch $w_1$ are presented on picture.}
+\end{figure}
+In total, Baxter's arms have fourteen degrees of freedom, which we consider as states of robot. They together form one state of the robot i.e. $(\{s^l_0, s^l_1, e^l_0, e^l_1, w^l_0, w^l_1, w^l_2\}\cup\{s^r_0, s^r_1, e^r_0, e^r_1, w^r_0, w^r_1, w^r_2\}) \in \mathbb{S}$. Then we can apply each degree of freedom an angular velocity as action, as a result, we have a set of actions $a \in \mathbb{A}$. The policy function $\pi(\cdot)$ is a $n$-layer multilayer linear neuron network that mathematically formulated as:
+\begin{equation}
+\pi(\vec{s}) = (f_1 \circ f_2 \cdots f_n)(\vec{s})
+\end{equation} 
+where $f_i(\vec{s}), \forall i \in \{1\cdots n\}$ is defined as $W_i \cdot \vec{s}$ as a single layer linear neuron network.
+The transition function follows physical law with some noise. The reward function is defined similar as cart-pole problem.
+Now we follow the formulation of PGPE algorithm, using two hidden parameters $\mu, \sigma^2$ for the each parameters in policy function. We also update algorithm according to PGPE algorithm ~\ref{alg:pgpe} mentioned in section Reinforcement Learning. Similarly, we also define the reward function as a step function. Only here we need to define time steps to be longer, which can be seen as Formula~
+\begin{equation}
+    R(s,\theta, t)= 
+\begin{cases}
+    0,				& \text{if} |s|\leq 0.05, |\theta| \leq 0.05, t \leq 2000\\
+    -1,              & 2.4 \geq |s|\geq 0.05, 0.7 \geq |\theta| \geq 0.05, t \leq 2000 \\
+    -2 \cdot (2000 - t), 		& \text{otherwise}
+\end{cases}
+\end{equation}
+
+\subsection{Experiment Result Using Baxter Simulator}
+Based on the Robot Operating System(ROS), several simulators supports simulation of Bater robot. One of them is Gazebo, an official simulator provided by ROS.
+\subsection{Experiment Result Using Baxter Robot}
 
 \chapter{Future Research}
 \section{Combining Control with Vision Using Deep Neural Network}

@@ -1,0 +1,398 @@
+\documentclass[officiallayout]{tktla} 
+%\documentclass[officiallayout,a4frame]{tktla}
+\usepackage[latin1]{inputenc}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{hyperref}
+
+\usetikzlibrary{arrows}
+\tikzset{basic/.style={draw,fill=blue!50!green!20,
+                       text badly centered,minimum width=3em}}
+\tikzset{input/.style={basic,circle}}
+\tikzset{weights/.style={basic,rectangle,minimum width=2em}}
+\tikzset{functions/.style={basic,circle,fill=blue!50!green!20}}
+\def\layersep{2.5cm}
+
+
+\newcommand{\addsymbol}{\draw[thick] (0.5em,0.5em) -- (0,0.5em) -- 
+                        (0,-0.5em) --  (-0.5em,-0.5em)
+                        (0em,0.75em) -- (0em,-0.75em)
+                        (0.75em,0em) -- (-0.75em,0em);}
+                        
+                        
+\usepackage[]{algorithm2e}
+
+% 
+\usepackage{xargs}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
+%
+
+
+\title{Deep Recurrent Neural Network for Robot Reinforcement Learning \\}
+\author{Yuan Gao}
+\authorcontact{gaoyuankidult@gmail.com\par
+  http://www.cs.helsinki.fi/u/yuangao/}
+\pubtime{September}{2015}
+\reportno{0}
+\isbnpaperback{000-00-0000-0}
+\isbnpdf{000-00-0000-0}
+\issn{1238-8645}
+\printhouse{Unigrafia}
+\pubpages{7} % --- remember to update this!
+% For monographs, the number of the last page of the list of references
+% For article-based theses, the number of the last page of the list of
+% references of the preamble part + the total number of the pages of
+% the original articles and interleaf pages.
+\supervisorlist{Dorota Glowacka, University of Helsinki, Finland \newline  Leo K{\"a}rkk{\"a}inen, Nokia Research Center, Finland \newline Honkala Mikko Nokia Research Center, Finland}
+\preexaminera{}
+\preexaminerb{}
+\opponent{}
+\custos{}
+\generalterms{}
+\additionalkeywords{}
+\crcshort{A.0, C.0.0}
+\crclong{
+\item[A.0] Example Category
+\item[C.0.0] Another Example
+}
+\permissionnotice{
+
+}
+
+\newtheorem{theorem}{Theorem}[chapter]
+\newenvironment{proof}{\noindent\textbf{Proof.} }{$\Box$}
+
+\begin{document}
+
+\frontmatter
+
+\maketitle
+\listoftodos
+\begin{abstract}
+
+\end{abstract}
+
+\begin{acknowledgements}
+
+\end{acknowledgements}
+
+\tableofcontents
+
+\mainmatter
+\chapter{Introduction}
+
+Controlling a complicated mechanical system to perform a certain task, for example making robot to dance, is a traditional problem studied in the field of control theory. Many successful applications like Google BigDog\cite{Raibert2008} and Google Self-driving car \cite{Guizzo2011a} have been made in accordance to the new theories found in this field.
+
+However more evidences show that in-cooperating with machine learning techniques in robotics can enable people to get rid of tedious engineering works of adjusting environmental parameters\todo{citation}. Many researchers like Jan Peters\todo{citation}, Sethu Vijayakumar, Stefan Schaal, Andrew Ng and Sebastian Thrun are the early explorers in this field. Based on the Partial Observable Markov Decision Process(POMDP) reinforcement learning, they contributed first several algorithms enabling robot to learn to perform a certain task overtime.
+
+Recently, one sub-field of machine learning called deep learning gained a lot of attention as a method attempting to model high-level abstractions by using model architectures composed by multiple non-linear layers. (for example \cite{Krizhevsky2012}). Several architectures of deep learning networks like deep belief network \cite{Hinton2006}, deep Boltzman machine \cite{Salakhutdinov2009}, convolutional neural network \cite{Krizhevsky2012} and deep de-noising auto-encoder \cite{Vincent2010} have shown its advantages in specific areas. Especially, convolutional neural network, which was invented by Krizhevsky, outperformed all the traditional feature-based machine learning techniques in imagenet competition.
+
+Based on the two trends we noticed, a natural path of research is to use deep learning methods for controlling movements of robot. Until the end of 2014,  the main works of deep learning are more related to a category of robotics called perception, which deals with problems like Sensor Fusion \cite{OConnor2013}, Nature Language Processing(NLP)\cite{Cho2014} and Object Recognition\cite{Lenz2013}\cite{Hoffman2014}. Although considered briefly in J{\"u}rgen Schmidhuber's team\cite{Mayer2006}, the other area of robotics, namely control, remains more-or-less unexplored in the realm of deep learning.
+
+The researches done in J{\"u}rgen Schmidhuber's team provided several interesting structures that might be potentially useful for robot control. The name of one of these structures is called Long Short Term Memory (LSTM), which is one variation of Recurrent Neural Network(RNN). Several experiments like generating sequences\cite{Graves2013}, speech recognition\cite{Graves2013b} and neural turing machine \cite{Graves2014} show that it has ability of extracting and storing temporal information from data. As a consequence, this specific structure of RNN, with modification, can be applied for control problems of robots.
+
+There are two main focuses of this thesis. One main focus of this Thesis is to introduce general learning methods for robot control problem with an emphasis on deep learning method. With experiments, the algorithm is able to show it can provide better results than previous method. Another focus of this thesis is to hint that neural network solution is a nature way to combine vision and other sensory input. It is possible that neural networks can be unified model for robotics.
+
+\chapter{Reinforcement Learning}
+\begin{itemize}
+\item We introduce background of reinforcement learning.
+\item We introduce basic definition of reinforcement learning.
+\end{itemize}
+
+\section{Markov Decision Process}
+\begin{itemize}
+\item We formalize Markov Decision Process(MDP).
+\end{itemize}
+
+\subsection{Partially Observable Markov Decision Process}
+\begin{itemize}
+\item We extend our definition of MDP with stochastic elements to form Partial Observable Markov Decision Process(POMDP).
+\end{itemize}
+
+\subsection{Markov Decision Process with Continuous States}
+
+\begin{itemize}
+\item We consider discretization of the states. 
+\end{itemize}
+
+\subsection{Value Functions}
+\begin{itemize}
+\item We consider two values functions of POMDP.
+\item One is state value function.
+\item Another one is state-action value function.
+\end{itemize}
+
+\section{Reinforcement Learning Methods}
+\begin{itemize}
+\item We introduce basic reinforcement learning algorithms(or concepts) that might be used in the following text.
+\item We also describe developmental background of these algorithms.
+\end{itemize}
+
+\subsection{Temporal Difference Learning}
+
+\begin{itemize}
+\item Temporal Difference(TD) learning is one of three basic methods in RL.
+\item We briefly introduce its relationship with Dynamic Programming and Monte Calo Method.
+\end{itemize}
+
+\subsection{Q-Learning}
+\begin{itemize}
+\item We introduce basic background of Q learning.
+\item Describe Q learning algorithm.
+\end{itemize}
+
+\subsection{Adaptive Heuristic Critic}
+\begin{itemize}
+\item We introduce basic background of Adaptive Heuristic Critic(AHC).
+\item Describe AHC architecture.
+\end{itemize}
+
+\subsection{Policy Gradient Methods}
+\begin{itemize}
+\item We introduce basic background of Policy Gradient(PG) methods.
+\item We discuss general approaches to policy gradient estimation.
+\item We discuss why PG is useful in area of reinforcement learning for robotics.
+\end{itemize}
+
+\section{Properties of the Regarded RL Problems}
+\begin{itemize}
+\item We tell readers what kind of RL problems we are considering.
+\item We quote four curses of applying reinforcement learning in robot from this paper. \href{"http://www.ias.tu-darmstadt.de/uploads/Publications/Kober\_IJRR\_2013.pdf"}{(paper)}
+\end{itemize}
+
+\subsection{High-Dimensionality}
+\begin{itemize}
+\item High-Dimensionality is typical in the area of robotics. A lot of robots have many degrees of freedom.
+\end{itemize}
+\subsection{Real-World Samples}
+\begin{itemize}
+\item Safe exploration becomes a key issue of the learning process. Normally robot systems suffers from wear and tear.
+\end{itemize}
+
+\subsection{Under-Modelling and Model Uncertainty}
+
+\begin{itemize}
+\item Simulators may under-model the environment.
+\item A direct result is that the simulated robot can quickly diverge from the real-world system.
+\end{itemize}
+
+\subsection{Goal Specification}
+
+\begin{itemize}
+\item Define a reasonable reward function is difficult due to human also has not assumption of statistical property of the system.
+\end{itemize}
+
+\chapter{Deep Recurrent Neural Networks}
+\begin{itemize}
+\item We introduce definition and background of Deep Learning(DL).
+\end{itemize}
+
+\section{Deep Learning and its Recent Advances}
+\begin{itemize}
+\item Several examples of DL are given including Convolutional Neural Network(CNN), Deep Boltzmann  Machine(DBM) and Deep Bidirectional RNN.
+\item For each of them, several state-of-art applications are given. For example, Google LeNet(i.e. variation of CNN) is the best model for image classification task. 
+\end{itemize}
+
+\section{Feedforward Neural Networks}
+\begin{itemize}
+\item We introduce basic structure of perceptron including bias neuron and non-linear transformation function.
+\item We then show how to fully connect several layers of perceptron to be a FeedForward Neural Network(FFNN).
+\end{itemize}
+\section{Recurrent Neural Networks}
+
+\begin{itemize}
+\item We introduce definition of recurrent connection and "vanilla" RNN.
+\item We then discuss about properties of RNN and how they might be used for robot control.
+\end{itemize}
+
+\subsection{Finite Unfolding in Time}
+\begin{itemize}
+\item Finite unfolding in time is a typical way of understanding RNN and it is also preprocessing step before training
+\item We introduce the concept and important of finite unfolding in time. 
+\end{itemize}
+
+\subsection{Overshooting}
+\begin{itemize}
+\item Overshooting happens when the training model does not have example any more.
+\item Here we discuss the concept, use and potential problem of overshooting.
+\end{itemize}
+
+\subsection{Dynamical Consistency}
+\begin{itemize}
+\item We introduce one solution(i.e. connect output of previous time step to input of next time step) to overshooting problem.
+\end{itemize}
+
+\section{Universal Approximation}
+\begin{itemize}
+\item We introduce Universal approximation theorem for both FFNN and RNN.
+\end{itemize}
+
+\subsection{Approximation by FFNN}
+\begin{itemize}
+\item We introduce Universal approximation theorem for FFNN(Honik's Universal Approximation Theorem)
+\end{itemize}
+
+\subsection{Approximation by RNN}
+\begin{itemize}
+\item We introduce Universal approximation theorem for RNN(Extension of Honik's Universal Approximation Theorem)
+\end{itemize}
+
+\section{Training of RNN}\label{training_rnn}
+\begin{itemize}
+\item We introduce basic training method of RNN.
+\item We note that the method we use here is variant of Back-Propagation Through Time(BPTT)  but there are other training methods like Real-time Recurrent Learning(RLRL) and Extended Kalman Filtering(EKF).
+\item We only discuss relevant ones.
+\end{itemize}
+
+\subsection{Shared Weight Extended Backpropagation}
+\begin{itemize}
+\item We first introduce Back Propagation for FFNN.
+\item We then extend that to BPTT for RNN.
+\end{itemize}
+\subsection{Learning Long-Term Dependencies}
+
+\begin{itemize}
+\item We introduce a special structure of RNN called Long Short Term Memory(LSTM).
+\item We discuss exploding and vanishing gradient problem of RNN.
+\item We then point out LSTM is able to solve this problem by adding control gates in the structure.
+\item We show evidences about how long can it keep information.
+\end{itemize}
+
+\subsection{Optimization Methods}
+\begin{itemize}
+\item We introduce optimization methods for training the network.
+\item It is not enough to just have BPTT as main algorithm. If one needs it to converge faster, one needs to consider other optimization method.
+\item We note that although here we only consider Nesterov's Momentum and Dropout, there are other methods like normal momentum and fisher-free optimization.
+\item We only consider relevant ones.
+\end{itemize}
+\subsubsection{Nesterov's Momentum}
+\begin{itemize}
+\item We introduce the concept and background of Nesterov's Momentum.
+\item We show why we use Nesterov's momentum for training the network.
+\end{itemize}
+
+
+\subsubsection{Dropout}
+\begin{itemize}
+\item Dropout is one typical technique used in CNN.
+\item However, this is used for regularization as a consequence, it can also be used for RNN for preventing overfit. 
+\end{itemize}
+
+\section{Improved Model-Building with RNN} 
+\begin{itemize}
+\item We show how we consider practical issue in this model.
+\end{itemize}
+\subsection{Handling Data Noise}
+\begin{itemize}
+\item We show filtering techniques that we used for handling data noise.
+\end{itemize}
+
+\subsection{Optimal Weights Initialization}
+\begin{itemize}
+\item We show that if we orthogonalize the weight matrix at the beginning of training, the algorithm is able converge faster.
+\end{itemize}
+
+\chapter{Prior Arts of Combining Deep NN and RL}
+\begin{itemize}
+\item Some attempts have been made for combining deep NN or deep RNN(DRNN) with RL.
+\item We show some examples of these attempts.
+\end{itemize}
+
+\section{RL-LSTM based on Model/Critic}
+
+\begin{itemize}
+\item We show one model proposed by Bram Bakker.\href{"http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.115.8633&rep=rep1&type=pdf"}{(paper)}
+\end{itemize}
+
+\section{Deep Q Network}
+\begin{itemize}
+\item We show one architecture called Deep Q Network proposed by Google Deep Mind.\href{http://www.cs.toronto.edu/~vmnih/docs/dqn.pdf}{(paper)}
+\end{itemize}
+
+\section{Recurrent Attention Model}       
+\begin{itemize}
+\item We show one architecture called Recurrent Attention Model proposed by Google Deep Mind.\href{http://arxiv.org/pdf/1406.6247v1.pdf}{(paper)}
+\end{itemize}
+
+\chapter{Proposed Recurrent Neural Network Structure}
+\begin{itemize}
+\item We introduce our contribution to the field.
+\end{itemize}
+\section{Stacked LSTM Layers as Model-Critic Approach}
+\begin{itemize}
+\item We stack several layers of LSTM using the whole history of each epoch for training.
+\item In this model, first Deep LSTM model tries to predict action probability based on current state of system.
+\item Second LSTM model tried to take current state of system and action probability as input and output predicted reward.
+\end{itemize}
+\section{Stacked Bidirectional LSTM Layers as Model-Critic Approach}
+\begin{itemize}
+\item Bidirectional RNN has been a technique in recognition and prediction tasks. Recently, it has achieved state-of-art performance in speech recognition task.\href{http://arxiv.org/pdf/1412.5567v2.pdf}{(paper)}
+\item For solving more difficult reinforcement learning problem, the bidirectional RNN might be used for prediction.
+
+\end{itemize}
+\section{Replacing LSTM with Mikolov's Context Layer}
+\begin{itemize}
+\item Mikolov's context layer was Introduced by Tomas Mikolov in December 2014. It is shown that it can remember long time dependence just as LSTM do. However, Mikolov's context layer has less parameters.
+\item Replacing LSTM with Mikolov might be faster.
+\end{itemize}
+
+\chapter{Experiment}
+\section{System Implementation}
+\begin{itemize}
+\item Introduce what is experiment setting.
+\item Introduce the python-based GPU(Heterogeneous) deep learning library Theano.
+\item Introduce Qt-based physics simulator.
+\item Introduce ROS, Gazebo and moveit for Baxter simulation.
+\item We also describe software architecture and communication between training program and simulators.
+\end{itemize}
+
+\section{Cart-pole Balancing}
+\begin{itemize}
+\item We start from a simple cart-pole balancing task with both markovian and non-markovian states.
+\item This example is meant to show that recurrent neural network is able to approximate value function of markov decision process.
+\item Compare the results of my architectures with results mentioned in paper\href{http://people.idsia.ch/~daan/papers/icann07.pdf}{(paper)}.
+\end{itemize}
+
+\section{Stacking Wooden Blocks}
+\begin{itemize}
+\item In this experiment, robot needs to learn to stack three wooden blocks on top of each other.
+\item On one hand, this example is more difficult than previous one, as a consequence, it may give a better idea about what the algorithm can do.
+\item On the another hand, it may help me to do transfer learning research later.
+\item We also show the results of my architectures on this task.
+\end{itemize}
+
+\section{Cart-pole Balancing Using Baxter Robot}
+\begin{itemize}
+\item This test is meant for illustrating how my methods can help learning of real robot.
+\end{itemize}
+
+\chapter{Future Research}
+\begin{itemize}
+\item Introduce what might be considered as future research directions.
+\end{itemize}
+\section{Combining Control with Vision Using Deep Neural Network}
+\begin{itemize}
+\item One may use unified neural network model for vision and control together.
+\item Deep neural network archived state-of-art or close to state-of-art result in video recognition tasks.(also in Image Recognition and Speech Recognition)
+\end{itemize}
+\section{Transfer Learning for Learning Repetitive Behaviour Using Deep Neural Network}
+\begin{itemize}
+\item In image classification task, people found out it takes much more less time to learn weights from a trained model, even if the model was trained from a very different dataset.
+\item For example, in convolutional neural network, no matter using what dataset, the weights of higher layer are similar.
+\item One may consider using it for learning repetitive behaviour.(For example, building a higher layer on trained RNN for training a task that might be similar to previously task.)
+\item The weights of neurons in higher layer may become similar(as they are all repetitive) by supervised or semi-supervised training. (inspired by works: \href{http://arxiv.org/pdf/1406.5298.pdf}{(paper 1)}, \href{http://arxiv.org/pdf/1411.4555.pdf}{(paper 2)}
+\end{itemize}
+
+
+\bibliography{library}
+\bibliographystyle{siam}
+
+\end{document}

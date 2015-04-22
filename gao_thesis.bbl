@@ -1,0 +1,126 @@
+\begin{thebibliography}{10}
+
+\bibitem{Cho2014}
+{\sc K.~Cho, B.~van Merrienboer, C.~Gulcehre, F.~Bougares, H.~Schwenk, and
+  Y.~Bengio}, {\em {Learning Phrase Representations using RNN Encoder-Decoder
+  for Statistical Machine Translation}}, arXiv,  (2014).
+
+\bibitem{Graves2013}
+{\sc A.~Graves}, {\em {Generating sequences with recurrent neural networks}},
+  arXiv preprint arXiv:1308.0850,  (2013), pp.~1--43.
+
+\bibitem{Graves2014}
+{\sc A.~Graves, G.~Wayne, and I.~Danihelka}, {\em {Neural Turing Machines}},
+  (2014), pp.~1--26.
+
+\bibitem{guizzo2011google}
+{\sc E.~Guizzo}, {\em How google's self-driving car works}, IEEE Spectrum
+  Online, October, 18 (2011).
+
+\bibitem{Hinton2006}
+{\sc G.~E. Hinton, S.~Osindero, and Y.~W. Teh}, {\em {A fast learning algorithm
+  for deep belief nets.}}, Neural computation, 18 (2006), pp.~1527--54.
+
+\bibitem{hinton2006reducing}
+{\sc G.~E. Hinton and R.~R. Salakhutdinov}, {\em Reducing the dimensionality of
+  data with neural networks}, Science, 313 (2006), pp.~504--507.
+
+\bibitem{Hoffman2014}
+{\sc J.~Hoffman, S.~Guadarrama, E.~Tzeng, R.~Hu, J.~Donahue, R.~Girshick,
+  T.~Darrell, and K.~Saenko}, {\em {LSDA: Large Scale Detection Through
+  Adaptation}},  (2014), pp.~1--9.
+
+\bibitem{kingma2014adam}
+{\sc D.~Kingma and J.~Ba}, {\em Adam: A method for stochastic optimization},
+  arXiv preprint arXiv:1412.6980,  (2014).
+
+\bibitem{Kober2013}
+{\sc J.~Kober, J.~a. Bagnell, and J.~Peters}, {\em {Reinforcement learning in
+  robotics: A survey}}, The International Journal of Robotics Research, 32
+  (2013), pp.~1238--1274.
+
+\bibitem{Krizhevsky2012}
+{\sc A.~Krizhevsky, I.~Sutskever, and G.~E. Hinton}, {\em {ImageNet
+  Classification with Deep Convolutional Neural Networks}}, Advances In Neural
+  Information Processing Systems,  (2012), pp.~1--9.
+
+\bibitem{Lenz2013}
+{\sc I.~Lenz, H.~Lee, and A.~Saxena}, {\em {Deep Learning for Detecting Robotic
+  Grasps}}, CoRR, abs/1301.3 (2013).
+
+\bibitem{Mayer2006}
+{\sc H.~Mayer, F.~Gomez, D.~Wierstra, I.~Nagy, A.~Knoll, and J.~Schmidhuber},
+  {\em {A system for robotic heart surgery that learns to tie knots using
+  recurrent neural networks}}, in IEEE International Conference on Intelligent
+  Robots and Systems, 2006, pp.~543--548.
+
+\bibitem{mnih2013playing}
+{\sc V.~Mnih, K.~Kavukcuoglu, D.~Silver, A.~Graves, I.~Antonoglou, D.~Wierstra,
+  and M.~Riedmiller}, {\em Playing atari with deep reinforcement learning},
+  arXiv preprint arXiv:1312.5602,  (2013).
+
+\bibitem{mnih2015human}
+{\sc V.~Mnih, K.~Kavukcuoglu, D.~Silver, A.~A. Rusu, J.~Veness, M.~G.
+  Bellemare, A.~Graves, M.~Riedmiller, A.~K. Fidjeland, G.~Ostrovski, et~al.},
+  {\em Human-level control through deep reinforcement learning}, Nature, 518
+  (2015), pp.~529--533.
+
+\bibitem{nguyen1990neural}
+{\sc D.~H. Nguyen and B.~Widrow}, {\em Neural networks for self-learning
+  control systems}, Control Systems Magazine, IEEE, 10 (1990), pp.~18--23.
+
+\bibitem{OConnor2013}
+{\sc P.~O'Connor, D.~Neil, S.~C. Liu, T.~Delbruck, and M.~Pfeiffer}, {\em
+  {Real-time classification and sensor fusion with a spiking deep belief
+  network}}, Frontiers in Neuroscience,  (2013).
+
+\bibitem{peters2006policy}
+{\sc J.~Peters and S.~Schaal}, {\em Policy gradient methods for robotics}, in
+  Intelligent Robots and Systems, 2006 IEEE/RSJ International Conference on,
+  IEEE, 2006, pp.~2219--2225.
+
+\bibitem{Raibert2008}
+{\sc M.~Raibert, K.~Blankespoor, G.~Nelson, and R.~Playter}, {\em {BigDog , the
+  Rough-Terrain Quaduped Robot}}, tech. rep., 2008.
+
+\bibitem{Salakhutdinov2009}
+{\sc R.~Salakhutdinov and G.~Hinton}, {\em {Deep Boltzmann Machines}},
+  Artificial Intelligence, 5 (2009), pp.~448--455.
+
+\bibitem{pybrain2010jmlr}
+{\sc T.~Schaul, J.~Bayer, D.~Wierstra, Y.~Sun, M.~Felder, F.~Sehnke,
+  T.~R{\"u}ckstie{\ss}, and J.~Schmidhuber}, {\em {PyBrain}}, Journal of
+  Machine Learning Research, 11 (2010), pp.~743--746.
+
+\bibitem{sehnke2013efficient}
+{\sc F.~Sehnke}, {\em Efficient baseline-free sampling in parameter exploring
+  policy gradients: Super symmetric pgpe}, in Artificial Neural Networks and
+  Machine Learning--ICANN 2013, Springer, 2013, pp.~130--137.
+
+\bibitem{sehnke2008policy}
+{\sc F.~Sehnke, C.~Osendorfer, T.~R{\"u}ckstie{\ss}, A.~Graves, J.~Peters, and
+  J.~Schmidhuber}, {\em Policy gradients with parameter-based exploration for
+  control}, in Artificial Neural Networks-ICANN 2008, Springer, 2008,
+  pp.~387--396.
+
+\bibitem{thrun1996explanation}
+{\sc S.~Thrun}, {\em Explanation-Based Neural Network Learning}, Springer,
+  1996.
+
+\bibitem{Vincent2010}
+{\sc P.~Vincent, H.~Larochelle, I.~Lajoie, Y.~Bengio, and P.-A. Manzagol}, {\em
+  {Stacked Denoising Autoencoders: Learning Useful Representations in a Deep
+  Network with a Local Denoising Criterion}}, Journal of Machine Learning
+  Research, 11 (2010), pp.~3371--3408.
+
+\bibitem{williams1992simple}
+{\sc R.~J. Williams}, {\em Simple statistical gradient-following algorithms for
+  connectionist reinforcement learning}, Machine learning, 8 (1992),
+  pp.~229--256.
+
+\bibitem{zhao2011analysis}
+{\sc T.~Zhao, H.~Hachiya, G.~Niu, and M.~Sugiyama}, {\em Analysis and
+  improvement of policy gradient estimation}, in Advances in Neural Information
+  Processing Systems, 2011, pp.~262--270.
+
+\end{thebibliography}
