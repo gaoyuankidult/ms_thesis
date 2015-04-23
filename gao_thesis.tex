@@ -24,7 +24,15 @@
 
                         
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}    
-                        
+\newcommand{\wtmat}[2]{W_{#1 #2}}    
+%\newcommand{\igate}{\vec{i}}
+%\newcommand{\fgate}{\vec{f}}
+%\newcommand{\ogate}{\vec{o}}
+
+\newcommand{\igate}{i}
+\newcommand{\fgate}{f}
+\newcommand{\ogate}{o}
+\newcommand{\state}{c}     
 
 \usepackage[ruled,vlined,linesnumbered]{algorithm2e}
 \usepackage{algorithmic,color}
@@ -87,9 +95,9 @@
 \frontmatter
 \maketitle
 \begin{abstract}
-Controlling a complicated mechanical system to perform a certain task, for example, making robot to dance, is a traditional problem studied in the area of control theory. Many successful applications like Google BigDog\cite{Raibert2008} and Google Self-driving car \todo{citation of self driving car} have been made in accordance to the new theories found in this field.
+Controlling a complicated mechanical system to perform a certain task, for example, making robot to dance, is a traditional problem studied in the area of control theory. Many successful applications like Google BigDog\cite{Raibert2008} and Google Self-driving car.
 
-However more evidences show that in-cooperating with machine learning techniques in robotics can enable people to get rid of tedious engineering works of adjusting environmental parameters\todo{citation}. Many researchers like Jan Peters\todo{citation}, Sethu Vijayakumar, Stefan Schaal, Andrew Ng and Sebastian Thrun are the early explorers in this field. Based on the Partial Observable Markov Decision Process(POMDP) reinforcement learning, they contributed theory and practical implementation of several bench marks in this field.
+However more evidences show that in-cooperating with machine learning techniques in robotics can enable people to get rid of tedious engineering works of adjusting environmental parameters. Many researchers like Jan Peters, Sethu Vijayakumar, Stefan Schaal, Andrew Ng and Sebastian Thrun are the early explorers in this field. Based on the Partial Observable Markov Decision Process(POMDP) reinforcement learning, they contributed theory and practical implementation of several bench marks in this field.
 
 Recently, one sub-field of machine learning called deep learning gained a lot of attention as a method attempting to model high-level abstractions by using model architectures composed by multiple non-linear layers. (for example \cite{Krizhevsky2012}). Several architectures of deep learning networks like deep belief network \cite{Hinton2006}, deep Boltzman machine \cite{Salakhutdinov2009}, convolutional neural network \cite{Krizhevsky2012} and deep de-noising auto-encoder \cite{Vincent2010} have shown its advantages in specific areas. Especially, convolutional neural network, which was invented by Krizhevsky, outperformed all the traditional feature-based machine learning techniques in ImageNet competition.
 
@@ -99,7 +107,7 @@ There are two reasons about why these areas remain unexplored. The first reason 
 
 The main focus of this thesis is to introduce general learning methods for robot control problem with an emphasize on deep learning method. As a consequence, this thesis tries to describe the transitional learning method as well as the emerging deep learning methods for robot control problem.
 
-Ultimately, the author hope the readers of this thesis, even without much background in machine learning or robotics can understand the gists of solution for robot learning problems. \improvement{All paragraphs abstract needs to be rechecked.}
+Ultimately, the author hope the readers of this thesis, even without much background in machine learning or robotics can understand the gists of solution for robot learning problems. 
 \end{abstract}
 
 \begin{acknowledgements}
@@ -249,7 +257,7 @@ method is fisher efficient. We recommend a further reading on Amari's paper[].
 If we rewrite Formula 5 as:
 
 \begin{equation}
-\nabla_\theta J(\theta) = \int_\mathbb{S} d^\pi(\vec{s})\int_\mathbb{A}\nabla_\theta \pi(\vec{a}, \vec{s})(Q^\pi(\vec{a}, \vec{s}) -b^\pi(\vec{x}))d\vec{a}d\vec{s}
+\nabla_\theta J(\theta) = \int_\mathbb{S} d^\pi(\vec{s})\int_\mathbb{A}\nabla_\theta \pi(\vec{a}, \vec{s})(Q^\pi(\vec{a}, \vec{s}) -b^\pi(\vec{s}))d\vec{a}d\vec{s}
 \end{equation}
 
 
@@ -1116,33 +1124,121 @@ The key element in this algorithm is the updating rule of the system. Based on
 
 \subsection{Learning Long-Term Dependencies}
 
-Long-term dependences is important in control. Something happened at one particular time might has an influences at another time. If one system can identify these kinds of moment, it would be beneficial to to predict outcome influenced by environment. Although there are other algorithm like policy gradients and Optimal Ordered Problem Solver also can do this job for control, some specially designed RNN can remember long-term dependences under a flexible setting. 
+Long-term dependences is an important concept in control. Some states of the system can be crucial to the system. They might influence the future behaviour of the system in many ways. For example, in the T maze example(see Figure~\ref{tmaze} for reference), the decision at the turning  point is essential for the system. As the behaviour is totally different after turning point, a long term memory is important in this case.
+\begin{figure}
+\centering
+\begin{tikzpicture}
+  \draw[line width=0.3cm,color=red!30,cap=round,join=round] (2,0)--(2,5);
+  \draw[help lines] (-2.5,-2.5) grid (5.5,7.5);
+  \draw[very thick] (2,-0)-- (2,5);
+  \draw[below left] (2,0) node(s){$s$};
+  \draw[below left] (2,5) node(t){$t$};
+  
+  \draw[below] (-1,5) node(end_1){$end_1$};
+  \draw[below] (4,5) node(end_2){$end_2$};
+   
+  \draw[above] (-1,5) node(end1_text){10};
+  \draw[above] (4,5) node(end1_text){-10};
+  
+  \fill (2,0) circle (0.06cm) (2,5) circle (0.06cm);
+  \fill (-1,5) circle (0.06cm) (4,5) circle (0.06cm);
+  \draw[->,rounded corners=0.2cm,shorten >=2pt]
+    (1.5,0.5)-- ++(0,1)-- ++(0,1)-- ++(0,1)-- ++(0,1)-- ++(-1,0)-- ++(-1,0)-- ++(-1,0)-- ++(0,1)
+    -- ++(1,0)-- ++(1,0)-- ++(1,0)-- ++(1,0)-- ++(1,0)-- ++(1,0)-- ++(0,-1)-- ++(-1,0)-- ++(-1,0)
+    -- ++(0,-1)-- ++(0,-1)-- ++(0,-1)-- ++(0,-1)-- ++(0,-1)-- ++(-1,0)-- ++(0,1);
+\end{tikzpicture}
 
-Transitional RNN has several problems. One famous problem is that it suffers exploding gradient and vanishing gradient problem as when RNN unfolds in time, it becomes neurally deep. The gradient becomes very small as we back-propagate it to first few layers.
+\caption{This picture shows the example of a T maze problem. State $s$ is the starting state. It needs to go to end of the maze to terminate the process. At the end state 1, it get 10 reward from the environment and at the end state 2, it get a punishment from the environment. The agent wants to maximize the reward it gets from environment, as a consequence, the turning state $t$ is important for it.}\label{tmaze}
+\end{figure}
 
 
-LSTM is normally treated as a hidden layer in a neural network system. It has input connections, three gate, outputs connection. A more illustrative example is shown in the following figure.
+Traditional RNN has several problems. One famous problem is that it suffers exploding and vanishing gradient problem as when RNN is unfolded in time, it becomes neurally deep. For example, The gradient becomes very small as we back-propagate it to first few layers. Although, there are methods like policy gradient and optimal ordered problem solver that can solve this problem, some specially designed RNN also has this ability.
+
+However, traditional RNNs suffered exploding or vanishing gradient problem. As training of RNN normally requires unfolding of the network in time. Comparing with FFNN, it is naturally deep and as a result, the gradient becomes smaller and smaller after several iterations of computing gradient.
+
+Soon after people discovered this problem, several new structures of RNN were developed for keeping long-term memory. Long Short Term Memory(LSTM) is one of them.
+
+LSTM is normally treated as a hidden layer in a neural network system. It normally adds some extra components in network. More specifically, it has input connections, three gates, outputs connection. A more illustrative example is shown in the following Figure~\ref{lstm}.
 
 \begin{figure}[h!]
   \centering
-    \includegraphics[width=0.8\textwidth]{lstm}
-  \caption{This figure shows the basic strucuture of LSTM. In the middel, there is the memory cell which keeps the information of the data sequence. Around it, there are three gates, namely input gate, output gate and foget gate. Each of them gets information from the input and controls the updatting rule of memory cell. At the left side, there is input connection. On right side, there is output connection of this layer.}\label{series_prediction_rnn}
+  \begin{tikzpicture}
+  \coordinate (A) at (-2,0);
+  \coordinate (B) at (6,0);  
+  \coordinate (C) at (6,6);
+  \coordinate (D) at (-2,6);
+
+  
+  \tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt];
+  \tikzstyle{memory_cell}=[circle, thick, fill=black!35,minimum size=25pt,inner sep=0pt];
+  \tikzstyle{multiplier}=[circle, thick, fill=black!25, minimum size=10pt,inner sep=0pt];
+  \tikzstyle{nonlinearity}=[circle, thick, fill=black!25,minimum size=15pt,inner sep=0pt];
+
+  \node (input) at (-3, 5.5) [neuron]{$\vec{s}$};
+  \draw[below left] (-3, 5) node {input};
+  
+  \node (output) at (7, 3.5) [neuron]{$\vec{h}$};
+  \draw[below right] (7, 3) node {output};  
+   
+  \node (input_gate) at (0, 5.5) [neuron]{$\vec{i}_t$};
+  \node (output_gate) at (5.5, 5.5) [neuron]{$\vec{o}_t$};
+  \node (forget_gate) at (2, 0.5)[neuron]{$\vec{f}_t$};
+  
+  \node (forget_gate) at (2, 0.5)[neuron]{$\vec{f}_t$};
+  
+  \node (multiplier_1) at (0, 3.5)[multiplier]{$\times$};
+  \node (multiplier_2) at (5.5, 3.5)[multiplier]{$\times$};
+  \node (multiplier_3) at (2, 2)[multiplier]{$\times$};
+  
+  \node (memory) at (2, 3.5)[memory_cell]{$\vec{c}_t$};
+  
+  \node (nonlinearity_1) at (-1.5, 3.5)[nonlinearity]{$\tanh$};
+  \node (nonlinearity_2) at (3.5, 3.5)[nonlinearity]{$\tanh$};
+  
+  \draw[very thick] (A)--(B)--(C)--(D)--(A);
+
+  \draw[->] (input) edge[-latex, out=0, in=180](input_gate);
+  \draw[->] (input) edge[-latex, out=45, in=135](output_gate);
+  \draw[->] (input) edge[-latex, out=-90, in=180](forget_gate);
+  \draw[->] (input) edge[-latex, out=-45, in=90](nonlinearity_1);
+
+  \draw[->] (multiplier_2) edge[-latex](output);
+  
+  \draw[->] (memory) edge[-latex](input_gate);
+  
+  \draw[->] (input_gate) edge[-latex](multiplier_1);
+  \draw[->] (nonlinearity_1) edge[-latex](multiplier_1);
+  
+  \draw[->] (multiplier_1) edge[-latex](memory);
+  \draw[->] (multiplier_3) edge[-latex, out=45,in=-45] (memory);
+  
+  \draw[->] (memory) edge[-latex, out=-135,in=135] (multiplier_3);
+  \draw[->] (forget_gate) edge[-latex](multiplier_3);
+  
+  \draw[->] (memory) edge[-latex, out=-145,in=135](forget_gate);  
+
+  \draw[->] (memory) edge[-latex](nonlinearity_2);
+  
+  \draw[->] (output_gate) edge[-latex](multiplier_2);
+  \draw[->] (nonlinearity_2) edge[-latex](multiplier_2);  
+
+  \draw[->] (memory) edge[-latex] (output_gate);
+	
+\end{tikzpicture}
+  \caption{This figure shows the basic strucuture of LSTM. In the middel, there is the memory cell which keeps the information of the data sequence. Around it, there are three gates, namely input gate, output gate and foget gate. Each of them gets information from the input and controls the updatting rule of memory cell. At the left side, there is input connection. On right side, there is output connection of this layer.}\label{lstm}
 \end{figure}
 
-The idea of LSTM is relatively straight forward. The memory cell stores information of the sequential data and gates in this layer tries to when and how much this information should be updated.
+The idea of LSTM is relatively straight forward. The memory cell stores information of the sequential data. Gates try remember when and how much the information  in memory cell should be updated. Mathematically, the process is defined by Formulas from \ref{igate_math} to \ref{output_math}.
 
-The basic gradient descent approach (and its backpropagation algorithm implementation) is notorious for slow convergence, because the learning rate $\gamma$ must be typically chosen small to avoid instability. Many speed-up techniques are described in the literature, 
+\begin{align}
+\vec{\igate}_t &= \sigma\left(\wtmat{x}{\igate} \vec{x}_t + \wtmat{h}{\igate} \vec{h}_{t-1} + \wtmat{\state}{\igate} \vec{\state}_{t-1}  + \vec{b}_\igate\right) \label{igate_math}\\
+\vec{\fgate}_t &= \sigma\left(\wtmat{x}{\fgate} \vec{x}_t + \wtmat{h}{\fgate} \vec{h}_{t-1} + \wtmat{\state}{\fgate} \vec{\state}_{t-1} + \vec{b}_\fgate \right) \label{fgate_math}\\
+\vec{\state}_t &= \vec{\fgate}_t \vec{\state}_{t-1} + \vec{\igate}_t \tanh \left(\wtmat{x}{\state} \vec{x}_t + \wtmat{h}{\state} \vec{h}_{t-1} + \vec{b}_\state\right) \label{cell}\\
+\vec{\ogate}_t &= \sigma\left(\wtmat{x}{\ogate} \vec{x}_t + \wtmat{h}{\ogate} \vec{h}_{t-1} + \wtmat{\state}{\ogate} \vec{\state}_{t} + \vec{b}_\ogate\right)\label{ogate_math}\\
+\vec{h}_t &= \vec{\ogate}_t \tanh(\vec{\state}_t) \label{output_math}
+\end{align}
 
-\begin{itemize}
-\item dynamic learning rate adaptation schemes. (complexity $O(TM)$, where T is number of epoch and M is number of connections)
-\item use second-order gradient descent techniques, which exploit curvature of the gradient but have epoch complexity $O(TM^2)$. 
-\item local error minimum
-\item adding noise
-\item by repeating the entire learning from different initial weight settings
-\item using task-specific prior information to start from an already plausible set of weights
-\end{itemize}
-
-
+Formula~\ref{igate_math} describes the
 Starting from LSTM section
 
 * more complex unit is called a *memory cell*
@@ -1225,9 +1321,20 @@ Where $g(t-1) = g(net_{cj}(t))$, $g(\cdot)$ is the activation function of new in
 * outputgates can be benecial: they prevent the net's attempts at storing long time lag memories 
 
 
-Following is the picture of the structure of the system. 
-
 \subsection{Optimization Methods}
+
+
+The basic gradient descent approach (and its backpropagation algorithm implementation) is notorious for slow convergence, because the learning rate $\gamma$ must be typically chosen small to avoid instability. Many speed-up techniques are described in the literature, 
+
+\begin{itemize}
+\item dynamic learning rate adaptation schemes. (complexity $O(TM)$, where T is number of epoch and M is number of connections)
+\item use second-order gradient descent techniques, which exploit curvature of the gradient but have epoch complexity $O(TM^2)$. 
+\item local error minimum
+\item adding noise
+\item by repeating the entire learning from different initial weight settings
+\item using task-specific prior information to start from an already plausible set of weights
+\end{itemize}
+
 
 Optimizing neuron network is not a simple task. People tried different method since perceptron was introduced. However, only until the back-propagation algorithm was introduced, the neuron network models have a role in the machine learning field. Currently, back-propagation has become standard of training neuron network and many optimization algorithms for neuron network are based on that. In the following section, I will describe two optimization methods I used in the experiments. One of them is call \textit{Nesterov's Accelerated Gradient}(NAG) and another of them is called \textit{Adam}. 
 \subsubsection{Nesterovs Accelerated Gradient}

@@ -22,17 +22,17 @@
 \contentsline {section}{\numberline {3.5}Training of RNN}{24}
 \contentsline {subsection}{\numberline {3.5.1}Shared Weight Extended Backpropagation}{25}
 \contentsline {subsection}{\numberline {3.5.2}Learning Long-Term Dependencies}{25}
-\contentsline {subsection}{\numberline {3.5.3}Optimization Methods}{28}
-\contentsline {subsubsection}{Nesterovs Accelerated Gradient}{29}
-\contentsline {subsubsection}{Adam}{29}
-\contentsline {chapter}{\numberline {4}Prior Arts of Combining Deep Neuron Network and RL}{31}
-\contentsline {section}{\numberline {4.1}Deep Q Network}{31}
-\contentsline {chapter}{\numberline {5}Experiment}{33}
-\contentsline {section}{\numberline {5.1}Cart-pole Balancing}{33}
-\contentsline {subsection}{\numberline {5.1.1}System Implementation}{35}
-\contentsline {subsection}{\numberline {5.1.2}Experiment Result}{35}
-\contentsline {section}{\numberline {5.2}Baxter Robot Learning a Action}{37}
-\contentsline {subsection}{\numberline {5.2.1}System Implementation}{37}
-\contentsline {subsection}{\numberline {5.2.2}Experiment Result Using Baxter Simulator}{38}
-\contentsline {subsection}{\numberline {5.2.3}Experiment Result Using Baxter Robot}{38}
-\contentsline {chapter}{References}{41}
+\contentsline {subsection}{\numberline {3.5.3}Optimization Methods}{29}
+\contentsline {subsubsection}{Nesterovs Accelerated Gradient}{30}
+\contentsline {subsubsection}{Adam}{31}
+\contentsline {chapter}{\numberline {4}Prior Arts of Combining Deep Neuron Network and RL}{33}
+\contentsline {section}{\numberline {4.1}Deep Q Network}{33}
+\contentsline {chapter}{\numberline {5}Experiment}{35}
+\contentsline {section}{\numberline {5.1}Cart-pole Balancing}{35}
+\contentsline {subsection}{\numberline {5.1.1}System Implementation}{37}
+\contentsline {subsection}{\numberline {5.1.2}Experiment Result}{37}
+\contentsline {section}{\numberline {5.2}Baxter Robot Learning a Action}{39}
+\contentsline {subsection}{\numberline {5.2.1}System Implementation}{39}
+\contentsline {subsection}{\numberline {5.2.2}Experiment Result Using Baxter Simulator}{40}
+\contentsline {subsection}{\numberline {5.2.3}Experiment Result Using Baxter Robot}{40}
+\contentsline {chapter}{References}{43}
