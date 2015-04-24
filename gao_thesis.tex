@@ -145,7 +145,7 @@ If we would like to discuss what might be the most common way of learning, learn
 
 The RL is an area that studies the mechanism of the such kind of learning in a computational way. Generally the goal of RL is to find a way of mapping different states with different actions so that we could maximize the reward signals. 
 
-There are two main approaches in area of reinforcement learning, one is based on Markov Decision Process(MDP)\cite{Sutton1998a}. Both methods have advantages and drawbacks when applied to robotics, another one is recurrent neural network(RNN)\cite{williams1989learning}.
+There are two main approaches in area of reinforcement learning, one is based on Markov Decision Process(MDP)\cite{barto1998reinforcement} and another one is recurrent neural network(RNN)\cite{williams1992simple}. Both methods have advantages and drawbacks when applied to robotics.
 
 In the following sections of this chapter, we may consider robot as an agent in all description of related techniques.
 
@@ -503,7 +503,7 @@ In the following section, we use pseudo code for whole PGPE algorithm.
  \While{average reward not converged}{
 	Get mean $\vec{\mu}$ and variances $\vec{\sigma^2}$ of random variables. \\
 	For each parameter, sample $\epsilon$ from Normal Distribution $\mathcal{N}(0, \sigma^2)$ and form a vector $\vec{\epsilon}$.  \\
-	Get two parameters using $\vec{\theta^-} = \vec{\mu} - \vec{\epsilon}$, $\vec{\theta^+} = \vec{\mu} + \vec{\epsilon}$ \\
+	Get two parameters using $\vec{\theta}^- = \vec{\mu} - \vec{\epsilon}$, $\vec{\theta}^+ = \vec{\mu} + \vec{\epsilon}$ \\
 	Use two parameters as policy parameters, get cumulative reward $r^+$, $r^-$ from system.\\
 	Update baseline $b$ of algorithm according to Formula~\ref{b_update}. \\
 	Update $\mu$ and $\sigma$ using Formula~\ref{sys_update_mu} and Formula~\ref{sys_update_sigma}. \\
@@ -1087,45 +1087,11 @@ Details of approximation theory of multi-layer neuron network is governed by Sto
 
 RNN, as special model of neuron network model also follows Stone-Weierstrass theorem. Herrn Anton Maximilian Schafer proved that RNN is also a universal approximator.
 
-\section{Training of RNN}\label{training_rnn}
-After getting data and designing the structure of network, the next important step is to train the network to model the data we have and also to predict next point in the data sequence. The main goal of training is to minimize the cost of objective function between expected outcome and real outcome. As a result, predicting data based on data we have.
 
-\subsection{Shared Weight Extended Backpropagation}
-
-Training algorithm of recurrent neural network, called back-propagation, is introduced from feed-forward neural network. For simplicity of this algorithm, we first consider a simple feed-forward neural network defined as:
-
-\begin{equation}
-y = \sigma(W\vec{x})
-\end{equation}
-
-where $W$ is a 3$\times$4 matrix, $\vec{x}$ is a vector of length 4 and $\sigma(\cdot)$ is an element-wise non-linear transformation.
-
-This network only contains two layers including input layer and output layer. Input layer has four input neurons and output layer has three output neurons. The data we have is a list of input-output pairs.
-
-Formally the backpropagation algorithm is defined as:
-
-\begin{algorithm}
- \KwData{List of input-output pairs }
- \KwResult{return the network with parameters $W$}
- initialize network weights (often small random values)\;
- \While{training example ex}{
-        prediction = neural-net-output(network, ex)\;
-        actual = teacher-output(ex)\;
-        compute error (prediction - actual) at the output units\;
-        compute $\Delta W$ for all weights from hidden layer to input layer\;
-        update network weights \;
-        until all examples classified correctly or another stopping criterion satisfied
- }
- \caption{Backpropagation for two layers feed-forward neural network.}\label{backpropagation}
-\end{algorithm}
-
-The key element in this algorithm is the updating rule of the system. Based on 
-
-
-\subsection{Learning Long-Term Dependencies}
+\section{Learning Long-Term Dependencies}
 
 Long-term dependences is an important concept in control. Some states of the system can be crucial to the system. They might influence the future behaviour of the system in many ways. For example, in the T maze example(see Figure~\ref{tmaze} for reference), the decision at the turning  point is essential for the system. As the behaviour is totally different after turning point, a long term memory is important in this case.
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \begin{tikzpicture}
   \draw[line width=0.3cm,color=red!30,cap=round,join=round] (2,0)--(2,5);
@@ -1238,105 +1204,156 @@ The idea of LSTM is relatively straight forward. The memory cell stores informat
 \vec{h}_t &= \vec{\ogate}_t \tanh(\vec{\state}_t) \label{output_math}
 \end{align}
 
-Formula~\ref{igate_math} describes the
-Starting from LSTM section
+Formula~\ref{igate_math} describes the update rule of input gate. It takes the output of last time step of system $h_{t-1}$, the input for current time step $\vec{x}_t$, the memory cell value of the last time step $\vec{c}_{t-1}$ and bias term $\vec{b}_t$ in to its updating rule. Similarly Formula~\ref{fgate_math} to Formula~\ref{output_math} also use these parameters to update its value. Generally , input gate controls information flow in to memory cell, forget gate controls information flow out of the system and output gate controls how information can be translated to output. These three gates form a path of remembering the long term dependence of the system.
 
-* more complex unit is called a *memory cell*
-* there are many memory cells. We mark j'th cell as $c_j$.
-* $c_j$ gets input from $net_{c_j}$, $out_j$(output gate), $in_j$(input gate).
-* $in_j$'s activation at time t is denoted as $y^{in_j}(t)$ and we denote $out_j$'s activation at time t is denoted as $y^{out_j}(t)$
+After knowing the how parameters in LSTM are updated, the next step is to determine what kind of optimization process should be applied to the network so that it can be optimized easily.
 
-\begin{equation}
-g^{out_j}(t) = f_{out_j}(net_{out_j}(t))
-\end{equation}
+\section{Training of RNN}\label{training_rnn}
+After getting data and designing the structure of network, the next important step is to train the network to model the data we have and also to predict next point in the data sequence. The main goal of training is to minimize the cost of objective function between expected outcome and real outcome. As a result, predicting data based on data we have.
 
+\subsubsection{Backpropagation}
+Backpropagation is an algorithm that uses gradient information of the network to update the parameters of the system. The basic idea of this algorithm is to first use output of the system $\vec{o}$ and real data $\vec{y}$ to compute the error $J(\theta) = |\vec{o} - \vec{y}|_2$. Then the algorithm uses this information to calculate $\Delta W_h$ of the hidden layer and further calculate $\Delta W_i$ of input layer. Normally this algorithm also uses a parameter $\alpha$ to decide the step size of the algorithm, which make the real updating rule of the parameters to be $W_ {t+1}=\alpha \cdot \Delta W_t + W_t$
+\begin{algorithm}[ht]
+\caption{\emph{Backpropagation}}
+\label{algo:backpropagation}
+\begin{algorithmic}
+\REQUIRE $\alpha$: Stepsize
+\REQUIRE $\delta$: Threshold
+\REQUIRE $W_{1\ldots n}$: Randomly initialized weights
+\WHILE{$J \leq \delta$}
+\STATE $\vec{o} = net\left(\vec{i}\right)$
+\STATE $J(W_{1,\ldots,n}) = |\vec{o} - \vec{y}|_2$
+\STATE $ \nabla W_i = \frac{\partial J(W_i)}{\partial W_i}, \forall i \in \{1, \ldots, n\}$
+\STATE $ W_i = \alpha \cdot \nabla W_i  + W_i, \forall i \in \{1, \ldots, n\}$
+\ENDWHILE
+\RETURN $\theta_t$ (Resulting parameters)
+\end{algorithmic}
+\vspace{-0.05in}
+\end{algorithm}
 
-where $f_{out_j}(\cdot (t))$ means activation function of out gate of memory cell $c_j$.
+The basic gradient descent approach (and its backpropagation algorithm implementation) is notorious for slow convergence, because the learning rate $\alpha$ must be typically chosen small to avoid instability. Many speed-up techniques are described in the literature. As a first order method, dynamic learning rate adaptation schemes is sometimes used to system. It has complexity $O(TM)$, where T is number of epoch and M is number of connections. Sometime people also use second-order gradient descent techniques, which exploit curvature of the gradient but have epoch complexity $O(TM^2)$. These two classes of methods are main streams in the optimization problem. 
 
-similarly:
-
-
-\begin{equation}
-g^{in_j}(t) = f_{in_j}(net_{int_j}(t))
-\end{equation}
-
-
-where $f_{in_j}(\cdot (t))$ means activation function of out gate of memory cell $c_j$.
-
-and
-
-
-\begin{equation}
-net_{out_j}(t) = \sum_u w_{out_ju}y^u(t-1) \label{eq_netout}
-\end{equation}
-
-
-and
-
-
-\begin{equation}
-net_{in_j}(t) = \sum_u w_{in_ju}y^u(t-1) \label{eq_netin}
-\end{equation}
-
-
-We also have 
-
-
-\begin{equation}
-net_{c_j}(t) = \sum_u w_{c_ju}y^u(t-1) \label{eq_cell}
-\end{equation}
-
-
-In above $Equation~\ref{eq_netout}$, $equation~\ref{eq_netin}$, $equation~\ref{eq_cell}$, $w_{j}$ means the weight of connection from $j$'th node to $c_j$
-
-As a consequence, the $w_{out_ju}$ means for the outgate of $j'th$ memory cell, the wight of $u'th$ connection conneted to memory cell $c_j$ and it is similar to all of the connections.
-
-* All these dierent types of units may convey useful information about the current state of the net.
-* an input gate (output gate) may use inputs from other memory cells to decide whether to store(access) certain information in its memory cell.
-* There even may be recurrent self-connections like $w_{c_jc_j}$.
-
-We have considered three conponents of memory cell. Now we consider the output of the memory cell.
-The output of $c_j$ is defined as:
-
-
-\begin{equation}
-y^{c_j}(t) = y^{out_j}(t)h(s_{c_j}(t)) \label{eq_cell_out}
-\end{equation}
-
-
-Where $y^{c_j}(t)$ is the output of memory cell $c_j$ at time $t$. $y^{out_j}(t)$ is the output of outgate at time $t$. $h$ is a sigmoid function that scales the state of self-connected node which is center component of cell memory(we also call it as inner state of memory cell).
-
-The inner state of memory cell $c_j$ is defined as:
-
-
-\begin{equation}
-s_{c_j}(t) = s_{c_j}(t-1) + g(t-1)\cdot y^{in_j}(t-1)
-\end{equation}
-
-
-Where $g(t-1) = g(net_{cj}(t))$, $g(\cdot)$ is the activation function of new input. 
-
-* memory cell $c_j$ (the box) and its gate units $in_j$, $out_j$ builds *constant error carrousel*.(CEC)
-* Distributed output representations typically do require output gates. Not always are both gate types necessary, though one may be sucient. For instance, in Experiments 2a and 2b inSection 5, it will be possible to use input gates only.
-* outputgates can be benecial: they prevent the net's attempts at storing long time lag memories 
-
-
-\subsection{Optimization Methods}
-
-
-The basic gradient descent approach (and its backpropagation algorithm implementation) is notorious for slow convergence, because the learning rate $\gamma$ must be typically chosen small to avoid instability. Many speed-up techniques are described in the literature, 
+However, with using these methods, the system still suffers local error minimum, which means the optimization stacks at some local minimum and can not get out. For this particular problem, there are normally three ways of solving it.
 
 \begin{itemize}
-\item dynamic learning rate adaptation schemes. (complexity $O(TM)$, where T is number of epoch and M is number of connections)
-\item use second-order gradient descent techniques, which exploit curvature of the gradient but have epoch complexity $O(TM^2)$. 
-\item local error minimum
 \item adding noise
-\item by repeating the entire learning from different initial weight settings
+\item repeating the entire learning from different initial weight settings
 \item using task-specific prior information to start from an already plausible set of weights
 \end{itemize}
 
+In the following section, we will briefly introduce two methods that are able to optimize the LSTM in practice. One of them is called Nesterov's Accelerated Gradient and another of them is called Adam.
 
-Optimizing neuron network is not a simple task. People tried different method since perceptron was introduced. However, only until the back-propagation algorithm was introduced, the neuron network models have a role in the machine learning field. Currently, back-propagation has become standard of training neuron network and many optimization algorithms for neuron network are based on that. In the following section, I will describe two optimization methods I used in the experiments. One of them is call \textit{Nesterov's Accelerated Gradient}(NAG) and another of them is called \textit{Adam}. 
+\subsection{Shared Weight Extended Backpropagation}
+
+Training algorithm of recurrent neural network, called shared weight backpropagation, is introduced from feed-forward neural network backpropagation. For simplicity of this algorithm, we first consider a simple feed-forward neural network defined as:
+
+\begin{equation}
+y = \sigma(W_h\sigma(W_i\vec{x}))
+\end{equation}
+
+This network only contains three layers including input layer, hidden layer and output layer. Input layer has $n_i$ input neurons, $h_i$ hidden neuron and output layer has $n_o$ output neurons. The data we have is a list of input-output pairs. Now we add one more recurrent connection to add recurrent connection weights $W_t$. The formula of describing the one step of the system becomes like Formula~\ref{one_step_rnn_bp}.
+
+\begin{equation}
+y = \sigma(W_h(\sigma(W_i\vec{x})+\sigma(W_{t}\vec{s}_{t-1}))) \label{one_step_rnn_bp}
+\end{equation}
+
+When we unfold the network in time more then one steps, the system will become like illustrated by Figure~\ref{shared_bp}. In the figure, all connections of the network share the same weights. In this case, we need to decide how could we update the weight of each parameter otherwise if we update the each parameter according to gradient information, all updates will eliminate each other.
+\begin{figure}[h!]
+  \centering
+% The input, state transition, and measurement matrices
+% are represented by gray squares.
+% They have a smaller minimal size for aesthetic reasons.
+\tikzstyle{matrx}=[rectangle,
+                                    thick,
+                                    minimum size=1cm,
+                                    draw=gray!80,
+                                    fill=gray!20]
+
+
+% Everything is drawn on underlying gray rectangles with
+% rounded corners.
+\tikzstyle{background}=[rectangle,
+                                                fill=gray!10,
+                                                inner sep=0.5cm,
+                                                rounded corners=5mm]
+
+\begin{tikzpicture}[>=latex,text height=1.5ex,text depth=0.25ex]
+	\tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
+    % "text height" and "text depth" are required to vertically
+    % align the labels with and without indices.
+  
+  % The various elements are conveniently placed using a matrix:
+  \matrix[row sep=0.6cm,column sep=0.5cm] {
+    % First line: Control input
+    		&
+        \node (x_t-1) [neuron]{$\vec{x}_{t-1}$}; &
+        &
+        \node (x_t)   [neuron]{$\vec{x}_t$};     &
+        &
+        \node (x_t+1) [neuron]{$\vec{x}_{t+1}$}; &
+
+        \\
+        % Third line: State & state transition matrix
+		\\
+		&
+        \node (s_t-1) [neuron] {$\vec{s}_{t-1}$}; &
+		&
+        \node (s_t)   [neuron] {$\vec{s}_t$};     &
+		&
+        \node (s_t+1) [neuron] {$\vec{s}_{t+1}$}; &
+		\\
+		\\
+
+        % Fifth line: Measurement
+        &
+        \node (o_t-1) [neuron] {$\vec{o}_{t-1}$}; &
+        &
+        \node (o_t)   [neuron] {$\vec{o}_t$};     &
+        &
+        \node (o_t+1) [neuron] {$\vec{o}_{t+1}$}; &
+        \\
+    };
+    
+    % The diagram elements are now connected through arrows:
+    \path[->]
+    	    (x_t-1) edge node[left]{$W_i$} (s_t-1)
+        (x_t) edge node[left]{$W_i$}(s_t)
+        (x_t+1) edge node[left]{$W_i$}(s_t+1)
+        	        	
+        (s_t-1) edge node[above]{$W_{t}$}(s_t)
+        (s_t) edge node[above]{$W_{t}$}(s_t+1)  
+        
+    	    (s_t-1) edge node[left]{$W_{h}$} (o_t-1)
+        (s_t) edge node[left]{$W_{h}$} (o_t)
+        (s_t+1) edge node[left]{$W_{h}$} (o_t+1)
+        ;
+\end{tikzpicture}
+  \caption{This figure shows the RNN network when it is unfolded in time, each paramer is copy several times. The unfolded network shares all the weights of original RNN.}\label{shared_bp}
+\end{figure}
+
+\begin{algorithm}
+ \KwData{List of input-output pairs }
+ \KwResult{return the network with parameters $W$}
+ initialize network weights (often small random values)\;
+ \While{training example ex}{
+        prediction = neural-net-output(network, ex)\;
+        actual = teacher-output(ex)\;
+        compute error (prediction - actual) at the output units\;
+        compute $\Delta W$ for all weights from hidden layer to input layer\;
+        update network weights \;
+        until all examples classified correctly or another stopping criterion satisfied
+ }
+ \caption{Backpropagation for two layers feed-forward neural network.}\label{backpropagation}
+\end{algorithm}
+
+The key element in this algorithm is the updating rule of the system. Based on 
+
+
+
+
+Optimizing neuron network is not a simple task. People tried different method since perceptron was introduced. However, only until the back-propagation algorithm was introduced, the neuron network models have a role in the machine learning field. Currently, back-propagation has become standard of training neuron network and many optimization algorithms for neuron network are based on that. In the following section, I will first describe the basic back propagation algorithm and them describe two optimization methods I used in the experiments. One of them is call \textit{Nesterov's Accelerated Gradient}(NAG) and another of them is called \textit{Adam}. 
+
+
 \subsubsection{Nesterovs Accelerated Gradient}
 Nesterov's Accelerated Gradient is sometimes called Nesterov's momentum. Here momentum refers to Classic Momentum(CM) method which is a technique to accelerate the standard gradient descent algorithm. Let recall the original gradient descent algorithm, which update parameters based on a step size $\alpha$ and gradient information of objective function. Formula~\ref{normal_gradient_descent}
 \begin{equation}
@@ -1358,12 +1375,12 @@ NAG, like CM algorithm, is a first order optimization algorithm. For a general s
 \end{equation}
 
 \subsubsection{Adam}
-Adam is a first-order gradient-based algorithm \cite{kingma2014adam} invented by 	Diederik Kingma and Jimmy Ba in 2015. It combines ideas of RMSProp and AdaGrad. Algorithm~\ref{algo:adam} shows the each step of this algorithm.
+Adam is a first-order gradient-based algorithm \cite{kingma2014adam} invented by 	Diederik Kingma and Jimmy Ba in 2015. It combines ideas of RMSProp\cite{tieleman2012lecture} and AdaGrad\cite{duchi2011adaptive}. Algorithm~\ref{algo:adam} shows the each step of this algorithm.
 
 \begin{algorithm}[ht]
 \caption{\emph{Adam}, $g^2_t$ indicates the elementwise square $g_t \odot g_t$. Good default settings for the tested machine learning problems are $\alpha=0.001$, $\beta_1=0.9$, $\beta_2=0.999$, $\epsilon = 10^{-8}$ and $\lambda = 1-10^{-8}$.}
 \label{algo:adam}
-\begin{algorithmic}
+\begin{algorithmic}[h]
 \REQUIRE $\alpha$: Stepsize
 \REQUIRE $\beta_1,\beta_2\in [0,1)$, $\lambda\in[0,1]$ : Exponential decay rates for the moment estimates
 %\REQUIRE ${ (1-\beta_1)^2 / \sqrt{1-\beta_2}} < 1$: Constraint from convergence analysis
@@ -1386,12 +1403,13 @@ Adam is a first-order gradient-based algorithm \cite{kingma2014adam} invented by
 \end{algorithmic}
 \vspace{-0.05in}
 \end{algorithm}
-
+Adam's parameters are invariant to rescaling of the gradient. By using statistical information,it step sizes are approximately bounded by hyper-parameters, which enables it to perform better by using step size annealing. For more reference, you could look at the paper made by Kingma, Diederik and Ba\cite{kingma2014adam}.
+ 
 \chapter{Prior Arts of Combining Deep Neuron Network and RL}
 Different research groups have tried different methods for combining deep neuron networks with reinforcement learning. The first thoughts turned out to be using neuron network as a general controller. In the early work applying neuron network to control algorithm, several algorithms using neuron network were proposed including Explanation-Based Neural Network Learning\cite{thrun1996explanation} and Neural networks for self-learning control systems. \cite{nguyen1990neural}. These early initiatives provide information about how could one formulate a 
 \section{Deep Q Network}
 Deep Q Network is a network proposed by Google's deep learning group. It creates a direction of combining Convolutional Neuron Network with Q learning algorithm\cite{mnih2013playing}\cite{mnih2015human}. 
-
+That is actually the first 
 
 
 
@@ -1504,16 +1522,6 @@ Based on the Robot Operating System(ROS), several simulators supports simulation
 \subsection{Experiment Result Using Baxter Robot}
 
 
-
-\begin{theorem}
-This is a sample sentence that should look like normal text,
-and this is another:
-\[ y = x+3 \]
-\end{theorem}
-
-\begin{proof}
-This is a sample sentence.
-\end{proof}
 
 \bibliography{library}
 \bibliographystyle{siam}
